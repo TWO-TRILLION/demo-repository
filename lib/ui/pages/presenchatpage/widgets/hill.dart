@@ -6,7 +6,7 @@ class Hill extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Positioned(
-      top: 350,
+      top: MediaQuery.of(context).size.height/2 - 120,
       left: 0,
       right: 0,
       child: ClipOval(
