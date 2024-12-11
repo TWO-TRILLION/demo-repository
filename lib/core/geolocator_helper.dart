@@ -22,4 +22,14 @@ class GeolocatorHelper {
     );
     return position;
   }
+
+  static double getDistance(
+    double startLatitude,
+    double startLongitude,
+    double endLatitude,
+    double endLongitude,
+  ) {
+    return Geolocator.distanceBetween(
+        startLatitude, startLongitude, endLatitude, endLongitude);
+  }
 }
