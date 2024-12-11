@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "900731788391",
+    "project_id": "sprinchat-bfb7e",
+    "storage_bucket": "sprinchat-bfb7e.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:900731788391:android:74d4d622f6afdb98fc48c2",
+        "android_client_info": {
+          "package_name": "com.example.flutter_sprinchat_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB3kqBEavXoJMXm1dGUILNfouUhbvVSPOo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
