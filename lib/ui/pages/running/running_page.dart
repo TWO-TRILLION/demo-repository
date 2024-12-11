@@ -16,16 +16,18 @@ class RunningPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20),
+        padding: const EdgeInsets.all(20),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             RunningInformation(title: '달린 거리', value: distance),
             RunningInformation(title: '평균 속력', value: speed),
             RunningInformation(title: '소모한 칼로리', value: calorie),
+            SizedBox(height: 30),
             KakaoMapView(
               width: double.infinity,
-              height: 400,
+              height: 350,
               kakaoMapKey: '08eebe69029ef27e6209ec2d97b79d29',
               lat: lat,
               lng: lng,
