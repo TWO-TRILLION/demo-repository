@@ -10,13 +10,16 @@ class RunningPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          RunningInformation(title: '달린 거리', value: distance),
-          RunningInformation(title: '평균 속력', value: speed),
-          RunningInformation(title: '소모한 칼로리', value: calorie),
-        ],
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            RunningInformation(title: '달린 거리', value: distance),
+            RunningInformation(title: '평균 속력', value: speed),
+            RunningInformation(title: '소모한 칼로리', value: calorie),
+          ],
+        ),
       ),
     );
   }
