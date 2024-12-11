@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_sprinchat_app/ui/pages/running/widgets/kakao_map.dart';
 import 'package:flutter_sprinchat_app/ui/pages/running/widgets/running_information.dart';
-import 'package:kakaomap_webview/kakaomap_webview.dart';
 
 class RunningPage extends StatelessWidget {
   RunningPage({required this.lat, required this.lng});
