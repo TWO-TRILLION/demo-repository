@@ -30,7 +30,6 @@ class Background extends StatelessWidget {
                   Text(
                     '부산 광역시 동래구 온천동',
                     style: TextStyle(
-                      fontFamily: 'Pretendard',
                       fontWeight: FontWeight.bold,
                       fontSize: 20,
                       color: Colors.black,
