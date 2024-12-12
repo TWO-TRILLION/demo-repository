@@ -51,29 +51,32 @@ class _LoginPageState extends State<LoginPage> {
         FocusScope.of(context).unfocus();
       },
       child: Scaffold(
-        body: Form(
-          key: formKey,
-          child: Center(
-            child: Padding(
-              padding: const EdgeInsets.all(50),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Image.asset('assets/images/logo.png'),
-                  SizedBox(height: 30),
-                  IdTextFormField(controller: idController),
-                  SizedBox(height: 30),
-                  PwTextFormField(controller: pwController),
-                  SizedBox(height: 30),
-                  ElevatedButton(onPressed: (onLoginClick), child: Text('로그인')),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  TextButton(
-                    onPressed: () {},
-                    child: Text('회원가입'),
-                  )
-                ],
+        body: SafeArea(
+          child: Form(
+            key: formKey,
+            child: Center(
+              child: Padding(
+                padding: const EdgeInsets.all(50),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Image.asset('assets/images/logo.png'),
+                    SizedBox(height: 40),
+                    IdTextFormField(controller: idController),
+                    SizedBox(height: 30),
+                    PwTextFormField(controller: pwController),
+                    SizedBox(height: 30),
+                    ElevatedButton(
+                        onPressed: (onLoginClick), child: Text('로그인')),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    TextButton(
+                      onPressed: () {},
+                      child: Text('회원가입'),
+                    )
+                  ],
+                ),
               ),
             ),
           ),
