@@ -18,15 +18,14 @@ class Bottomwindow extends StatelessWidget {
           child: Column(
             children: [
               Spacer(),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => Chatpage()));
-                },
-                child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 80, vertical: 10),
-                  child: Text('참여하기'),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 80),
+                child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => Chatpage()));
+                  },
+                  child: Center(child: Text('참여하기')),
                 ),
               ),
               SizedBox(height: 60,),
