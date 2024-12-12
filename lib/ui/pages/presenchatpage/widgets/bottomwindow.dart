@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_sprinchat_app/ui/pages/chatpage/chatpage.dart';
+import 'package:flutter_sprinchat_app/ui/pages/presenchatpage/presenchatpage.dart';
 
 class Bottomwindow extends StatelessWidget {
   const Bottomwindow({super.key});
@@ -20,16 +20,19 @@ class Bottomwindow extends StatelessWidget {
               Spacer(),
               ElevatedButton(
                 onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => Chatpage()));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const PresenChatPage()));
                 },
-                child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 80, vertical: 10),
+                child: const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 80, vertical: 10),
                   child: Text('참여하기'),
                 ),
               ),
-              SizedBox(height: 60,),
+              const SizedBox(
+                height: 60,
+              ),
               Spacer(),
             ],
           )),

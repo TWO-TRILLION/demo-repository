@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_sprinchat_app/ui/pages/profile.dart';
+import 'package:flutter_sprinchat_app/ui/pages/myhome/profile.dart';
 import 'dart:io';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_sprinchat_app/ui/widgets/navigation_bar.dart';
 
 class MyHome extends StatefulWidget {
   const MyHome({super.key});
@@ -154,23 +155,7 @@ class _MyHomeState extends State<MyHome> {
           ),
         ),
       ),
-      bottomNavigationBar: Container(
-        padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-        margin: const EdgeInsets.all(16),
-        decoration: BoxDecoration(
-          color: Colors.black,
-          borderRadius: BorderRadius.circular(30),
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            _buildNavItem(Icons.home_filled, true),
-            _buildNavItem(Icons.person_outline, false),
-            _buildNavItem(Icons.history, false),
-            _buildNavItem(Icons.arrow_forward_ios, false),
-          ],
-        ),
-      ),
+      bottomNavigationBar: const CustomNavigationBar(currentPage: 'home'),
     );
   }
 
@@ -200,23 +185,6 @@ class _MyHomeState extends State<MyHome> {
             ),
           ),
         ],
-      ),
-    );
-  }
-
-  Widget _buildNavItem(IconData icon, bool isSelected) {
-    return Container(
-      padding: const EdgeInsets.all(12),
-      decoration: isSelected
-          ? BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(20),
-            )
-          : null,
-      child: Icon(
-        icon,
-        color: isSelected ? Colors.black : Colors.white,
-        size: 20,
       ),
     );
   }

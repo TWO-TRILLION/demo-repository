@@ -4,8 +4,8 @@ import 'package:flutter_sprinchat_app/ui/pages/presenchatpage/widgets/bottomwind
 import 'package:flutter_sprinchat_app/ui/pages/presenchatpage/widgets/fruit.dart';
 import 'package:flutter_sprinchat_app/ui/pages/presenchatpage/widgets/hill.dart';
 
-class Presenchatpage extends StatelessWidget {
-  const Presenchatpage({super.key});
+class PresenChatPage extends StatelessWidget {
+  const PresenChatPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +27,7 @@ class Presenchatpage extends StatelessWidget {
           Bottomwindow(),
         ],
       )),
-      floatingActionButton: FloatingActionButton(onPressed: (){}),
+      floatingActionButton: FloatingActionButton(onPressed: () {}),
     );
   }
 }
