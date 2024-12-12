@@ -2,7 +2,9 @@ import 'package:chat_bubbles/bubbles/bubble_normal.dart';
 import 'package:flutter/material.dart';
 
 class Chatswindow extends StatelessWidget {
-  const Chatswindow({super.key});
+  const Chatswindow({super.key, this.chatState});
+
+  final chatState;
 
   @override
   Widget build(BuildContext context) {

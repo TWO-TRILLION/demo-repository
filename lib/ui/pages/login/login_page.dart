@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_sprinchat_app/theme.dart';
+import 'package:flutter_sprinchat_app/ui/pages/join/join_page.dart';
 import 'package:flutter_sprinchat_app/ui/widgets/id_text_form_field.dart';
 import 'package:flutter_sprinchat_app/ui/widgets/pw_text_form_field.dart';
 
@@ -72,7 +73,13 @@ class _LoginPageState extends State<LoginPage> {
                       height: 10,
                     ),
                     TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(context, MaterialPageRoute(
+                          builder: (context) {
+                            return JoinPage();
+                          },
+                        ));
+                      },
                       child: Text('회원가입'),
                     )
                   ],
