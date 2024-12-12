@@ -17,14 +17,14 @@ class Chatmodel {
 
   Chatmodel.fromJson(Map<String,dynamic> json) : this(
     chatroomid: json['chatroomid'],
-    updatetime: json['updatetime'],
+    updatetime: DateTime.parse(json['updatetime']),
     chats: (json['chats'] as List).map((item) => item as Map<String,dynamic>).toList()
   );
 
   Map<String,dynamic> toJson(){
     return {
       "chatroomid" : chatroomid,
-      "updatetime" : updatetime,
+      "updatetime" : updatetime.toIso8601String(),
       "chats" : chats,
     };
   }
