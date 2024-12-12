@@ -1,10 +1,24 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_sprinchat_app/core/geolocator_helper.dart';
 
-class RunningViewModel extends AutoDisposeNotifier<List<double>> {
+class RunningState {
+  double? distance;
+  double? speed;
+  double? calorie;
+  DateTime time;
+
+  RunningState(
+    this.distance,
+    this.speed,
+    this.calorie,
+    this.time,
+  );
+}
+
+class RunningViewModel extends Notifier<RunningState> {
   @override
-  List<double> build() {
-    return [];
+  build() {
+    return RunningState(distance, speed, calorie, time);
   }
 
   RunningViewModel(
@@ -15,6 +29,11 @@ class RunningViewModel extends AutoDisposeNotifier<List<double>> {
   DateTime startTime; // 러닝을 시작한 시간
   double startLat; // 러닝을 시작한 지점의 위도
   double startLng; // 러닝을 시작한 지점의 경도
+
+  double? distance;
+  double? speed;
+  double? calorie;
+  var time;
 
   Future<void> update() async {
     // 현재 위치 검색
@@ -29,11 +48,13 @@ class RunningViewModel extends AutoDisposeNotifier<List<double>> {
         currentLocation.longitude,
       );
       // 달린 시간
-      final runningTime = DateTime.now().difference(startTime);
-      // TODO : 평균 속력, 소모 칼로리 구하기
-      final speed = distance / runningTime.inHours;
+      time = DateTime.now().difference(startTime);
+      // 평균 속력(km/h)
+      speed = distance / time.inHours;
       // 칼로리 소모 : 분당 4
-      final calorie = runningTime.inMinutes / 4;
+      calorie = time.inMinutes / 4;
+
+      state = RunningState(distance, speed, calorie, time);
     }
   }
 }
