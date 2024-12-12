@@ -7,11 +7,11 @@ class Hill extends StatelessWidget {
   Widget build(BuildContext context) {
     return Positioned(
       top: MediaQuery.of(context).size.height/2 - 120,
-      left: 0,
-      right: 0,
+      left: -170,
       child: ClipOval(
         child: Container(
-          height: 200,
+          width: 800,
+          height: 400,
           decoration: BoxDecoration(
             color: Color(0xffc7753b),
           ),

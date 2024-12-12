@@ -13,6 +13,7 @@ class Presenchatpage extends StatelessWidget {
       appBar: AppBar(),
       body: SafeArea(
         child: Stack(
+          clipBehavior: Clip.none,
           children: [
             // 배경
             Background(),

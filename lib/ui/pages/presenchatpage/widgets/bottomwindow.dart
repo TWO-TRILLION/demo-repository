@@ -10,12 +10,21 @@ class Bottomwindow extends StatelessWidget {
       left: 0,
       right: 0,
       child: Container(
-        height: MediaQuery.of(context).size.height/2 - 120,
+        height: MediaQuery.of(context).size.height/2 - 200,
         decoration: BoxDecoration(
           color: Color(0xfff2f8ff),
           borderRadius: BorderRadius.circular(10)
         ),
-      ),
+        child: Center(
+          child: ElevatedButton(
+            onPressed: (){}, 
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 80, vertical: 10),
+              child: Text('참여하기'),
+            ),
+            ),
+        )
+        ),
     );
   }
 }
