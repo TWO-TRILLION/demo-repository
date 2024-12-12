@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_sprinchat_app/ui/pages/myhome/my_home.dart';
-import 'package:flutter_sprinchat_app/ui/pages/chatpage/chatpage.dart';
+import 'package:flutter_sprinchat_app/ui/pages/presenchatpage/presenchatpage.dart';
 import 'package:flutter_sprinchat_app/ui/pages/running/running_page.dart';
 
 class CustomNavigationBar extends StatelessWidget {
@@ -52,7 +52,8 @@ class CustomNavigationBar extends StatelessWidget {
               if (currentPage != 'chat') {
                 Navigator.pushReplacement(
                   context,
-                  MaterialPageRoute(builder: (context) => const ChatPage()),
+                  MaterialPageRoute(
+                      builder: (context) => const PresenChatPage()),
                 );
               }
             },
