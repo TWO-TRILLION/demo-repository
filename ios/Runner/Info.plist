@@ -2,15 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>NSAppTransportSecurity</key>
-		<dict>
-			<key>NSAllowsArbitraryLoads</key> <true/>
-		</dict>
-		<key>io.flutter.embedded_views_preview</key> <true/>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>위치 접근 권한을 요청합니다.</string>
-	<key>NSLocationAlwaysUsageDescription</key>
-	<string>백그라운드에서 위치 권한 사용을 요청합니다.</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
