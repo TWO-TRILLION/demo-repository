@@ -22,6 +22,7 @@ void main() async {
   print(chatmodel[0].chatroomid);
   print(chatmodel[0].updatetime);
   print(chatmodel[0].chats[0]['message']);
+  print(chatmodel[0].member[0]);
   */
 }
 

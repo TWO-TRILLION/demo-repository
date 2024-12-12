@@ -1,15 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_sprinchat_app/ui/pages/presenchatpage/viewmodel/presenchatpage_viewmodel.dart';
 import 'package:flutter_sprinchat_app/ui/pages/presenchatpage/widgets/background.dart';
 import 'package:flutter_sprinchat_app/ui/pages/presenchatpage/widgets/bottomwindow.dart';
 import 'package:flutter_sprinchat_app/ui/pages/presenchatpage/widgets/fruit.dart';
 import 'package:flutter_sprinchat_app/ui/pages/presenchatpage/widgets/hill.dart';
 
-class Presenchatpage extends StatelessWidget {
+class Presenchatpage extends ConsumerStatefulWidget {
   const Presenchatpage({super.key});
 
   @override
+  ConsumerState<Presenchatpage> createState() => _PresenchatpageState();
+}
+
+class _PresenchatpageState extends ConsumerState<Presenchatpage> {
+  @override
+  void initState() {
+    ref.read(PresenchatpageViewModelProvider.notifier).readChats();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    int membersNum = 8;
+    var presenchatpageState = ref.watch(PresenchatpageViewModelProvider);
+    int membersNum = presenchatpageState.chats.member.length;
 
     return Scaffold(
       appBar: AppBar(),
@@ -27,7 +41,8 @@ class Presenchatpage extends StatelessWidget {
           Bottomwindow(),
         ],
       )),
-      floatingActionButton: FloatingActionButton(onPressed: (){}),
+      floatingActionButton: FloatingActionButton(onPressed: () {}),
     );
+    ;
   }
 }
