@@ -1,7 +1,42 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_sprinchat_app/ui/pages/profile.dart';
+import 'dart:io';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class MyHome extends StatelessWidget {
+class MyHome extends StatefulWidget {
   const MyHome({super.key});
+
+  @override
+  State<MyHome> createState() => _MyHomeState();
+}
+
+class _MyHomeState extends State<MyHome> {
+  DecorationImage? _profileImage;
+  final String defaultProfileImage = 'assets/images/default_profile.png';
+
+  @override
+  void initState() {
+    super.initState();
+    _loadProfileImage();
+  }
+
+  Future<void> _loadProfileImage() async {
+    final prefs = await SharedPreferences.getInstance();
+    final profileImagePath = prefs.getString('profile_image');
+    setState(() {
+      if (profileImagePath != null) {
+        _profileImage = DecorationImage(
+          image: FileImage(File(profileImagePath)),
+          fit: BoxFit.cover,
+        );
+      } else {
+        _profileImage = DecorationImage(
+          image: AssetImage(defaultProfileImage),
+          fit: BoxFit.cover,
+        );
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,9 +72,24 @@ class MyHome extends StatelessWidget {
                       ),
                     ],
                   ),
-                  const CircleAvatar(
-                    radius: 25,
-                    backgroundColor: Colors.blue,
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const Profile()),
+                      ).then((_) => _loadProfileImage());
+                    },
+                    child: Container(
+                      width: 50,
+                      height: 50,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Colors.white,
+                        border: Border.all(color: Colors.white, width: 2),
+                        image: _profileImage,
+                      ),
+                    ),
                   ),
                 ],
               ),
@@ -80,9 +130,9 @@ class MyHome extends StatelessWidget {
               ),
               const SizedBox(height: 20),
 
-              // 최근 리뷰 섹션
+              // 최근 러닝 섹션
               const Text(
-                '최근 리뷰',
+                '최근 러닝',
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
@@ -105,23 +155,19 @@ class MyHome extends StatelessWidget {
         ),
       ),
       bottomNavigationBar: Container(
-        padding: const EdgeInsets.symmetric(vertical: 10),
+        padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+        margin: const EdgeInsets.all(16),
         decoration: BoxDecoration(
-          color: Colors.white,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey.withOpacity(0.3),
-              blurRadius: 10,
-            ),
-          ],
+          color: Colors.black,
+          borderRadius: BorderRadius.circular(30),
         ),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            _buildNavItem(Icons.home, true),
+            _buildNavItem(Icons.home_filled, true),
             _buildNavItem(Icons.person_outline, false),
-            _buildNavItem(Icons.access_time, false),
-            _buildNavItem(Icons.arrow_forward, false),
+            _buildNavItem(Icons.history, false),
+            _buildNavItem(Icons.arrow_forward_ios, false),
           ],
         ),
       ),
@@ -160,16 +206,17 @@ class MyHome extends StatelessWidget {
 
   Widget _buildNavItem(IconData icon, bool isSelected) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      padding: const EdgeInsets.all(12),
       decoration: isSelected
           ? BoxDecoration(
-              color: Colors.black,
+              color: Colors.white,
               borderRadius: BorderRadius.circular(20),
             )
           : null,
       child: Icon(
         icon,
-        color: isSelected ? Colors.white : Colors.grey,
+        color: isSelected ? Colors.black : Colors.white,
+        size: 20,
       ),
     );
   }

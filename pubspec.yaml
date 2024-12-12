@@ -36,6 +36,8 @@ dependencies:
   cupertino_icons: ^1.0.8
   firebase_core: ^3.8.1
   flutter_riverpod: ^2.6.1
+  image_picker: ^1.0.4
+  shared_preferences: ^2.2.2
 
 dev_dependencies:
   flutter_test:
@@ -98,3 +100,6 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package
+
+  assets:
+    - assets/images/default_profile.png
