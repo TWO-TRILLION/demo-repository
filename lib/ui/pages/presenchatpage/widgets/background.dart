@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 class Background extends StatelessWidget {
-  const Background({super.key});
+  const Background({super.key, this.membersNum});
+
+  final membersNum;
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +38,7 @@ class Background extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    '00 명 참여 중',
+                    '$membersNum 명 참여 중',
                     style: TextStyle(
                       fontFamily: 'Pretendard',
                       fontWeight: FontWeight.bold,

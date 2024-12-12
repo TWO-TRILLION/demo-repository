@@ -9,15 +9,20 @@ class Chatpage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      body: SafeArea(
-        child: Column(
-          children: [
-            // 채팅창
-            Chatswindow(),
-            // 입력필드
-            Inputmessage(),
-          ],
-      )),
+      body: GestureDetector(
+        onTap: (){
+          FocusScope.of(context).unfocus();
+        },
+        child: SafeArea(
+          child: Column(
+            children: [
+              // 채팅창
+              Chatswindow(),
+              // 입력필드
+              Inputmessage(),
+            ],
+        )),
+      ),
     );
   }
 }

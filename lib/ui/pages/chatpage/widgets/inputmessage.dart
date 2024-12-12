@@ -37,7 +37,9 @@ class _InputmessageState extends State<Inputmessage> {
                 child: TextFormField(
                   controller: textController,
                   validator: inputvalidator,
-                  decoration: InputDecoration(border: OutlineInputBorder()),
+                  decoration: InputDecoration(
+                    hintText: 'Type a message',
+                    border: OutlineInputBorder()),
                 ),
               ),
             ),

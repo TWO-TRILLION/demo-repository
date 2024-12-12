@@ -9,6 +9,8 @@ class Presenchatpage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    int membersNum = 8;
+
     return Scaffold(
       appBar: AppBar(),
       body: SafeArea(
@@ -16,11 +18,11 @@ class Presenchatpage extends StatelessWidget {
         clipBehavior: Clip.none,
         children: [
           // 배경
-          Background(),
+          Background(membersNum: membersNum),
           // 언덕
           Hill(),
           // 과일
-          Fruit(),
+          Fruit(membersNum: membersNum),
           // 메뉴바
           Bottomwindow(),
         ],
