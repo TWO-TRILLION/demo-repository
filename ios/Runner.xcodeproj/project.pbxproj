@@ -9,7 +9,8 @@
 /* Begin PBXBuildFile section */
 		1498D2341E8E89220040F4C2 /* GeneratedPluginRegistrant.m in Sources */ = {isa = PBXBuildFile; fileRef = 1498D2331E8E89220040F4C2 /* GeneratedPluginRegistrant.m */; };
 		14AB34CDAD36E8A524D7096F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8846E19A77E081AD3CC1135B /* GoogleService-Info.plist */; };
-		1A4F41659281D4F06D271576 /* Pods_Runner.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B39FA5ECF93C5A32C8C424EE /* Pods_Runner.framework */; };
+		24B7581D49A6B03BA64E61DF /* Pods_Runner.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8FC799C8FA5CDAA7764741F /* Pods_Runner.framework */; };
+		25043432E1F11459E9AD36C5 /* Pods_RunnerTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED963CFCE1E46EAAC9059A77 /* Pods_RunnerTests.framework */; };
 		331C808B294A63AB00263BE5 /* RunnerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 331C807B294A618700263BE5 /* RunnerTests.swift */; };
 		3B3967161E833CAA004F5970 /* AppFrameworkInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3B3967151E833CAA004F5970 /* AppFrameworkInfo.plist */; };
 		74858FAF1ED2DC5600515810 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74858FAE1ED2DC5600515810 /* AppDelegate.swift */; };
@@ -58,7 +59,7 @@
 		74858FAD1ED2DC5600515810 /* Runner-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Runner-Bridging-Header.h"; sourceTree = "<group>"; };
 		74858FAE1ED2DC5600515810 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7AFA3C8E1D35360C0083082E /* Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = Release.xcconfig; path = Flutter/Release.xcconfig; sourceTree = "<group>"; };
-		8198D61832ED9E1D22A894EA /* Pods-Runner.profile.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.profile.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.profile.xcconfig"; sourceTree = "<group>"; };
+		86AA95BBF20132C566F4C184 /* Pods-RunnerTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RunnerTests.debug.xcconfig"; path = "Target Support Files/Pods-RunnerTests/Pods-RunnerTests.debug.xcconfig"; sourceTree = "<group>"; };
 		8846E19A77E081AD3CC1135B /* GoogleService-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "Runner/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		9487165D8BDD2E58562D995E /* Pods-Runner.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.debug.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.debug.xcconfig"; sourceTree = "<group>"; };
 		9740EEB21CF90195004384FC /* Debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Debug.xcconfig; path = Flutter/Debug.xcconfig; sourceTree = "<group>"; };
@@ -99,13 +100,18 @@
 			path = RunnerTests;
 			sourceTree = "<group>";
 		};
-		4A1D6241B36362FBA479F612 /* Frameworks */ = {
+		421498104987A0212262B4D6 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				B39FA5ECF93C5A32C8C424EE /* Pods_Runner.framework */,
-				8E3D71FEEB9E709CA15AAD4F /* Pods_RunnerTests.framework */,
+				B673044239DDCD08F424FF0E /* Pods-Runner.debug.xcconfig */,
+				ECC22B41B2A62A22F1800B98 /* Pods-Runner.release.xcconfig */,
+				E9754FA33E600DADB6EABDB1 /* Pods-Runner.profile.xcconfig */,
+				86AA95BBF20132C566F4C184 /* Pods-RunnerTests.debug.xcconfig */,
+				8A18FD064B0CE839A55E2458 /* Pods-RunnerTests.release.xcconfig */,
+				C12883D6D261571347A60154 /* Pods-RunnerTests.profile.xcconfig */,
 			);
-			name = Frameworks;
+			name = Pods;
+			path = Pods;
 			sourceTree = "<group>";
 		};
 		9740EEB11CF90186004384FC /* Flutter */ = {
@@ -340,7 +346,7 @@
 			shellPath = /bin/sh;
 			shellScript = "/bin/sh \"$FLUTTER_ROOT/packages/flutter_tools/bin/xcode_backend.sh\" embed_and_thin";
 		};
-		91DD7CC07DAFBA74145D2554 /* [CP] Check Pods Manifest.lock */ = {
+		53A1101A00C722E43355D0FC /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
