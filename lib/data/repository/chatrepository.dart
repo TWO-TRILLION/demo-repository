@@ -28,4 +28,32 @@ class Chatrepository {
 
     return list;
   }
+
+  // 실시간 채팅 읽기 (스트림용)
+  Stream<List<Chatmodel>> getStream(String chatroomid){
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+    CollectionReference collectionRef = firestore.collection('Chatroom');
+
+    final stream = collectionRef.snapshots();
+
+    final newStream = stream.map((snapshot){
+      final docs = snapshot.docs.where((doc){
+        return doc.id.contains(chatroomid);
+      });
+
+      final list = docs.map((doc){
+        final map = doc.data() as Map<String,dynamic>;
+        final newMap = {
+          'chatroomid' : chatroomid,
+          ...map,
+        };
+
+        return Chatmodel.fromJson(newMap);
+      }).toList();
+
+      return list;
+    });
+
+    return newStream;
+  }
 }

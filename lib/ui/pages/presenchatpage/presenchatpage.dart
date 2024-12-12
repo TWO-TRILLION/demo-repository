@@ -16,7 +16,7 @@ class Presenchatpage extends ConsumerStatefulWidget {
 class _PresenchatpageState extends ConsumerState<Presenchatpage> {
   @override
   void initState() {
-    ref.read(PresenchatpageViewModelProvider.notifier).readChats();
+    ref.read(PresenchatpageViewModelProvider.notifier).streamChats();
     super.initState();
   }
 
