@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_sprinchat_app/firebase_options.dart';
 import 'package:flutter_sprinchat_app/ui/pages/my_home.dart';
+import 'package:flutter_sprinchat_app/ui/pages/presenchatpage/presenchatpage.dart';
+import 'package:flutter_sprinchat_app/theme.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -20,6 +22,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       home: const MyHome(),
+      theme: theme,
     );
   }
 }
