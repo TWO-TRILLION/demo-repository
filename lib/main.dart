@@ -20,8 +20,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       home: RunningPage(
-        lat: 35.8245542,
-        lng: 127.1007766,
+        startLat: 35.8245542,
+        startLng: 127.1007766,
       ),
     );
   }
