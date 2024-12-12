@@ -1,3 +1,8 @@
+/*
+{
+  "chatroomid" : 
+}
+*/
 
 class Chatmodel {
   String chatroomid;
