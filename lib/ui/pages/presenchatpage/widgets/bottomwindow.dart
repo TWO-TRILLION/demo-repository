@@ -11,23 +11,28 @@ class Bottomwindow extends StatelessWidget {
       left: 0,
       right: 0,
       child: Container(
-        height: MediaQuery.of(context).size.height/2 - 200,
-        decoration: BoxDecoration(
-          color: Color(0xfff2f8ff),
-          borderRadius: BorderRadius.circular(10)
-        ),
-        child: Center(
-          child: ElevatedButton(
-            onPressed: (){
-              Navigator.push(context, MaterialPageRoute(builder: (context)=> Chatpage()));
-            },
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 80, vertical: 10),
-              child: Text('참여하기'),
-            ),
-            ),
-        )
-        ),
+          height: MediaQuery.of(context).size.height / 2 - 300,
+          decoration: BoxDecoration(
+              color: Color(0xfff2f8ff),
+              borderRadius: BorderRadius.circular(10)),
+          child: Column(
+            children: [
+              Spacer(),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => Chatpage()));
+                },
+                child: Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 80, vertical: 10),
+                  child: Text('참여하기'),
+                ),
+              ),
+              SizedBox(height: 60,),
+              Spacer(),
+            ],
+          )),
     );
   }
 }

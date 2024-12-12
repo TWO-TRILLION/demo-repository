@@ -12,19 +12,20 @@ class Presenchatpage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(),
       body: SafeArea(
-        child: Stack(
-          clipBehavior: Clip.none,
-          children: [
-            // 배경
-            Background(),
-            // 언덕
-            Hill(),
-            // 과일
-            Fruit(),
-            // 메뉴바
-            Bottomwindow(),
-          ],
-        )),
+          child: Stack(
+        clipBehavior: Clip.none,
+        children: [
+          // 배경
+          Background(),
+          // 언덕
+          Hill(),
+          // 과일
+          Fruit(),
+          // 메뉴바
+          Bottomwindow(),
+        ],
+      )),
+      floatingActionButton: FloatingActionButton(onPressed: (){}),
     );
   }
 }
