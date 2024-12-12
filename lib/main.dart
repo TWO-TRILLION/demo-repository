@@ -27,12 +27,12 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      home: const Presenchatpage(),
+      //home: const MyHome(),
       theme: theme,
-      /* home: RunningPage(
+      home: RunningPage(
         startLat: lat,
         startLng: lng,
-      ),*/
+      ),
     );
   }
 }
