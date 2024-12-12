@@ -7,7 +7,7 @@ class IdTextFormField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      decoration: InputDecoration(hintText: "아이디를 입력해주세요"),
+      decoration: InputDecoration(hintText: "아이디"),
       validator: ValidatorUtils.validatorId,
       controller: controller,
     );

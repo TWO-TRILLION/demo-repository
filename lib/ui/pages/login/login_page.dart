@@ -60,12 +60,19 @@ class _LoginPageState extends State<LoginPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Image.asset('assets/images/logo.png'),
-                  SizedBox(height: 20),
+                  SizedBox(height: 30),
                   IdTextFormField(controller: idController),
-                  SizedBox(height: 20),
+                  SizedBox(height: 30),
                   PwTextFormField(controller: pwController),
-                  SizedBox(height: 20),
-                  ElevatedButton(onPressed: (onLoginClick), child: Text('로그인'))
+                  SizedBox(height: 30),
+                  ElevatedButton(onPressed: (onLoginClick), child: Text('로그인')),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  TextButton(
+                    onPressed: () {},
+                    child: Text('회원가입'),
+                  )
                 ],
               ),
             ),

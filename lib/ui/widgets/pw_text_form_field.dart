@@ -9,7 +9,7 @@ class PwTextFormField extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextFormField(
       obscureText: true,
-      decoration: InputDecoration(hintText: "비밀번호를 입력해주세요"),
+      decoration: InputDecoration(hintText: "비밀번호"),
       validator: ValidatorUtils.validatorPassword,
       controller: controller,
     );
