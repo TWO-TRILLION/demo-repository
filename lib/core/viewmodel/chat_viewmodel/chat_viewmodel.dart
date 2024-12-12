@@ -4,24 +4,24 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_sprinchat_app/data/model/chatmodel.dart';
 import 'package:flutter_sprinchat_app/data/repository/chatrepository.dart';
 
-class PresenchatpageState{
+class ChatState{
   String location;
   Chatmodel chats;
 
-  PresenchatpageState(this.location, this.chats);
+  ChatState(this.location, this.chats);
 }
 
-class PresenchatpageViewmodel extends Notifier<PresenchatpageState>{
+class ChatViewmodel extends Notifier<ChatState>{
   @override
-  PresenchatpageState build() {
+  ChatState build() {
     Chatmodel defaultChatmodel = Chatmodel(chatroomid: "", updatetime: DateTime.now(), member: [], chats: []);
-    return PresenchatpageState('',defaultChatmodel);
+    return ChatState('',defaultChatmodel);
   }
 
   // 채팅 지역 받아오는 메서드
   void setLocation(String location){
     state.location = location;
-    // state = PresenchatpageState(location, state.chats);
+    // state = ChatState(location, state.chats);
   }
 
   // 현 지역 채팅 가져오는 메서드
@@ -29,7 +29,7 @@ class PresenchatpageViewmodel extends Notifier<PresenchatpageState>{
     final chatrepository = Chatrepository();
     final chats = await chatrepository.get(state.location);
 
-    state = PresenchatpageState(state.location, chats[0]);
+    state = ChatState(state.location, chats[0]);
   }
 
   // 현 지역 채팅 실시간 가져오는 메서드
@@ -38,7 +38,7 @@ class PresenchatpageViewmodel extends Notifier<PresenchatpageState>{
 
     final stream = chatrepository.getStream(state.location);
     final streamSubscription = stream.listen((chats){
-      state = PresenchatpageState(state.location, chats[0]);
+      state = ChatState(state.location, chats[0]);
     });
     ref.onDispose((){
       streamSubscription.cancel();
@@ -46,6 +46,6 @@ class PresenchatpageViewmodel extends Notifier<PresenchatpageState>{
   }
 }
 
-final PresenchatpageViewModelProvider = NotifierProvider<PresenchatpageViewmodel,PresenchatpageState>((){
-  return PresenchatpageViewmodel();
+final chatViewModelProvider = NotifierProvider<ChatViewmodel,ChatState>((){
+  return ChatViewmodel();
 });

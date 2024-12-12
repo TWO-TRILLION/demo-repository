@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_sprinchat_app/ui/pages/presenchatpage/viewmodel/presenchatpage_viewmodel.dart';
+import 'package:flutter_sprinchat_app/core/viewmodel/chat_viewmodel/chat_viewmodel.dart';
 import 'package:flutter_sprinchat_app/ui/pages/presenchatpage/widgets/background.dart';
 import 'package:flutter_sprinchat_app/ui/pages/presenchatpage/widgets/bottomwindow.dart';
 import 'package:flutter_sprinchat_app/ui/pages/presenchatpage/widgets/fruit.dart';
@@ -16,14 +16,14 @@ class Presenchatpage extends ConsumerStatefulWidget {
 class _PresenchatpageState extends ConsumerState<Presenchatpage> {
   @override
   void initState() {
-    ref.read(PresenchatpageViewModelProvider.notifier).streamChats();
+    ref.read(chatViewModelProvider.notifier).readChats();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    var presenchatpageState = ref.watch(PresenchatpageViewModelProvider);
-    int membersNum = presenchatpageState.chats.member.length;
+    var chatState = ref.watch(chatViewModelProvider);
+    int membersNum = chatState.chats.member.length;
 
     return Scaffold(
       appBar: AppBar(),
