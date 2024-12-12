@@ -24,9 +24,28 @@ class RunningAnalysis extends StatelessWidget {
         final analysis = ref.watch(runningViewModel);
         return Column(
           children: [
-            RunningInformation(title: '달린 거리', value: analysis.distance!),
-            RunningInformation(title: '평균 속력', value: analysis.speed!),
-            RunningInformation(title: '소모한 칼로리', value: analysis.calorie!),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                RunningInformation(
+                  '달린 거리',
+                  analysis.distance,
+                  'km',
+                ),
+                RunningTimeInformation(
+                  title: '달린 시간',
+                  hour: analysis.hour,
+                  minute: analysis.minute,
+                ),
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                RunningInformation('평균 속력', analysis.speed, 'km/h'),
+                RunningInformation('소모한 칼로리', analysis.calorie, 'kcal'),
+              ],
+            ),
             SizedBox(height: 30),
           ],
         );

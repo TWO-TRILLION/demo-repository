@@ -15,7 +15,7 @@ class KakaoMap extends StatelessWidget {
   Widget build(BuildContext context) {
     return KakaoMapView(
       width: double.infinity,
-      height: 350,
+      height: 300,
       kakaoMapKey: '08eebe69029ef27e6209ec2d97b79d29',
       lat: lat,
       lng: lng,
