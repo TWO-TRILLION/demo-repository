@@ -17,17 +17,14 @@ class RunningPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      body: Padding(
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            RunningAnalysis(
-                startTime: startTime, startLat: startLat, startLng: startLng),
-            KakaoMap(lat: startLat, lng: startLng),
-          ],
-        ),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          RunningAnalysis(
+              startTime: startTime, startLat: startLat, startLng: startLng),
+          KakaoMap(lat: startLat, lng: startLng),
+        ],
       ),
     );
   }
