@@ -40,12 +40,12 @@ class RunningViewModel extends Notifier<RunningState> {
         currentLocation.longitude,
       );
       state.hour = time.inHours; // hour : 달린 시간(시)
-      state.minute = DateTime.now().difference(startTime).inMinutes %
-          60; // minute : 달린 시간(분)
+      state.minute = time.inMinutes; // minute : 달린 시간(분)
       if (time.inHours != 0) {
         state.speed = distance / time.inHours; // 평균 속력(km/h)
       }
-      state.calorie = time.inMinutes / 4; // calorie : 칼로리 소모 (분당 4kcal)
+      state.calorie = (time.inHours * 60 + time.inMinutes) *
+          4; // calorie : 칼로리 소모 (분당 4kcal)
     }
   }
 }
