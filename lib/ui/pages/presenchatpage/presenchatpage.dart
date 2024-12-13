@@ -46,8 +46,7 @@ class _PresenchatpageState extends ConsumerState<Presenchatpage> {
           Bottomwindow(),
         ],
       )),
-      bottomNavigationBar: const CustomNavigationBar(currentPage: 'chat'),
-      floatingActionButton: FloatingActionButton(onPressed: () {}),
+      bottomNavigationBar: CustomNavigationBar(currentPage: 'chat'),
     );
   }
 }

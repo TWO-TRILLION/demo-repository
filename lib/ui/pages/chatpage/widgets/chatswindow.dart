@@ -8,34 +8,39 @@ class Chatswindow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    List<Map<String,dynamic>> orderchats = chatState.chats.chats;
+
+    // 채팅 시간대 정렬
+    orderchats.sort((a,b)=> a['createdAt'].compareTo(b['createdAt']));
+
     return Expanded(
       child: ListView.builder(
-        itemCount: chatState.chats.chats.length ?? 0,
+        itemCount: orderchats.length,
         itemBuilder: (context, index) {
-          if (chatState.userid == chatState.chats.chats[index]['userid']) {
-            return rightChat(index);
+          if (chatState.userid == orderchats[index]['userid']) {
+            return rightChat(index, orderchats);
           } else if ("systemMessagelog1234" ==
-              chatState.chats.chats[index]['userid']) {
-            return systemChat(index);
+              orderchats[index]['userid']) {
+            return systemChat(index, orderchats);
           } else {
-            return leftChat(index);
+            return leftChat(index, orderchats);
           }
         },
       ),
     );
   }
 
-  Widget leftChat(int index) {
+  Widget leftChat(int index, List<Map<String,dynamic>> orderchats) {
     bool isDiffUser = true;
 
-    if (index > 0 && index < chatState.chats.chats.length - 1) {
-      if (chatState.chats.chats[index]['userid'] ==
-          chatState.chats.chats[index + 1]['userid']) {
+    if (index > 0 && index < orderchats.length - 1) {
+      if (orderchats[index]['userid'] ==
+          orderchats[index + 1]['userid']) {
         isDiffUser = false;
       }
     }
 
-    DateTime date = DateTime.parse(chatState.chats.chats[index]['createdAt']);
+    DateTime date = DateTime.parse(orderchats[index]['createdAt']);
     String minute = date.minute < 10 ? '0${date.minute}' : '${date.minute}';
     String dateTime =
         '${date.year}-${date.month}-${date.day} ${date.hour} : $minute';
@@ -62,7 +67,7 @@ class Chatswindow extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               BubbleSpecialThree(
-                text: chatState.chats.chats[index]['message'],
+                text: orderchats[index]['message'],
                 isSender: false,
                 tail: true,
                 color: Color(0xfff2f4f5),
@@ -82,17 +87,17 @@ class Chatswindow extends StatelessWidget {
     );
   }
 
-  Widget rightChat(int index) {
+  Widget rightChat(int index, List<Map<String,dynamic>> orderchats) {
     bool isDiffUser = true;
 
-    if (index > 0 && index < chatState.chats.chats.length - 1) {
-      if (chatState.chats.chats[index]['userid'] ==
-          chatState.chats.chats[index + 1]['userid']) {
+    if (index > 0 && index < orderchats.length - 1) {
+      if (orderchats[index]['userid'] ==
+          orderchats[index + 1]['userid']) {
         isDiffUser = false;
       }
     }
 
-    DateTime date = DateTime.parse(chatState.chats.chats[index]['createdAt']);
+    DateTime date = DateTime.parse(orderchats[index]['createdAt']);
     String minute = date.minute < 10 ? '0${date.minute}' : '${date.minute}';
     String dateTime =
         '${date.year}-${date.month}-${date.day} ${date.hour} : $minute';
@@ -107,7 +112,7 @@ class Chatswindow extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               BubbleSpecialThree(
-                text: chatState.chats.chats[index]['message'],
+                text: orderchats[index]['message'],
                 isSender: true,
                 tail: true,
                 color: Color(0xff0070f0),
@@ -141,7 +146,7 @@ class Chatswindow extends StatelessWidget {
     );
   }
 
-  Widget systemChat(int index) {
+  Widget systemChat(int index, List<Map<String,dynamic>> orderchats) {
     return Center(
       child: Padding(
         padding: const EdgeInsets.only(
@@ -156,7 +161,7 @@ class Chatswindow extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.all(5.0),
             child: Text(
-              chatState.chats.chats[index]['message'],
+              orderchats[index]['message'],
               style: TextStyle(
                 color: Colors.purple,
               ),

@@ -13,7 +13,7 @@ class ChatState {
   ChatState(this.location, this.userid, this.chats);
 }
 
-class ChatViewmodel extends Notifier<ChatState> {
+class ChatViewmodel extends AutoDisposeNotifier<ChatState> {
   @override
   ChatState build() {
     Chatmodel defaultChatmodel = Chatmodel(
@@ -85,6 +85,6 @@ class ChatViewmodel extends Notifier<ChatState> {
   }
 }
 
-final chatViewModelProvider = NotifierProvider<ChatViewmodel, ChatState>(() {
+final chatViewModelProvider = AutoDisposeNotifierProvider<ChatViewmodel, ChatState>(() {
   return ChatViewmodel();
 });
