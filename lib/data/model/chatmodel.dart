@@ -21,7 +21,7 @@ class Chatmodel {
     chatroomid: json['chatroomid'],
     updatetime: DateTime.parse(json['updatetime']),
     member: (json['member'] as List).map((item) => item as String,).toList(),
-    chats: (json['chats'] as List).map((item) => item as Map<String,dynamic>).toList()
+    chats: (json['chats'] as List).map((item) => item as Map<String,dynamic>).toList(),
   );
 
   Map<String,dynamic> toJson(){

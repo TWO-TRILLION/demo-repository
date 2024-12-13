@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_sprinchat_app/ui/pages/chatpage/widgets/chatswindow.dart';
 import 'package:flutter_sprinchat_app/ui/pages/chatpage/widgets/inputmessage.dart';
 import 'package:flutter_sprinchat_app/core/viewmodel/chat_viewmodel/chat_viewmodel.dart';
-import 'package:flutter_sprinchat_app/ui/widgets/navigation_bar.dart';
 
 class Chatpage extends ConsumerStatefulWidget {
   const Chatpage({super.key});
@@ -26,18 +25,15 @@ class _ChatpageState extends ConsumerState<Chatpage> {
           FocusScope.of(context).unfocus();
         },
         child: SafeArea(
-            child: Column(
-          children: [
-            // 채팅창
-            Chatswindow(
-              chatState: chatState,
-            ),
-            // 입력필드
-            Inputmessage(),
-          ],
+          child: Column(
+            children: [
+              // 채팅창
+              Chatswindow(chatState: chatState,),
+              // 입력필드
+              Inputmessage(),
+            ],
         )),
       ),
-      bottomNavigationBar: const CustomNavigationBar(currentPage: 'chat'),
     );
   }
 }
