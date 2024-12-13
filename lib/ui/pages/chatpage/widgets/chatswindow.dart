@@ -47,26 +47,33 @@ class Chatswindow extends StatelessWidget {
         children: [
           ClipRRect(
             borderRadius: BorderRadius.circular(30),
-            child: isDiffUser ? SizedBox(
-              width: 40,
-              height: 40,
-              child: Image.network('https://picsum.photos/300/300',
-                  fit: BoxFit.cover),
-            ) : SizedBox(width: 40,),
+            child: isDiffUser
+                ? SizedBox(
+                    width: 40,
+                    height: 40,
+                    child: Image.network('https://picsum.photos/300/300',
+                        fit: BoxFit.cover),
+                  )
+                : SizedBox(
+                    width: 40,
+                  ),
           ),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              BubbleNormal(
+              BubbleSpecialThree(
                 text: chatState.chats.chats[index]['message'],
                 isSender: false,
-                tail: false,
+                tail: true,
                 color: Color(0xfff2f4f5),
               ),
               if (isDiffUser)
                 Padding(
                   padding: const EdgeInsets.only(left: 24),
-                  child: Text('$dateTime  Nickname'),
+                  child: Text(
+                    '$dateTime  Nickname',
+                    style: TextStyle(fontSize: 12),
+                  ),
                 )
             ],
           )
@@ -99,28 +106,35 @@ class Chatswindow extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              BubbleNormal(
+              BubbleSpecialThree(
                 text: chatState.chats.chats[index]['message'],
-                isSender: false,
-                tail: false,
+                isSender: true,
+                tail: true,
                 color: Color(0xff0070f0),
                 textStyle: TextStyle(color: Colors.white),
               ),
               if (isDiffUser)
                 Padding(
                   padding: const EdgeInsets.only(right: 24),
-                  child: Text('Nickname  $dateTime'),
+                  child: Text(
+                    'Nickname  $dateTime',
+                    style: TextStyle(fontSize: 12),
+                  ),
                 )
             ],
           ),
           ClipRRect(
             borderRadius: BorderRadius.circular(30),
-            child: isDiffUser ? SizedBox(
-              width: 40,
-              height: 40,
-              child: Image.network('https://picsum.photos/300/300',
-                  fit: BoxFit.cover),
-            ) : SizedBox(width: 40,),
+            child: isDiffUser
+                ? SizedBox(
+                    width: 40,
+                    height: 40,
+                    child: Image.network('https://picsum.photos/300/300',
+                        fit: BoxFit.cover),
+                  )
+                : SizedBox(
+                    width: 40,
+                  ),
           ),
         ],
       ),
