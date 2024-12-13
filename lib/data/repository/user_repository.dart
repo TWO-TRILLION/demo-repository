@@ -8,7 +8,6 @@ class UserRepository {
 
 // 컬렉션(User)의 userid 문서 읽기
   Future<void> getAll() async {
-    // FirebaseFirestore 객체 가져오기
     FirebaseFirestore firestore = FirebaseFirestore.instance;
 
     //FirebaseFirestore 객체에서 컬렉션메서드로 User 컬렉션에 대한 참조 가져오기
@@ -28,24 +27,25 @@ class UserRepository {
     }
   }
 
-  Future<void> insert() async {
-    //Firebase 객체 가져오기
-    FirebaseFirestore firestore = FirebaseFirestore.instance;
-
-    //FirebaseFirestore 객체에서 collection 메서드로 User 컬렉션에 대한 참조 가져오기
-    // User 컬렉션에 대한 참조만 저장
-    CollectionReference collectionRef = firestore.collection('User');
-
-    //컬렉션 참조에서 문서참조 만들기
-    //ID 를 파라미터로 넣지 않으면 문서 생성시 새로운 ID 부여
-    DocumentReference documentRef = collectionRef.doc();
-
-    //문서에 넣을 데이터를 Map 타입으로 생성
-    Map<String, dynamic> data = {
-      'userid': IdTextFormField,
-      'userpw': PwTextFormField,
-      'nickname': NicknameTextFormField,
-    };
-    await documentRef.set(data);
+  Future<bool> insert({
+    required String userid,
+    required String userpw,
+    required String nickname,
+  }) async {
+    try {
+      FirebaseFirestore firestore = FirebaseFirestore.instance;
+      CollectionReference collectionRef = firestore.collection('User');
+      DocumentReference documentRef = collectionRef.doc();
+      Map<String, dynamic> data = {
+        'userid': IdTextFormField,
+        'userpw': PwTextFormField,
+        'nickname': NicknameTextFormField,
+      };
+      await documentRef.set(data);
+      return true;
+    } catch (e) {
+      print(e);
+      return false;
+    }
   }
 }
