@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_sprinchat_app/data/model/chatmodel.dart';
 import 'package:flutter_sprinchat_app/data/repository/chatrepository.dart';
 
+// presenchatpage 하고, chatpage 에 영향을 주고 있는 State
 class ChatState {
   String location;
   String userid;
@@ -20,15 +21,14 @@ class ChatViewmodel extends Notifier<ChatState> {
     return ChatState('', '', defaultChatmodel);
   }
 
-  // 유저 id 받아오는 메서드
+  // 유저 id, State에 받아오는 메서드
   void setUserId(String userid){
     state.userid = userid;
   }
 
-  // 채팅 지역 받아오는 메서드
+  // 채팅 지역, State에 받아오는 메서드
   void setLocation(String location) {
     state.location = location;
-    // state = ChatState(location, state.chats);
   }
 
   // 현 지역 채팅 가져오는 메서드
