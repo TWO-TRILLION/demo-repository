@@ -26,7 +26,14 @@ class Chatswindow extends StatelessWidget {
   }
 
   Widget leftChat(int index) {
-    bool dateText = true;
+    bool isDiffUser = true;
+
+    if (index > 0 && index < chatState.chats.chats.length - 1) {
+      if (chatState.chats.chats[index]['userid'] ==
+          chatState.chats.chats[index + 1]['userid']) {
+        isDiffUser = false;
+      }
+    }
 
     DateTime date = DateTime.parse(chatState.chats.chats[index]['createdAt']);
     String minute = date.minute < 10 ? '0${date.minute}' : '${date.minute}';
@@ -34,18 +41,18 @@ class Chatswindow extends StatelessWidget {
         '${date.year}-${date.month}-${date.day} ${date.hour} : $minute';
 
     return Padding(
-      padding: const EdgeInsets.only(left: 24, top: 30),
+      padding: EdgeInsets.only(left: 24, bottom: isDiffUser ? 30 : 0),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           ClipRRect(
             borderRadius: BorderRadius.circular(30),
-            child: SizedBox(
+            child: isDiffUser ? SizedBox(
               width: 40,
               height: 40,
               child: Image.network('https://picsum.photos/300/300',
                   fit: BoxFit.cover),
-            ),
+            ) : SizedBox(width: 40,),
           ),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -56,7 +63,7 @@ class Chatswindow extends StatelessWidget {
                 tail: false,
                 color: Color(0xfff2f4f5),
               ),
-              if (dateText)
+              if (isDiffUser)
                 Padding(
                   padding: const EdgeInsets.only(left: 24),
                   child: Text('$dateTime  Nickname'),
@@ -69,7 +76,14 @@ class Chatswindow extends StatelessWidget {
   }
 
   Widget rightChat(int index) {
-    bool dateText = true;
+    bool isDiffUser = true;
+
+    if (index > 0 && index < chatState.chats.chats.length - 1) {
+      if (chatState.chats.chats[index]['userid'] ==
+          chatState.chats.chats[index + 1]['userid']) {
+        isDiffUser = false;
+      }
+    }
 
     DateTime date = DateTime.parse(chatState.chats.chats[index]['createdAt']);
     String minute = date.minute < 10 ? '0${date.minute}' : '${date.minute}';
@@ -77,7 +91,7 @@ class Chatswindow extends StatelessWidget {
         '${date.year}-${date.month}-${date.day} ${date.hour} : $minute';
 
     return Padding(
-      padding: const EdgeInsets.only(right: 24, top: 30),
+      padding: EdgeInsets.only(right: 24, bottom: isDiffUser ? 30 : 0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.end,
         crossAxisAlignment: CrossAxisAlignment.end,
@@ -92,7 +106,7 @@ class Chatswindow extends StatelessWidget {
                 color: Color(0xff0070f0),
                 textStyle: TextStyle(color: Colors.white),
               ),
-              if (dateText)
+              if (isDiffUser)
                 Padding(
                   padding: const EdgeInsets.only(right: 24),
                   child: Text('Nickname  $dateTime'),
@@ -101,12 +115,12 @@ class Chatswindow extends StatelessWidget {
           ),
           ClipRRect(
             borderRadius: BorderRadius.circular(30),
-            child: SizedBox(
+            child: isDiffUser ? SizedBox(
               width: 40,
               height: 40,
               child: Image.network('https://picsum.photos/300/300',
                   fit: BoxFit.cover),
-            ),
+            ) : SizedBox(width: 40,),
           ),
         ],
       ),
@@ -117,8 +131,8 @@ class Chatswindow extends StatelessWidget {
     return Center(
       child: Padding(
         padding: const EdgeInsets.only(
-          top: 7,
-          bottom: 7,
+          top: 20,
+          bottom: 30,
         ),
         child: Container(
           decoration: BoxDecoration(
