@@ -7,21 +7,12 @@ import 'package:flutter_sprinchat_app/ui/pages/running/widgets/time_information.
 class RunningAnalysis extends StatelessWidget {
   const RunningAnalysis({
     super.key,
-    required this.startTime,
-    required this.startLat,
-    required this.startLng,
   });
-
-  final DateTime startTime;
-  final double startLat;
-  final double startLng;
 
   @override
   Widget build(BuildContext context) {
     return Consumer(
       builder: (context, ref, child) {
-        final viewModel = ref.read(runningViewModel.notifier);
-        viewModel.update(startTime, startLat, startLng);
         final analysis = ref.watch(runningViewModel);
         return Padding(
           padding: const EdgeInsets.symmetric(horizontal: 0),
