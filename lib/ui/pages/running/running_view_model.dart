@@ -7,6 +7,7 @@ class RunningState {
   double calorie; // 소모한 칼로리
   int hour; // 달린 시간(시)
   int minute; // 달린 시간(분)
+  int second;
 
   RunningState(
     this.distance,
@@ -14,13 +15,14 @@ class RunningState {
     this.calorie,
     this.hour,
     this.minute,
+    this.second,
   );
 }
 
 class RunningViewModel extends Notifier<RunningState> {
   @override
   build() {
-    return RunningState(0, 0, 0, 0, 0);
+    return RunningState(0, 0, 0, 0, 0, 0);
   }
 
   Future<void> update(
@@ -41,6 +43,7 @@ class RunningViewModel extends Notifier<RunningState> {
       );
       state.hour = time.inHours; // hour : 달린 시간(시)
       state.minute = time.inMinutes; // minute : 달린 시간(분)
+      state.second = time.inSeconds; // second : 달린 시간(초)
       if (time.inHours != 0) {
         state.speed = distance / time.inHours; // 평균 속력(km/h)
       }
