@@ -22,10 +22,13 @@ class Background extends StatelessWidget {
                 child: SizedBox(
                   width: 50,
                   height: 50,
-                  child: Image.network('https://picsum.photos/300/300',fit: BoxFit.cover),
+                  child: Image.network('https://picsum.photos/300/300',
+                      fit: BoxFit.cover),
                 ),
               ),
-              SizedBox(width: 20,),
+              SizedBox(
+                width: 20,
+              ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [

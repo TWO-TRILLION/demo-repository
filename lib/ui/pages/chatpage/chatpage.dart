@@ -18,7 +18,9 @@ class _ChatpageState extends ConsumerState<Chatpage> {
     var chatState = ref.watch(chatViewModelProvider);
 
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: Text('${chatState.location}'),
+      ),
       body: GestureDetector(
         onTap: () {
           FocusScope.of(context).unfocus();
@@ -27,7 +29,9 @@ class _ChatpageState extends ConsumerState<Chatpage> {
             child: Column(
           children: [
             // 채팅창
-            Chatswindow(),
+            Chatswindow(
+              chatState: chatState,
+            ),
             // 입력필드
             Inputmessage(),
           ],
