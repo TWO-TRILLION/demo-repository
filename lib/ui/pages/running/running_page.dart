@@ -45,7 +45,38 @@ class RunningPage extends StatelessWidget {
                 ],
               ),
               SizedBox(height: 30),
-              KakaoMap(lat: startLat, lng: startLng),
+              SizedBox(
+                height: 350,
+                child: Stack(
+                  alignment: Alignment.topCenter,
+                  children: [
+                    KakaoMap(lat: startLat, lng: startLng),
+                    Positioned(
+                      bottom: 0,
+                      child: Container(
+                        width: 120,
+                        height: 120,
+                        decoration: BoxDecoration(
+                          color: Color(0xff0070F0),
+                          shape: BoxShape.circle,
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(0.7),
+                              blurRadius: 5.0,
+                              offset: Offset(0, 5),
+                            ),
+                          ],
+                        ),
+                        child: GestureDetector(
+                          onTap: () {
+                            print('object');
+                          },
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              ),
               SizedBox(height: 30),
               RunningAnalysis(
                   startTime: startTime, startLat: startLat, startLng: startLng),
