@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_sprinchat_app/core/geolocator_helper.dart';
+import 'package:geolocator/geolocator.dart';
 
 class RunningState {
   double distance; // 달린 거리
@@ -25,10 +26,19 @@ class RunningViewModel extends Notifier<RunningState> {
     return RunningState(0, 0, 0, 0, 0, 0);
   }
 
+  double startLat = 0;
+  double startLng = 0;
+
+  Future<void> setLocation() async {
+    final startLocation = await GeolocatorHelper.getPosition();
+    if (startLocation != null) {
+      startLat = startLocation.latitude;
+      startLng = startLocation.longitude;
+    }
+  }
+
   Future<void> update(
     DateTime startTime,
-    double startLat,
-    double startLng,
   ) async {
     final currentLocation = await GeolocatorHelper.getPosition(); // 현재 위치 좌표
     var time = DateTime.now().difference(startTime); // 달린 시간
