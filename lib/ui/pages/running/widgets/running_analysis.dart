@@ -25,13 +25,6 @@ class RunningAnalysis extends StatelessWidget {
         final analysis = ref.watch(runningViewModel);
         return Column(
           children: [
-            SizedBox(height: 50),
-            Container(
-              width: 300,
-              height: 1,
-              color: Colors.grey[400],
-            ),
-            SizedBox(height: 30),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 30),
               child: Row(
