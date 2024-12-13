@@ -24,33 +24,9 @@ class RunningAnalysis extends StatelessWidget {
         viewModel.update(startTime, startLat, startLng);
         final analysis = ref.watch(runningViewModel);
         return Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 30),
+          padding: const EdgeInsets.symmetric(horizontal: 0),
           child: Column(
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    '러닝',
-                    style: TextStyle(
-                      fontFamily: 'Pretendard',
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                  Text(
-                    '${DateTime.now().month}월 ${DateTime.now().day}일 ${DateTime.now().hour}시 ${DateTime.now().minute}분',
-                    style: TextStyle(
-                      color: Color(0xff979C9E),
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(height: 10),
-              Container(
-                width: double.infinity,
-                height: 1,
-                color: Color(0xff979C9E),
-              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [

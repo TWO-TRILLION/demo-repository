@@ -17,18 +17,40 @@ class RunningPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
-      body: Expanded(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            RunningAnalysis(
-                startTime: startTime, startLat: startLat, startLng: startLng),
-            Expanded(
-              child: KakaoMap(lat: startLat, lng: startLng),
-            ),
-          ],
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Text(
+                    '러닝',
+                    style: TextStyle(
+                      fontFamily: 'Pretendard',
+                      fontWeight: FontWeight.w700,
+                      fontSize: 24,
+                    ),
+                  ),
+                  Text(
+                    '${DateTime.now().month}월 ${DateTime.now().day}일 ${DateTime.now().hour}시 ${DateTime.now().minute}분',
+                    style: TextStyle(
+                      color: Color(0xff979C9E),
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: 30),
+              KakaoMap(lat: startLat, lng: startLng),
+              SizedBox(height: 30),
+              RunningAnalysis(
+                  startTime: startTime, startLat: startLat, startLng: startLng),
+            ],
+          ),
         ),
       ),
       bottomNavigationBar: const CustomNavigationBar(currentPage: 'running'),

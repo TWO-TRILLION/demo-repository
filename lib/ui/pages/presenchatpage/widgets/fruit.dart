@@ -47,16 +47,22 @@ class _FruitState extends State<Fruit> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     // 0 ~ 9 : 딸기, 10 ~ 49 : 사과, 50 ~ 99 : 바나나, 100 ~ 999 : 수박, 1000 ~ : 귤
-    List<String> fruits = ['strawberry.png','apple.png','banana.png','watermellon.png','mandarin.png'];
+    List<String> fruits = [
+      'strawberry.png',
+      'apple.png',
+      'banana.png',
+      'watermellon.png',
+      'mandarin.png'
+    ];
 
     String assetImage = 'assets/fruits/';
-    if(widget.membersNum < 10){
+    if (widget.membersNum < 10) {
       assetImage += fruits[0];
-    } else if(widget.membersNum >= 10 && widget.membersNum < 50){
+    } else if (widget.membersNum >= 10 && widget.membersNum < 50) {
       assetImage += fruits[1];
-    } else if(widget.membersNum >= 50 && widget.membersNum < 100){
+    } else if (widget.membersNum >= 50 && widget.membersNum < 100) {
       assetImage += fruits[2];
-    } else if(widget.membersNum >= 100 && widget.membersNum < 1000){
+    } else if (widget.membersNum >= 100 && widget.membersNum < 1000) {
       assetImage += fruits[3];
     } else {
       assetImage += fruits[4];
