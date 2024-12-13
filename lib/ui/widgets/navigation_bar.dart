@@ -68,10 +68,11 @@ class CustomNavigationBar extends StatelessWidget {
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => RunningPage(
-                            startLat: 0,
-                            startLng: 0,
-                          )),
+                    builder: (context) => RunningPage(
+                      startLat: 35.8245542,
+                      startLng: 127.1007766,
+                    ),
+                  ),
                 );
               }
             },

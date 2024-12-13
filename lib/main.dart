@@ -5,6 +5,7 @@ import 'package:flutter_sprinchat_app/firebase_options.dart';
 import 'package:flutter_sprinchat_app/ui/pages/myhome/my_home.dart';
 import 'package:flutter_sprinchat_app/theme.dart';
 
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
