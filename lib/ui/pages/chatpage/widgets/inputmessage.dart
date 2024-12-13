@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_sprinchat_app/core/viewmodel/chat_viewmodel/chat_viewmodel.dart';
 
-class Inputmessage extends StatefulWidget {
+class Inputmessage extends ConsumerStatefulWidget {
   const Inputmessage({super.key});
 
   @override
-  State<Inputmessage> createState() => _InputmessageState();
+  ConsumerState<Inputmessage> createState() => _InputmessageState();
 }
 
-class _InputmessageState extends State<Inputmessage> {
+class _InputmessageState extends ConsumerState<Inputmessage> {
   final GlobalKey<FormState> formkey = GlobalKey<FormState>();
   final TextEditingController textController = TextEditingController();
 
@@ -49,6 +51,8 @@ class _InputmessageState extends State<Inputmessage> {
                 if(!isValid){
                   return;
                 }
+                ref.read(chatViewModelProvider.notifier).newChat(textController.text);
+                textController.text = '';
               },
               icon: Icon(
                 Icons.send,
