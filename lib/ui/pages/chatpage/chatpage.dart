@@ -15,18 +15,20 @@ class _ChatpageState extends ConsumerState<Chatpage> {
   @override
   Widget build(BuildContext context) {
     var chatState = ref.watch(chatViewModelProvider);
-    
+
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: Text('${chatState.location}'),
+      ),
       body: GestureDetector(
-        onTap: (){
+        onTap: () {
           FocusScope.of(context).unfocus();
         },
         child: SafeArea(
           child: Column(
             children: [
               // 채팅창
-              Chatswindow(),
+              Chatswindow(chatState: chatState,),
               // 입력필드
               Inputmessage(),
             ],
