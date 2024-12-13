@@ -16,6 +16,7 @@ class Presenchatpage extends ConsumerStatefulWidget {
 class _PresenchatpageState extends ConsumerState<Presenchatpage> {
   @override
   void initState() {
+    ref.read(chatViewModelProvider.notifier).setLocation('부산 광역시 동래구 삼천동');
     ref.read(chatViewModelProvider.notifier).readChats();
     super.initState();
   }
@@ -32,7 +33,7 @@ class _PresenchatpageState extends ConsumerState<Presenchatpage> {
         clipBehavior: Clip.none,
         children: [
           // 배경
-          Background(membersNum: membersNum),
+          Background(chatState: chatState),
           // 언덕
           Hill(),
           // 과일
@@ -43,6 +44,5 @@ class _PresenchatpageState extends ConsumerState<Presenchatpage> {
       )),
       floatingActionButton: FloatingActionButton(onPressed: () {}),
     );
-    ;
   }
 }

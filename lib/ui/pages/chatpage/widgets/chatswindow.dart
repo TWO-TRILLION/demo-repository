@@ -1,4 +1,4 @@
-import 'package:chat_bubbles/bubbles/bubble_normal.dart';
+import 'package:chat_bubbles/chat_bubbles.dart';
 import 'package:flutter/material.dart';
 
 class Chatswindow extends StatelessWidget {
@@ -8,21 +8,30 @@ class Chatswindow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String userid = 'ABCD';
+
     return Expanded(
       child: ListView.builder(
-        itemCount: 10,
+        itemCount: chatState.chats.chats.length ?? 0,
         itemBuilder: (context, index) {
-          if(index % 2 == 0){
-            return leftChat();
+          if (userid == chatState.chats.chats[index]['userid']) {
+            return rightChat(index);
+          } else if ("systemMessagelog1234" ==
+              chatState.chats.chats[index]['userid']) {
+            return systemChat(index);
           } else {
-            return rightChat();
+            return leftChat(index);
           }
         },
       ),
     );
   }
 
-  Widget leftChat() {
+  Widget leftChat(int index) {
+    DateTime date = DateTime.parse(chatState.chats.chats[index]['createdAt']);
+    String dateTime =
+        '${date.year}-${date.month}-${date.day} ${date.hour} : ${date.minute}';
+
     return Padding(
       padding: const EdgeInsets.only(left: 24, top: 30),
       child: Row(
@@ -41,15 +50,15 @@ class Chatswindow extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               BubbleNormal(
-                text:
-                    'Show me other options aaaaaaaaaaaaaaaaaaaaaaaaaaa bbbbbbbbbbbbb',
+                text: chatState.chats.chats[index]['message'],
                 isSender: false,
                 tail: false,
                 color: Color(0xfff2f4f5),
               ),
               Padding(
                 padding: const EdgeInsets.only(left: 24),
-                child: Text('2024-12-10 15:00  Nickname'),
+                child: Text(
+                    '$dateTime  Nickname'),
               )
             ],
           )
@@ -58,18 +67,22 @@ class Chatswindow extends StatelessWidget {
     );
   }
 
-  Widget rightChat() {
+  Widget rightChat(int index) {
+    DateTime date = DateTime.parse(chatState.chats.chats[index]['createdAt']);
+    String dateTime =
+        '${date.year}-${date.month}-${date.day} ${date.hour} : ${date.minute}';
+
     return Padding(
       padding: const EdgeInsets.only(right: 24, top: 30),
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               BubbleNormal(
-                text:
-                    'Show me other options aaaaaaaaaaaaaaaaaaaaaaaaaaa bbbbbbbbbbbbb',
+                text: chatState.chats.chats[index]['message'],
                 isSender: false,
                 tail: false,
                 color: Color(0xff0070f0),
@@ -77,7 +90,7 @@ class Chatswindow extends StatelessWidget {
               ),
               Padding(
                 padding: const EdgeInsets.only(right: 24),
-                child: Text('Nickname  2024-12-10 15:00'),
+                child: Text('Nickname  $dateTime'),
               )
             ],
           ),
@@ -91,6 +104,29 @@ class Chatswindow extends StatelessWidget {
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  Widget systemChat(int index) {
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.only(
+          top: 7,
+          bottom: 7,
+        ),
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.all(Radius.circular(6)),
+            color: Colors.purple,
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(5.0),
+            child: Text(
+              chatState.chats.chats[index]['message'],
+            ),
+          ),
+        ),
       ),
     );
   }

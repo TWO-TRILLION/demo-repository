@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 class Background extends StatelessWidget {
-  const Background({super.key, this.membersNum});
+  const Background({super.key, this.chatState});
 
-  final membersNum;
+  final chatState;
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +30,7 @@ class Background extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    '부산 광역시 동래구 온천동',
+                    '${chatState.chats.chatroomid}',
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 20,
@@ -38,7 +38,7 @@ class Background extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    '$membersNum 명 참여 중',
+                    '${chatState.chats.member.length} 명 참여 중',
                     style: TextStyle(
                       fontFamily: 'Pretendard',
                       fontWeight: FontWeight.bold,

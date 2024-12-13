@@ -26,7 +26,7 @@ class _ChatpageState extends ConsumerState<Chatpage> {
           child: Column(
             children: [
               // 채팅창
-              Chatswindow(),
+              Chatswindow(chatState: chatState,),
               // 입력필드
               Inputmessage(),
             ],
