@@ -15,7 +15,7 @@ void main() async {
   );
   runApp(const ProviderScope(child: MyApp()));
 
- /*
+  /*
   final chatrepo = Chatrepository();
   final chatmodel = await chatrepo.get('부산 광역시 동래구 온천동');
 
@@ -39,6 +39,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: theme,
+      home: RunningPage(startLat: lat, startLng: lng),
     );
   }
 }

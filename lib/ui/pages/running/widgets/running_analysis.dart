@@ -27,21 +27,7 @@ class RunningAnalysis extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                RunningInformation(
-                  '달린 거리',
-                  analysis.distance,
-                  'km',
-                ),
-                RunningTimeInformation(
-                  title: '달린 시간',
-                  hour: analysis.hour,
-                  minute: analysis.minute,
-                ),
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
+                RunningInformation('달린 거리', analysis.distance, 'km'),
                 RunningInformation('평균 속력', analysis.speed, 'km/h'),
                 RunningInformation('소모한 칼로리', analysis.calorie, 'kcal'),
               ],
