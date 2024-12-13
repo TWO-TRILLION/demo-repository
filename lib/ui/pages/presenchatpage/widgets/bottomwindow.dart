@@ -28,7 +28,9 @@ class Bottomwindow extends StatelessWidget {
                   child: Center(child: Text('참여하기')),
                 ),
               ),
-              SizedBox(height: 60,),
+              SizedBox(
+                height: 60,
+              ),
               Spacer(),
             ],
           )),
