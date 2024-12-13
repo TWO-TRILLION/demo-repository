@@ -53,7 +53,7 @@ class CustomNavigationBar extends StatelessWidget {
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => const PresenChatPage()),
+                      builder: (context) => const Presenchatpage()),
                 );
               }
             },
@@ -67,7 +67,11 @@ class CustomNavigationBar extends StatelessWidget {
               if (currentPage != 'running') {
                 Navigator.pushReplacement(
                   context,
-                  MaterialPageRoute(builder: (context) => const RunningPage()),
+                  MaterialPageRoute(
+                      builder: (context) => RunningPage(
+                            startLat: 0,
+                            startLng: 0,
+                          )),
                 );
               }
             },

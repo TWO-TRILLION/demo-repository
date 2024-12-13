@@ -5,11 +5,10 @@ import 'package:flutter_sprinchat_app/ui/pages/presenchatpage/widgets/background
 import 'package:flutter_sprinchat_app/ui/pages/presenchatpage/widgets/bottomwindow.dart';
 import 'package:flutter_sprinchat_app/ui/pages/presenchatpage/widgets/fruit.dart';
 import 'package:flutter_sprinchat_app/ui/pages/presenchatpage/widgets/hill.dart';
+import 'package:flutter_sprinchat_app/ui/widgets/navigation_bar.dart';
 
-
-class PresenChatPage extends StatelessWidget {
-  const PresenChatPage({super.key});
-
+class Presenchatpage extends ConsumerStatefulWidget {
+  const Presenchatpage({super.key});
 
   @override
   ConsumerState<Presenchatpage> createState() => _PresenchatpageState();
@@ -33,16 +32,13 @@ class _PresenchatpageState extends ConsumerState<Presenchatpage> {
           child: Stack(
         clipBehavior: Clip.none,
         children: [
-          // 배경
           Background(membersNum: membersNum),
-          // 언덕
           Hill(),
-          // 과일
           Fruit(membersNum: membersNum),
-          // 메뉴바
           Bottomwindow(),
         ],
       )),
+      bottomNavigationBar: const CustomNavigationBar(currentPage: 'chat'),
       floatingActionButton: FloatingActionButton(onPressed: () {}),
     );
     ;

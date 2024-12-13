@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_sprinchat_app/ui/pages/chatpage/widgets/chatswindow.dart';
 import 'package:flutter_sprinchat_app/ui/pages/chatpage/widgets/inputmessage.dart';
 import 'package:flutter_sprinchat_app/core/viewmodel/chat_viewmodel/chat_viewmodel.dart';
+import 'package:flutter_sprinchat_app/ui/widgets/navigation_bar.dart';
 
 class Chatpage extends ConsumerStatefulWidget {
   const Chatpage({super.key});
@@ -15,9 +16,11 @@ class _ChatpageState extends ConsumerState<Chatpage> {
   @override
   Widget build(BuildContext context) {
     var chatState = ref.watch(chatViewModelProvider);
-    
+
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: Text('${chatState.location}'),
+      ),
       body: GestureDetector(
         onTap: () {
           FocusScope.of(context).unfocus();
@@ -26,7 +29,9 @@ class _ChatpageState extends ConsumerState<Chatpage> {
             child: Column(
           children: [
             // 채팅창
-            Chatswindow(),
+            Chatswindow(
+              chatState: chatState,
+            ),
             // 입력필드
             Inputmessage(),
           ],

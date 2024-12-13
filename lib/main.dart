@@ -1,7 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_sprinchat_app/data/repository/chatrepository.dart';
 import 'package:flutter_sprinchat_app/firebase_options.dart';
 import 'package:flutter_sprinchat_app/ui/pages/myhome/my_home.dart';
 import 'package:flutter_sprinchat_app/theme.dart';
@@ -13,7 +12,7 @@ void main() async {
   );
   runApp(const ProviderScope(child: MyApp()));
 
- /*
+  /*
   final chatrepo = Chatrepository();
   final chatmodel = await chatrepo.get('부산 광역시 동래구 온천동');
 
