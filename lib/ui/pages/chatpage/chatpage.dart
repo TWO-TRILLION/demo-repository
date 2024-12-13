@@ -17,7 +17,9 @@ class _ChatpageState extends ConsumerState<Chatpage> {
     var chatState = ref.watch(chatViewModelProvider);
     
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: Text('${chatState.location}'),
+      ),
       body: GestureDetector(
         onTap: (){
           FocusScope.of(context).unfocus();

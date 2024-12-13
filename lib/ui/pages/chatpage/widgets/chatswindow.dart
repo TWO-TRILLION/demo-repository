@@ -28,9 +28,12 @@ class Chatswindow extends StatelessWidget {
   }
 
   Widget leftChat(int index) {
+    bool dateText = true;
+
     DateTime date = DateTime.parse(chatState.chats.chats[index]['createdAt']);
+    String minute = date.minute < 10 ? '0${date.minute}' : '${date.minute}';
     String dateTime =
-        '${date.year}-${date.month}-${date.day} ${date.hour} : ${date.minute}';
+        '${date.year}-${date.month}-${date.day} ${date.hour} : $minute';
 
     return Padding(
       padding: const EdgeInsets.only(left: 24, top: 30),
@@ -55,11 +58,11 @@ class Chatswindow extends StatelessWidget {
                 tail: false,
                 color: Color(0xfff2f4f5),
               ),
-              Padding(
-                padding: const EdgeInsets.only(left: 24),
-                child: Text(
-                    '$dateTime  Nickname'),
-              )
+              if (dateText)
+                Padding(
+                  padding: const EdgeInsets.only(left: 24),
+                  child: Text('$dateTime  Nickname'),
+                )
             ],
           )
         ],
@@ -68,9 +71,12 @@ class Chatswindow extends StatelessWidget {
   }
 
   Widget rightChat(int index) {
+    bool dateText = true;
+
     DateTime date = DateTime.parse(chatState.chats.chats[index]['createdAt']);
+    String minute = date.minute < 10 ? '0${date.minute}' : '${date.minute}';
     String dateTime =
-        '${date.year}-${date.month}-${date.day} ${date.hour} : ${date.minute}';
+        '${date.year}-${date.month}-${date.day} ${date.hour} : $minute';
 
     return Padding(
       padding: const EdgeInsets.only(right: 24, top: 30),
@@ -88,10 +94,11 @@ class Chatswindow extends StatelessWidget {
                 color: Color(0xff0070f0),
                 textStyle: TextStyle(color: Colors.white),
               ),
-              Padding(
-                padding: const EdgeInsets.only(right: 24),
-                child: Text('Nickname  $dateTime'),
-              )
+              if (dateText)
+                Padding(
+                  padding: const EdgeInsets.only(right: 24),
+                  child: Text('Nickname  $dateTime'),
+                )
             ],
           ),
           ClipRRect(
@@ -118,12 +125,15 @@ class Chatswindow extends StatelessWidget {
         child: Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.all(Radius.circular(6)),
-            color: Colors.purple,
+            color: Colors.purple.shade100,
           ),
           child: Padding(
             padding: const EdgeInsets.all(5.0),
             child: Text(
               chatState.chats.chats[index]['message'],
+              style: TextStyle(
+                color: Colors.purple,
+              ),
             ),
           ),
         ),
