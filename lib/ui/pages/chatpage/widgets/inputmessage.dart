@@ -51,7 +51,7 @@ class _InputmessageState extends ConsumerState<Inputmessage> {
                 if(!isValid){
                   return;
                 }
-                ref.read(chatViewModelProvider.notifier).newChat("ABCD", textController.text);
+                ref.read(chatViewModelProvider.notifier).newChat(textController.text);
                 textController.text = '';
               },
               icon: Icon(

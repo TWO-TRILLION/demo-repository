@@ -8,13 +8,11 @@ class Chatswindow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String userid = 'ABCD';
-
     return Expanded(
       child: ListView.builder(
         itemCount: chatState.chats.chats.length ?? 0,
         itemBuilder: (context, index) {
-          if (userid == chatState.chats.chats[index]['userid']) {
+          if (chatState.userid == chatState.chats.chats[index]['userid']) {
             return rightChat(index);
           } else if ("systemMessagelog1234" ==
               chatState.chats.chats[index]['userid']) {

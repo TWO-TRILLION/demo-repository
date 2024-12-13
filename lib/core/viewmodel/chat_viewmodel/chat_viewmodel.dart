@@ -6,9 +6,10 @@ import 'package:flutter_sprinchat_app/data/repository/chatrepository.dart';
 
 class ChatState {
   String location;
+  String userid;
   Chatmodel chats;
 
-  ChatState(this.location, this.chats);
+  ChatState(this.location, this.userid, this.chats);
 }
 
 class ChatViewmodel extends Notifier<ChatState> {
@@ -16,7 +17,12 @@ class ChatViewmodel extends Notifier<ChatState> {
   ChatState build() {
     Chatmodel defaultChatmodel = Chatmodel(
         chatroomid: "", updatetime: DateTime.now(), member: [], chats: []);
-    return ChatState('', defaultChatmodel);
+    return ChatState('', '', defaultChatmodel);
+  }
+
+  // 유저 id 받아오는 메서드
+  void setUserId(String userid){
+    state.userid = userid;
   }
 
   // 채팅 지역 받아오는 메서드
@@ -32,7 +38,7 @@ class ChatViewmodel extends Notifier<ChatState> {
     try {
       final chats = await chatrepository.get(state.location);
 
-      state = ChatState(state.location, chats[0]);
+      state = ChatState(state.location, state.userid, chats[0]);
       streamChats();
     } catch (e) {
       newChatRoom();
@@ -45,7 +51,7 @@ class ChatViewmodel extends Notifier<ChatState> {
     final chatrepository = Chatrepository();
     final stream = chatrepository.getStream(state.location);
     final streamSubscription = stream.listen((chats) {
-      state = ChatState(state.location, chats[0]);
+      state = ChatState(state.location, state.userid, chats[0]);
     });
 
     ref.onDispose(() {
@@ -72,10 +78,10 @@ class ChatViewmodel extends Notifier<ChatState> {
   }
 
   // 새로운 채팅 입력
-  void newChat(String userid, String chat){
+  void newChat(String chat){
     final chatrepository = Chatrepository();
 
-    chatrepository.update(state.location, userid, chat);
+    chatrepository.update(state.location, state.userid, chat);
   }
 }
 

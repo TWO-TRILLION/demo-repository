@@ -16,7 +16,12 @@ class Presenchatpage extends ConsumerStatefulWidget {
 class _PresenchatpageState extends ConsumerState<Presenchatpage> {
   @override
   void initState() {
+    // 위치세팅(chatroomid)
     ref.read(chatViewModelProvider.notifier).setLocation('부산 광역시 동래구 삼천동');
+    // 유저세팅(userid)
+    ref.read(chatViewModelProvider.notifier).setUserId('ABCD');
+
+    // db읽고(채팅방 없으면 만들고), 스트림 세팅
     ref.read(chatViewModelProvider.notifier).readChats();
     super.initState();
   }
