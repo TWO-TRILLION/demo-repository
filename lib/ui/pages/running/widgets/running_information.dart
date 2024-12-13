@@ -14,65 +14,62 @@ class RunningInformation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(5),
-      child: Container(
-        height: 120,
-        width: 120,
-        padding: EdgeInsets.all(10),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(20),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.1),
-              blurRadius: 40,
-            )
-          ],
-        ),
-        child: Stack(
-          children: [
-            // 제목
-            Positioned(
-              top: 20,
-              left: 5,
-              child: Text(
-                title,
-                style: TextStyle(
-                  fontSize: 14,
-                  fontFamily: 'Pretendard',
-                  fontWeight: FontWeight.w200,
-                ),
+    return Container(
+      height: 120,
+      width: 110,
+      padding: EdgeInsets.all(10),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(20),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.1),
+            blurRadius: 40,
+          )
+        ],
+      ),
+      child: Stack(
+        children: [
+          // 제목
+          Positioned(
+            top: 20,
+            left: 5,
+            child: Text(
+              title,
+              style: TextStyle(
+                fontSize: 14,
+                fontFamily: 'Pretendard',
+                fontWeight: FontWeight.w200,
               ),
             ),
-            // 값
-            Positioned(
-              bottom: 5,
-              left: 5,
-              child: Text(
-                '$value',
-                style: TextStyle(
-                  fontSize: 30,
-                  fontFamily: 'Pretendard',
-                  fontWeight: FontWeight.w800,
-                ),
+          ),
+          // 값
+          Positioned(
+            bottom: 5,
+            left: 5,
+            child: Text(
+              '$value',
+              style: TextStyle(
+                fontSize: 30,
+                fontFamily: 'Pretendard',
+                fontWeight: FontWeight.w800,
               ),
             ),
-            // 단위
-            Positioned(
-              bottom: 10,
-              right: 5,
-              child: Text(
-                unit,
-                style: TextStyle(
-                  fontSize: 14,
-                  fontFamily: 'Pretendard',
-                  fontWeight: FontWeight.w300,
-                ),
+          ),
+          // 단위
+          Positioned(
+            bottom: 10,
+            right: 5,
+            child: Text(
+              unit,
+              style: TextStyle(
+                fontSize: 14,
+                fontFamily: 'Pretendard',
+                fontWeight: FontWeight.w300,
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
