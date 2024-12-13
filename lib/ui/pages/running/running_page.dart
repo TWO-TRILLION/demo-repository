@@ -20,19 +20,6 @@ class RunningPage extends StatelessWidget {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          SizedBox(height: 50),
-          Text(
-            '${startTime.month}월 ${startTime.day}일 ${startTime.hour}시 ${startTime.minute}분',
-            style: TextStyle(
-              color: Color(0xff979C9E),
-            ),
-          ),
-          SizedBox(height: 10),
-          Container(
-            width: 300,
-            height: 1,
-            color: Color(0xff979C9E),
-          ),
           SizedBox(height: 30),
           RunningAnalysis(
               startTime: startTime, startLat: startLat, startLng: startLng),

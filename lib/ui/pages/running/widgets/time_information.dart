@@ -18,7 +18,7 @@ class TimeInformation extends StatelessWidget {
         Text(
           '$value',
           style: TextStyle(
-            fontSize: 70,
+            fontSize: 50,
             fontFamily: 'Pretendard',
             fontWeight: FontWeight.w600,
           ),
@@ -27,12 +27,11 @@ class TimeInformation extends StatelessWidget {
         Text(
           unit,
           style: TextStyle(
-            fontSize: 50,
+            fontSize: 30,
             fontFamily: 'Pretendard',
             fontWeight: FontWeight.w200,
           ),
         ),
-        SizedBox(width: 10),
       ],
     );
   }

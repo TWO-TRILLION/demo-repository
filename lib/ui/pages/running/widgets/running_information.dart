@@ -18,16 +18,6 @@ class RunningInformation extends StatelessWidget {
       height: 120,
       width: 110,
       padding: EdgeInsets.all(10),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(20),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.1),
-            blurRadius: 40,
-          )
-        ],
-      ),
       child: Stack(
         children: [
           // 제목

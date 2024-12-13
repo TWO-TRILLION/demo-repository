@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_sprinchat_app/ui/pages/running/running_view_model.dart';
+import 'package:flutter_sprinchat_app/ui/pages/running/widgets/running_button.dart';
 import 'package:flutter_sprinchat_app/ui/pages/running/widgets/running_information.dart';
 import 'package:flutter_sprinchat_app/ui/pages/running/widgets/time_information.dart';
 
@@ -25,26 +26,7 @@ class RunningAnalysis extends StatelessWidget {
         final analysis = ref.watch(runningViewModel);
         return Column(
           children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 30),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  TimeInformation(
-                    value: analysis.hour,
-                    unit: 'h',
-                  ),
-                  TimeInformation(
-                    value: analysis.minute,
-                    unit: 'm',
-                  ),
-                  TimeInformation(
-                    value: analysis.second,
-                    unit: 's',
-                  ),
-                ],
-              ),
-            ),
+            RunningButton(analysis),
             SizedBox(height: 30),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
