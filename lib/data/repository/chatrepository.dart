@@ -90,7 +90,8 @@ class Chatrepository {
   }
 
   // 컬렉션(Chatroom)의 chatroomid 문서 업데이트
-  Future<void> update(String chatroomid) async {
+  // 사용자가 채팅을 쳤을때 주로 호출
+  Future<void> update(String chatroomid, String userid, String chat) async {
     FirebaseFirestore firestore = FirebaseFirestore.instance;
     CollectionReference collectionRef = firestore.collection('Chatroom');
 
@@ -98,6 +99,12 @@ class Chatrepository {
 
     Map<String,dynamic> map ={
       "updatetime" : DateTime.now().toIso8601String(),
+      "member": FieldValue.arrayUnion([userid]),
+      "chats": FieldValue.arrayUnion([{
+        "message": chat,
+        "createdAt" : DateTime.now().toIso8601String(),
+        "userid": userid,
+      }])
     };
 
     await docRef.update(map);

@@ -35,7 +35,7 @@ class ChatViewmodel extends Notifier<ChatState> {
       state = ChatState(state.location, chats[0]);
       streamChats();
     } catch (e) {
-      newChat();
+      newChatRoom();
       readChats();
     }
   }
@@ -54,8 +54,8 @@ class ChatViewmodel extends Notifier<ChatState> {
     });
   }
 
-  // 새로운 채팅 생성
-  void newChat() {
+  // 새로운 채팅방 생성
+  void newChatRoom() {
     final chatrepository = Chatrepository();
 
     Map<String,dynamic> defalutchat = {
@@ -69,6 +69,13 @@ class ChatViewmodel extends Notifier<ChatState> {
         updatetime: DateTime.now(),
         member: [],
         chats: [defalutchat]);
+  }
+
+  // 새로운 채팅 입력
+  void newChat(String userid, String chat){
+    final chatrepository = Chatrepository();
+
+    chatrepository.update(state.location, userid, chat);
   }
 }
 
