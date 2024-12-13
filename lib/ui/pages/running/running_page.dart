@@ -18,17 +18,17 @@ class RunningPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              RunningAnalysis(
-                  startTime: startTime, startLat: startLat, startLng: startLng),
-              KakaoMap(lat: startLat, lng: startLng),
-            ],
-          ),
+      body: Expanded(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            RunningAnalysis(
+                startTime: startTime, startLat: startLat, startLng: startLng),
+            Expanded(
+              child: KakaoMap(lat: startLat, lng: startLng),
+            ),
+          ],
         ),
       ),
       bottomNavigationBar: const CustomNavigationBar(currentPage: 'running'),
