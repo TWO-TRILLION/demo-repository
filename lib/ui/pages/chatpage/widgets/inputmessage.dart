@@ -56,8 +56,6 @@ class _InputmessageState extends ConsumerState<Inputmessage> {
                     .read(chatViewModelProvider.notifier)
                     .newChat(textController.text);
                 textController.text = '';
-
-                widget.scrollController.jumpTo(widget.scrollController.position.maxScrollExtent);
               },
               icon: Icon(
                 Icons.send,

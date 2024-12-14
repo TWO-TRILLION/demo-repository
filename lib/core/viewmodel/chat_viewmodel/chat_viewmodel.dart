@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_sprinchat_app/data/model/chatmodel.dart';
 import 'package:flutter_sprinchat_app/data/repository/chatrepository.dart';
@@ -9,8 +10,9 @@ class ChatState {
   String location;
   String userid;
   Chatmodel chats;
+  ScrollController scrollController;
 
-  ChatState(this.location, this.userid, this.chats);
+  ChatState(this.location, this.userid, this.chats, this.scrollController);
 }
 
 class ChatViewmodel extends AutoDisposeNotifier<ChatState> {
@@ -18,11 +20,11 @@ class ChatViewmodel extends AutoDisposeNotifier<ChatState> {
   ChatState build() {
     Chatmodel defaultChatmodel = Chatmodel(
         chatroomid: "", updatetime: DateTime.now(), member: [], chats: []);
-    return ChatState('', '', defaultChatmodel);
+    return ChatState('', '', defaultChatmodel, ScrollController());
   }
 
   // 유저 id, State에 받아오는 메서드
-  void setUserId(String userid){
+  void setUserId(String userid) {
     state.userid = userid;
   }
 
@@ -38,7 +40,8 @@ class ChatViewmodel extends AutoDisposeNotifier<ChatState> {
     try {
       final chats = await chatrepository.get(state.location);
 
-      state = ChatState(state.location, state.userid, chats[0]);
+      state = ChatState(
+          state.location, state.userid, chats[0], state.scrollController);
       streamChats();
     } catch (e) {
       newChatRoom();
@@ -51,7 +54,8 @@ class ChatViewmodel extends AutoDisposeNotifier<ChatState> {
     final chatrepository = Chatrepository();
     final stream = chatrepository.getStream(state.location);
     final streamSubscription = stream.listen((chats) {
-      state = ChatState(state.location, state.userid, chats[0]);
+      state = ChatState(
+          state.location, state.userid, chats[0], state.scrollController);
     });
 
     ref.onDispose(() {
@@ -64,7 +68,7 @@ class ChatViewmodel extends AutoDisposeNotifier<ChatState> {
   void newChatRoom() {
     final chatrepository = Chatrepository();
 
-    Map<String,dynamic> defalutchat = {
+    Map<String, dynamic> defalutchat = {
       "createdAt": DateTime.now().toIso8601String(),
       "message": "시스템 : 채팅방이 생성되었습니다.",
       "userid": "systemMessagelog1234"
@@ -79,26 +83,36 @@ class ChatViewmodel extends AutoDisposeNotifier<ChatState> {
 
   // 새로운 채팅 입력
   // 채팅방 멤버 안에 없으면 멤버리스트에도 유저id 추가
-  void newChat(String chat){
+  // 유저가 채팅을 치면, 스크롤 컨트롤러가 마지막으로 가도록 설정
+  void newChat(String chat) {
     final chatrepository = Chatrepository();
-    chatrepository.update(state.location, state.userid, chat);
+    chatrepository.update(state.location, state.userid, chat).then((_){
+      scrollEndPosition();
+    });
   }
 
   // 채팅방 참여 메서드 (해당 채팅방의 멤버리스트에 유저id 추가)
   // 유저가 다른 채팅방을 입장하게 될 경우 호출
-  void newMember(){
+  void newMember() {
     final chatrepository = Chatrepository();
     chatrepository.updateMember(state.location, state.userid);
   }
 
   // 채팅방 나가기 메서드 (해당 채팅방의 멤버리스트에서 유저id 제거)
   // 유저가 다른 채팅방을 입장하게 될 경우 호출
-    void deleteMember(){
+  void deleteMember() {
     final chatrepository = Chatrepository();
     chatrepository.deleteMember(state.location, state.userid);
   }
+
+  // 스크롤 컨트롤러를 마지막으로 옮기는 메서드
+  void scrollEndPosition() {
+    state.scrollController
+        .jumpTo(state.scrollController.position.maxScrollExtent);
+  }
 }
 
-final chatViewModelProvider = AutoDisposeNotifierProvider<ChatViewmodel, ChatState>(() {
+final chatViewModelProvider =
+    AutoDisposeNotifierProvider<ChatViewmodel, ChatState>(() {
   return ChatViewmodel();
 });
