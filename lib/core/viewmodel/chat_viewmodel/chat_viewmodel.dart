@@ -85,9 +85,17 @@ class ChatViewmodel extends AutoDisposeNotifier<ChatState> {
   }
 
   // 채팅방 참여 메서드 (해당 채팅방의 멤버리스트에 유저id 추가)
+  // 유저가 다른 채팅방을 입장하게 될 경우 호출
   void newMember(){
     final chatrepository = Chatrepository();
     chatrepository.updateMember(state.location, state.userid);
+  }
+
+  // 채팅방 나가기 메서드 (해당 채팅방의 멤버리스트에서 유저id 제거)
+  // 유저가 다른 채팅방을 입장하게 될 경우 호출
+    void deleteMember(){
+    final chatrepository = Chatrepository();
+    chatrepository.deleteMember(state.location, state.userid);
   }
 }
 

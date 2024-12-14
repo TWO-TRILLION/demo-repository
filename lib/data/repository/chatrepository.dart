@@ -126,4 +126,18 @@ class Chatrepository {
 
     await docRef.update(map);
   }
+
+  // 컬렉션(Chatroom)의 chatroomid 문서 중 member리스트의 유저id 만 제거
+    Future<void> deleteMember(String chatroomid, String userid) async {
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+    CollectionReference collectionRef = firestore.collection('Chatroom');
+
+    final docRef = collectionRef.doc(chatroomid);
+
+    Map<String, dynamic> map = {
+      "member": FieldValue.arrayRemove([userid]),
+    };
+
+    await docRef.update(map);
+  }
 }
