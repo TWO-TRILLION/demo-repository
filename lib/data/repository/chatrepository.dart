@@ -77,7 +77,7 @@ class Chatrepository {
 
       final docRef = collectionRef.doc(chatroomid);
 
-      Map<String,dynamic> map = {
+      Map<String, dynamic> map = {
         "chats": chats,
         "member": member,
         "updatetime": updatetime.toIso8601String(),
@@ -97,14 +97,31 @@ class Chatrepository {
 
     final docRef = collectionRef.doc(chatroomid);
 
-    Map<String,dynamic> map ={
-      "updatetime" : DateTime.now().toIso8601String(),
+    Map<String, dynamic> map = {
+      "updatetime": DateTime.now().toIso8601String(),
       "member": FieldValue.arrayUnion([userid]),
-      "chats": FieldValue.arrayUnion([{
-        "message": chat,
-        "createdAt" : DateTime.now().toIso8601String(),
-        "userid": userid,
-      }])
+      "chats": FieldValue.arrayUnion([
+        {
+          "message": chat,
+          "createdAt": DateTime.now().toIso8601String(),
+          "userid": userid,
+        }
+      ])
+    };
+
+    await docRef.update(map);
+  }
+
+  // 컬렉션(Chatroom)의 chatroomid 문서 중 updatetime과 member속성만 업데이트
+  // presenchatpage의 참여하기 버튼을 누르면 호출 (채팅방 참여)
+  Future<void> updateMember(String chatroomid, String userid) async {
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+    CollectionReference collectionRef = firestore.collection('Chatroom');
+
+    final docRef = collectionRef.doc(chatroomid);
+
+    Map<String, dynamic> map = {
+      "member": FieldValue.arrayUnion([userid]),
     };
 
     await docRef.update(map);
