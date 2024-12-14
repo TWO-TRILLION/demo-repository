@@ -130,6 +130,7 @@ class Chatswindow extends StatelessWidget {
                 )
             ],
           ),
+          /* 현 유저의 프로필사진은 띄울 필요 없다는 의견이 타당하다고 생각해서 지움
           ClipRRect(
             borderRadius: BorderRadius.circular(30),
             child: isDiffUser
@@ -143,6 +144,7 @@ class Chatswindow extends StatelessWidget {
                     width: 40,
                   ),
           ),
+          */
         ],
       ),
     );

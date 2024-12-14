@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 
 final theme = ThemeData(
+    appBarTheme: AppBarTheme(
+      scrolledUnderElevation: 0,
+      color: Colors.transparent,
+    ),
     fontFamily: 'Pretendard',
     colorScheme: ColorScheme.fromSeed(seedColor: Colors.blueAccent),
     highlightColor: Colors.blueAccent,

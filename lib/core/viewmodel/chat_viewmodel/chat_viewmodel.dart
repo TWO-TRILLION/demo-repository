@@ -6,6 +6,7 @@ import 'package:flutter_sprinchat_app/data/model/chatmodel.dart';
 import 'package:flutter_sprinchat_app/data/repository/chatrepository.dart';
 
 // presenchatpage 하고, chatpage 에 영향을 주고 있는 State
+// location이 채팅방에 chatroomid 역할을 맡음
 class ChatState {
   String location;
   String userid;
