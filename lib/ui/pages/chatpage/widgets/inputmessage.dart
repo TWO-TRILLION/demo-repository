@@ -57,10 +57,7 @@ class _InputmessageState extends ConsumerState<Inputmessage> {
                     .newChat(textController.text);
                 textController.text = '';
 
-                WidgetsBinding.instance.addPostFrameCallback((_) {
-                  widget.scrollController
-                      .jumpTo(widget.scrollController.position.maxScrollExtent);
-                });
+                widget.scrollController.jumpTo(widget.scrollController.position.maxScrollExtent);
               },
               icon: Icon(
                 Icons.send,

@@ -15,11 +15,11 @@ class _ChatpageState extends ConsumerState<Chatpage> {
   final ScrollController scrollController = ScrollController();
 
   @override
-  void didChangeDependencies() {
+  void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       scrollController.jumpTo(scrollController.position.maxScrollExtent);
     });
-    super.didChangeDependencies();
+    super.initState();
   }
 
   @override
