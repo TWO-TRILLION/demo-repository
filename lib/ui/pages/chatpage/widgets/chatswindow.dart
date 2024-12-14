@@ -2,9 +2,10 @@ import 'package:chat_bubbles/chat_bubbles.dart';
 import 'package:flutter/material.dart';
 
 class Chatswindow extends StatelessWidget {
-  const Chatswindow({super.key, this.chatState});
+  const Chatswindow({super.key, this.chatState, this.scrollController});
 
   final chatState;
+  final scrollController;
 
   @override
   Widget build(BuildContext context) {
@@ -15,6 +16,7 @@ class Chatswindow extends StatelessWidget {
 
     return Expanded(
       child: ListView.builder(
+        controller: scrollController,
         itemCount: orderchats.length,
         itemBuilder: (context, index) {
           if (chatState.userid == orderchats[index]['userid']) {

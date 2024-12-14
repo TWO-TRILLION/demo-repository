@@ -112,7 +112,7 @@ class Chatrepository {
     await docRef.update(map);
   }
 
-  // 컬렉션(Chatroom)의 chatroomid 문서 중 updatetime과 member속성만 업데이트
+  // 컬렉션(Chatroom)의 chatroomid 문서 중 member속성만 업데이트
   // presenchatpage의 참여하기 버튼을 누르면 호출 (채팅방 참여)
   Future<void> updateMember(String chatroomid, String userid) async {
     FirebaseFirestore firestore = FirebaseFirestore.instance;
@@ -128,7 +128,8 @@ class Chatrepository {
   }
 
   // 컬렉션(Chatroom)의 chatroomid 문서 중 member리스트의 유저id 만 제거
-    Future<void> deleteMember(String chatroomid, String userid) async {
+  // 유저가 다른 채팅방을 들어가게 될 경우 호출 (미리 User가 참여하고 있던 채팅방 정보가 있어야 함)
+  Future<void> deleteMember(String chatroomid, String userid) async {
     FirebaseFirestore firestore = FirebaseFirestore.instance;
     CollectionReference collectionRef = firestore.collection('Chatroom');
 
