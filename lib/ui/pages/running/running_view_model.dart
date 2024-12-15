@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_sprinchat_app/core/geolocator_helper.dart';
+import 'package:geolocator/geolocator.dart';
 
 class RunningState {
   double distance; // 달린 거리
@@ -7,6 +8,7 @@ class RunningState {
   double calorie; // 소모한 칼로리
   int hour; // 달린 시간(시)
   int minute; // 달린 시간(분)
+  int second;
 
   RunningState(
     this.distance,
@@ -14,19 +16,29 @@ class RunningState {
     this.calorie,
     this.hour,
     this.minute,
+    this.second,
   );
 }
 
 class RunningViewModel extends Notifier<RunningState> {
   @override
   build() {
-    return RunningState(0, 0, 0, 0, 0);
+    return RunningState(0, 0, 0, 0, 0, 0);
+  }
+
+  double startLat = 0;
+  double startLng = 0;
+
+  Future<void> setLocation() async {
+    final startLocation = await GeolocatorHelper.getPosition();
+    if (startLocation != null) {
+      startLat = startLocation.latitude;
+      startLng = startLocation.longitude;
+    }
   }
 
   Future<void> update(
     DateTime startTime,
-    double startLat,
-    double startLng,
   ) async {
     final currentLocation = await GeolocatorHelper.getPosition(); // 현재 위치 좌표
     var time = DateTime.now().difference(startTime); // 달린 시간
@@ -41,6 +53,7 @@ class RunningViewModel extends Notifier<RunningState> {
       );
       state.hour = time.inHours; // hour : 달린 시간(시)
       state.minute = time.inMinutes; // minute : 달린 시간(분)
+      state.second = time.inSeconds; // second : 달린 시간(초)
       if (time.inHours != 0) {
         state.speed = distance / time.inHours; // 평균 속력(km/h)
       }
