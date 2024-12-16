@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 
 class ResultBox extends StatelessWidget {
-  ResultBox(this.title, this.value, this.message);
+  ResultBox(this.title, this.value, this.message, this.icon);
 
   String title;
   String value;
   String message;
+  IconData icon;
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +14,7 @@ class ResultBox extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 10),
       child: Container(
         width: 340,
-        height: 135,
+        height: 140,
         padding: EdgeInsets.all(14),
         decoration: BoxDecoration(
           color: Colors.white,
@@ -37,7 +38,7 @@ class ResultBox extends StatelessWidget {
                     shape: BoxShape.circle,
                   ),
                   child: Icon(
-                    Icons.timer_outlined,
+                    icon,
                     color: Color(0xff0070F0),
                   ),
                 ),
