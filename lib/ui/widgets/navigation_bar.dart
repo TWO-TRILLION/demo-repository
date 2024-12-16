@@ -2,17 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_sprinchat_app/ui/pages/myhome/my_home.dart';
 import 'package:flutter_sprinchat_app/ui/pages/presenchatpage/presenchatpage.dart';
 import 'package:flutter_sprinchat_app/ui/pages/running/running_page.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_sprinchat_app/core/viewmodel/location_viewmodel/location_viewmodel.dart';
 
-class CustomNavigationBar extends StatelessWidget {
+class CustomNavigationBar extends ConsumerWidget {
   final String currentPage;
 
   const CustomNavigationBar({
     super.key,
     required this.currentPage,
+    required String currentLocation,
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final location = ref.watch(locationViewModelProvider);
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
       margin: const EdgeInsets.only(left: 8, right: 8, bottom: 16),
@@ -53,7 +57,8 @@ class CustomNavigationBar extends StatelessWidget {
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => const Presenchatpage()),
+                    builder: (context) => Presenchatpage(location),
+                  ),
                 );
               }
             },
@@ -71,6 +76,7 @@ class CustomNavigationBar extends StatelessWidget {
                     builder: (context) => RunningPage(
                       startLat: 35.8245542,
                       startLng: 127.1007766,
+                      currentLocation: location,
                     ),
                   ),
                 );

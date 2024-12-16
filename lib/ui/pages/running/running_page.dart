@@ -9,11 +9,15 @@ import 'package:flutter_sprinchat_app/ui/pages/running/widgets/running_button.da
 import 'package:flutter_sprinchat_app/ui/widgets/navigation_bar.dart';
 
 class RunningPage extends StatefulWidget {
-  RunningPage({required this.startLat, required this.startLng});
+  RunningPage(
+      {required this.startLat,
+      required this.startLng,
+      required this.currentLocation});
 
   final double startLat; // 러닝을 시작한 좌표(위도)
   final double startLng; // 러닝을 시작한 좌표(경도)
   bool isRunning = false;
+  String currentLocation;
 
   @override
   State<RunningPage> createState() => _RunningPageState();
@@ -97,7 +101,8 @@ class _RunningPageState extends State<RunningPage> {
           ),
         ),
       ),
-      bottomNavigationBar: const CustomNavigationBar(currentPage: 'running'),
+      bottomNavigationBar: CustomNavigationBar(
+          currentPage: 'running', currentLocation: widget.currentLocation),
     );
   }
 }

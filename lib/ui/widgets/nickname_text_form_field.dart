@@ -7,7 +7,7 @@ class NicknameTextFormField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      decoration: InputDecoration(hintText: "닉네임을 입력해주세요"),
+      decoration: InputDecoration(hintText: "닉네임"),
       validator: ValidatorUtils.validatorNickname,
       controller: controller,
     );
