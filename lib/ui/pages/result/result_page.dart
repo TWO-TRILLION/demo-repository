@@ -10,9 +10,10 @@ import 'package:flutter_sprinchat_app/ui/pages/running/running_page.dart';
 import 'package:flutter_sprinchat_app/ui/pages/running/running_view_model.dart';
 
 class ResultPage extends StatelessWidget {
-  ResultPage(this.analysis);
+  ResultPage(this.analysis, this.user);
 
   RunningState analysis;
+  UserModel user;
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +57,7 @@ class ResultPage extends StatelessWidget {
                             onPressed: () {
                               // 러닝 기록 업데이트
                               updateResult(
-                                'userId',
+                                user.userid,
                                 analysis.distance,
                                 analysis.calorie,
                                 analysis.speed,
