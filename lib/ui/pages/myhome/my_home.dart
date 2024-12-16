@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_sprinchat_app/ui/pages/myhome/profile.dart';
-import 'dart:io';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_sprinchat_app/ui/widgets/navigation_bar.dart';
 import 'package:flutter_sprinchat_app/ui/pages/myhome/widgets/home_location.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_sprinchat_app/core/viewmodel/user_viewmodel/user_viewmodel.dart';
+import 'package:flutter_sprinchat_app/data/repository/user_repository.dart';
 
-class MyHome extends StatefulWidget {
+class MyHome extends ConsumerStatefulWidget {
   const MyHome({super.key});
 
   @override
-  State<MyHome> createState() => _MyHomeState();
+  ConsumerState<MyHome> createState() => _MyHomeState();
 }
 
-class _MyHomeState extends State<MyHome> {
+class _MyHomeState extends ConsumerState<MyHome> {
   DecorationImage? _profileImage;
   final String defaultProfileImage = 'assets/images/default_profile.png';
-  String currentLocation = '위치 불러오는 중...';
 
   @override
   void initState() {
@@ -24,21 +24,47 @@ class _MyHomeState extends State<MyHome> {
   }
 
   Future<void> _loadProfileImage() async {
-    final prefs = await SharedPreferences.getInstance();
-    final profileImagePath = prefs.getString('profile_image');
-    setState(() {
-      if (profileImagePath != null) {
-        _profileImage = DecorationImage(
-          image: FileImage(File(profileImagePath)),
-          fit: BoxFit.cover,
-        );
-      } else {
-        _profileImage = DecorationImage(
-          image: AssetImage(defaultProfileImage),
-          fit: BoxFit.cover,
-        );
+    try {
+      final userRepo = UserRepository();
+      final userId = ref.read(userViewModelProvider);
+      final user = await userRepo.getOne(userId);
+
+      if (mounted) {
+        setState(() {
+          if (user != null &&
+              user.imageUrl != null &&
+              user.imageUrl!.isNotEmpty) {
+            _profileImage = DecorationImage(
+              image: NetworkImage(user.imageUrl!),
+              fit: BoxFit.cover,
+              onError: (error, stackTrace) {
+                setState(() {
+                  _profileImage = DecorationImage(
+                    image: AssetImage(defaultProfileImage),
+                    fit: BoxFit.cover,
+                  );
+                });
+              },
+            );
+          } else {
+            _profileImage = DecorationImage(
+              image: AssetImage(defaultProfileImage),
+              fit: BoxFit.cover,
+            );
+          }
+        });
       }
-    });
+    } catch (e) {
+      print('프로필 이미지 로딩 오류: $e');
+      if (mounted) {
+        setState(() {
+          _profileImage = DecorationImage(
+            image: AssetImage(defaultProfileImage),
+            fit: BoxFit.cover,
+          );
+        });
+      }
+    }
   }
 
   @override
@@ -64,23 +90,20 @@ class _MyHomeState extends State<MyHome> {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        HomeLocation(
-                          onLocationChanged: (location) {
-                            setState(() {
-                              currentLocation = location;
-                            });
-                          },
-                        ),
+                        HomeLocation(onLocationChanged: (location) {}),
                       ],
                     ),
                   ),
                   GestureDetector(
-                    onTap: () {
-                      Navigator.push(
+                    onTap: () async {
+                      await Navigator.push(
                         context,
                         MaterialPageRoute(
                             builder: (context) => const Profile()),
-                      ).then((_) => _loadProfileImage());
+                      );
+                      if (mounted) {
+                        await _loadProfileImage();
+                      }
                     },
                     child: Container(
                       width: 50,
@@ -152,7 +175,7 @@ class _MyHomeState extends State<MyHome> {
       ),
       bottomNavigationBar: CustomNavigationBar(
         currentPage: 'home',
-        currentLocation: currentLocation,
+        currentLocation: '부산광역시 동래구 온천동',
       ),
     );
   }
