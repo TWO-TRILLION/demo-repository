@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_sprinchat_app/ui/pages/result/result_page.dart';
 import 'package:flutter_sprinchat_app/ui/pages/running/running_view_model.dart';
 import 'package:flutter_sprinchat_app/ui/pages/running/widgets/kakao_map.dart';
 import 'package:flutter_sprinchat_app/ui/pages/running/widgets/running_analysis.dart';
@@ -82,6 +83,12 @@ class _RunningPageState extends State<RunningPage> {
                                 ref
                                     .read(runningViewModel.notifier)
                                     .endRunning();
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => ResultxPage(),
+                                  ),
+                                );
                               }
                             },
                             // 버튼 디자인
