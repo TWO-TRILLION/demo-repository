@@ -13,6 +13,14 @@ class Chatpage extends ConsumerStatefulWidget {
 
 class _ChatpageState extends ConsumerState<Chatpage> {
   @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ref.read(chatViewModelProvider.notifier).scrollEndPosition();
+    });
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     var chatState = ref.watch(chatViewModelProvider);
 
@@ -25,13 +33,16 @@ class _ChatpageState extends ConsumerState<Chatpage> {
           FocusScope.of(context).unfocus();
         },
         child: SafeArea(
-          child: Column(
-            children: [
-              // 채팅창
-              Chatswindow(chatState: chatState,),
-              // 입력필드
-              Inputmessage(),
-            ],
+            child: Column(
+          children: [
+            // 채팅창
+            Chatswindow(
+              chatState: chatState,
+              scrollController: chatState.scrollController,
+            ),
+            // 입력필드
+            Inputmessage(scrollController: chatState.scrollController),
+          ],
         )),
       ),
     );

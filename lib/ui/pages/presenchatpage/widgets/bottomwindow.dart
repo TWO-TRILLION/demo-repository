@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_sprinchat_app/core/viewmodel/chat_viewmodel/chat_viewmodel.dart';
 import 'package:flutter_sprinchat_app/ui/pages/chatpage/chatpage.dart';
 
 class Bottomwindow extends StatelessWidget {
@@ -14,22 +16,27 @@ class Bottomwindow extends StatelessWidget {
           height: MediaQuery.of(context).size.height / 2 - 300,
           decoration: BoxDecoration(
               color: Color(0xfff2f8ff),
-              borderRadius: BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(10))),
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(10), topRight: Radius.circular(10))),
           child: Column(
             children: [
               Spacer(),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 80),
-                child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => Chatpage()));
+                child: Consumer(
+                  builder: (context, ref, child) {
+                    return ElevatedButton(
+                      onPressed: () {
+                        ref.read(chatViewModelProvider.notifier).newMember();
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Chatpage()));
+                      },
+                      child: Center(child: Text('참여하기')),
+                    );
                   },
-                  child: Center(child: Text('참여하기')),
                 ),
-              ),
-              SizedBox(
-                height: 60,
               ),
               Spacer(),
             ],
