@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_sprinchat_app/core/viewmodel/chat_viewmodel/chat_viewmodel.dart';
+import 'package:flutter_sprinchat_app/core/viewmodel/location_viewmodel/location_viewmodel.dart';
 import 'package:flutter_sprinchat_app/ui/pages/presenchatpage/widgets/background.dart';
 import 'package:flutter_sprinchat_app/ui/pages/presenchatpage/widgets/bottomwindow.dart';
 import 'package:flutter_sprinchat_app/ui/pages/presenchatpage/widgets/fruit.dart';
@@ -8,7 +9,9 @@ import 'package:flutter_sprinchat_app/ui/pages/presenchatpage/widgets/hill.dart'
 import 'package:flutter_sprinchat_app/ui/widgets/navigation_bar.dart';
 
 class Presenchatpage extends ConsumerStatefulWidget {
-  const Presenchatpage({super.key});
+  const Presenchatpage(this.currentLocation, {super.key});
+
+  final String currentLocation;
 
   @override
   ConsumerState<Presenchatpage> createState() => _PresenchatpageState();
@@ -17,18 +20,20 @@ class Presenchatpage extends ConsumerStatefulWidget {
 class _PresenchatpageState extends ConsumerState<Presenchatpage> {
   @override
   void initState() {
+    super.initState();
+    final location = ref.read(locationViewModelProvider);
     // 위치세팅(chatroomid)
-    ref.read(chatViewModelProvider.notifier).setLocation('부산 광역시 동래구 삼천동');
+    ref.read(chatViewModelProvider.notifier).setLocation(location);
     // 유저세팅(userid)
     ref.read(chatViewModelProvider.notifier).setUserId('ABCD');
 
     // db읽고(채팅방 없으면 만들고), 스트림 세팅
     ref.read(chatViewModelProvider.notifier).readChats();
-    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    final location = ref.watch(locationViewModelProvider);
     var chatState = ref.watch(chatViewModelProvider);
     int membersNum = chatState.chats.member.length;
 
@@ -46,7 +51,8 @@ class _PresenchatpageState extends ConsumerState<Presenchatpage> {
           Bottomwindow(),
         ],
       )),
-      bottomNavigationBar: CustomNavigationBar(currentPage: 'chat'),
+      bottomNavigationBar:
+          CustomNavigationBar(currentPage: 'chat', currentLocation: location),
     );
   }
 }
