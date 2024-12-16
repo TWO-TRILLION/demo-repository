@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_sprinchat_app/core/viewmodel/chat_viewmodel/chat_viewmodel.dart';
 import 'package:flutter_sprinchat_app/core/viewmodel/location_viewmodel/location_viewmodel.dart';
+import 'package:flutter_sprinchat_app/core/viewmodel/user_viewmodel/user_viewmodel.dart';
 import 'package:flutter_sprinchat_app/ui/pages/presenchatpage/widgets/background.dart';
 import 'package:flutter_sprinchat_app/ui/pages/presenchatpage/widgets/bottomwindow.dart';
 import 'package:flutter_sprinchat_app/ui/pages/presenchatpage/widgets/fruit.dart';
@@ -22,10 +23,11 @@ class _PresenchatpageState extends ConsumerState<Presenchatpage> {
   void initState() {
     super.initState();
     final location = ref.read(locationViewModelProvider);
+    final userid = ref.read(userViewModelProvider);
     // 위치세팅(chatroomid)
     ref.read(chatViewModelProvider.notifier).setLocation(location);
     // 유저세팅(userid)
-    ref.read(chatViewModelProvider.notifier).setUserId('ABCD');
+    ref.read(chatViewModelProvider.notifier).setUserId(userid);
 
     // db읽고(채팅방 없으면 만들고), 스트림 세팅
     ref.read(chatViewModelProvider.notifier).readChats();
