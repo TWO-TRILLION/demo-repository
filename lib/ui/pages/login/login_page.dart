@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_sprinchat_app/core/viewmodel/user_viewmodel/user_viewmodel.dart';
 import 'package:flutter_sprinchat_app/data/repository/user_repository.dart';
 import 'package:flutter_sprinchat_app/ui/pages/join/join_page.dart';
 import 'package:flutter_sprinchat_app/ui/pages/myhome/my_home.dart';
@@ -25,7 +27,7 @@ class _LoginPageState extends State<LoginPage> {
     super.dispose();
   }
 
-  void onLoginClick() async {
+  void onLoginClick(WidgetRef ref) async {
     final userRepo = UserRepository();
 
     final user = await userRepo.getOne(idController.text);
@@ -64,13 +66,13 @@ class _LoginPageState extends State<LoginPage> {
           );
         },
       );
-    } else
+    } else {
+      ref.read(userViewModelProvider.notifier).setUserId(idController.text);
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => const MyHome()),
       );
-
-    ;
+    }
   }
 
   @override
@@ -95,8 +97,13 @@ class _LoginPageState extends State<LoginPage> {
                     SizedBox(height: 30),
                     PwTextFormField(controller: pwController),
                     SizedBox(height: 30),
-                    ElevatedButton(
-                        onPressed: (onLoginClick), child: Text('로그인')),
+                    Consumer(
+                      builder: (context, ref, child) => ElevatedButton(
+                          onPressed: () {
+                            onLoginClick(ref);
+                          },
+                          child: Text('로그인')),
+                    ),
                     SizedBox(
                       height: 10,
                     ),
