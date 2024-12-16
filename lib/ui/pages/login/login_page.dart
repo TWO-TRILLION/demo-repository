@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_sprinchat_app/data/repository/user_repository.dart';
 import 'package:flutter_sprinchat_app/theme.dart';
 import 'package:flutter_sprinchat_app/ui/pages/join/join_page.dart';
+import 'package:flutter_sprinchat_app/ui/pages/myhome/my_home.dart';
 import 'package:flutter_sprinchat_app/ui/widgets/id_text_form_field.dart';
 import 'package:flutter_sprinchat_app/ui/widgets/pw_text_form_field.dart';
 
@@ -41,7 +43,16 @@ class _LoginPageState extends State<LoginPage> {
 
   void onLoginClick() async {
     if (formKey.currentState?.validate() ?? false) {
-      // 나중에 여기서 뷰모델 연동
+      final userRepo = UserRepository();
+      final user = await userRepo.getOne(idController.text);
+      print(user!.userpw);
+      if (user.userpw == pwController.text) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => const MyHome()),
+        );
+      }
+      ;
     }
   }
 
