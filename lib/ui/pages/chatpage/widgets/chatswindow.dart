@@ -67,6 +67,7 @@ class Chatswindow extends StatelessWidget {
                           child: snapshot.data!.imageUrl! != '' ? Image.network(
                             snapshot.data!.imageUrl!,
                             fit: BoxFit.cover,
+                            // loadingBuilder: (context, child, loadingProgress) => Center(child: CircularProgressIndicator(),),
                           ) : Image.asset('assets/images/default_profile.png'),
                         )
                       : SizedBox(
@@ -86,7 +87,7 @@ class Chatswindow extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.only(left: 24),
                         child: Text(
-                          '$dateTime  ${snapshot.data!.nickname}',
+                          '$dateTime  [ ${snapshot.data!.nickname} ]',
                           style: TextStyle(fontSize: 12),
                         ),
                       )
@@ -94,7 +95,7 @@ class Chatswindow extends StatelessWidget {
                 )
               ],
             );
-          } else {
+          } else { // 로딩중이거나, 정상적으로 userNickname, userImageUrl 이 가져오지 못했을 경우
             return Row(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
@@ -124,7 +125,7 @@ class Chatswindow extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.only(left: 24),
                         child: Text(
-                          '$dateTime  Nickname',
+                          '$dateTime  [ Nickname ]',
                           style: TextStyle(fontSize: 12),
                         ),
                       )
@@ -176,14 +177,15 @@ class Chatswindow extends StatelessWidget {
                   child: FutureBuilder(
                     future: userRepository.getOne(orderchats[index]['userid']),
                     builder: (context, snapshot) {
+                      // 정상적으로 userNickname을 가져왔을 경우
                       if (snapshot.hasData) {
                         return Text(
-                          '${snapshot.data!.nickname}  $dateTime',
+                          '[ ${snapshot.data!.nickname} ]  $dateTime',
                           style: TextStyle(fontSize: 12),
                         );
-                      } else {
+                      } else { // 로딩중이거나, 정상적으로 userNickname 을 가져오지 못했을 경우
                         return Text(
-                          'Nickname  $dateTime',
+                          '[ Nickname ]  $dateTime',
                           style: TextStyle(fontSize: 12),
                         );
                       }
@@ -192,21 +194,6 @@ class Chatswindow extends StatelessWidget {
                 )
             ],
           ),
-          /* 현 유저의 프로필사진은 띄울 필요 없다는 의견이 타당하다고 생각해서 지움
-          ClipRRect(
-            borderRadius: BorderRadius.circular(30),
-            child: isDiffUser
-                ? SizedBox(
-                    width: 40,
-                    height: 40,
-                    child: Image.network('https://picsum.photos/300/300',
-                        fit: BoxFit.cover),
-                  )
-                : SizedBox(
-                    width: 40,
-                  ),
-          ),
-          */
         ],
       ),
     );
