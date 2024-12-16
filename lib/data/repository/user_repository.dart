@@ -138,4 +138,46 @@ class UserRepository {
       print('없는 아이디 입니다. $e');
     }
   }
+
+  Future<void> updateNickname(String userId, String newNickname) async {
+    try {
+      await firestore.collection('User').doc(userId).update({
+        'nickname': newNickname,
+      });
+    } catch (e) {
+      print('닉네임 업데이트 오류: $e');
+      throw Exception('닉네임 업데이트 실패');
+    }
+  }
+
+  Future<UserModel?> getUser(String userId) async {
+    try {
+      final doc = await firestore.collection('User').doc(userId).get();
+      if (doc.exists) {
+        final data = doc.data()!;
+        data['userid'] = doc.id;
+        return UserModel.fromJson(data);
+      }
+      return null;
+    } catch (e) {
+      print('사용자 정보 가져오기 오류: $e');
+      return null;
+    }
+  }
+
+  Future<void> updateUserImage(String userId, String imagePath) async {
+    try {
+      final file = File(imagePath);
+      final ref = storage.ref().child('profile_images').child('$userId.jpg');
+      await ref.putFile(file);
+      final url = await ref.getDownloadURL();
+
+      await firestore.collection('User').doc(userId).update({
+        'imageUrl': url,
+      });
+    } catch (e) {
+      print('프로필 이미지 업데이트 오류: $e');
+      throw Exception('프로필 이미지 업데이트 실패');
+    }
+  }
 }
