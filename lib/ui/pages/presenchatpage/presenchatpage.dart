@@ -25,7 +25,7 @@ class _PresenchatpageState extends ConsumerState<Presenchatpage> {
     // 위치세팅(chatroomid)
     ref.read(chatViewModelProvider.notifier).setLocation(location);
     // 유저세팅(userid)
-    ref.read(chatViewModelProvider.notifier).setUserId('ABCD');
+    ref.read(chatViewModelProvider.notifier).setUserId('hjkim9217');
 
     // db읽고(채팅방 없으면 만들고), 스트림 세팅
     ref.read(chatViewModelProvider.notifier).readChats();
