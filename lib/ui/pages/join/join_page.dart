@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_sprinchat_app/data/model/user_model.dart';
+import 'package:flutter_sprinchat_app/data/repository/user_repository.dart';
 import 'package:flutter_sprinchat_app/ui/pages/login/login_page.dart';
 import 'package:flutter_sprinchat_app/ui/widgets/id_text_form_field.dart';
 import 'package:flutter_sprinchat_app/ui/widgets/nickname_text_form_field.dart';
@@ -25,8 +27,17 @@ class _JoinPageState extends State<JoinPage> {
     super.dispose();
   }
 
-  void onJoin() {
+  void onJoin() async {
     if (formKey.currentState?.validate() ?? false) {
+      final userRepo = UserRepository();
+      await userRepo.insert(
+        userid: idController.text,
+        userpw: pwController.text,
+        nickname: nicknameController.text,
+        lastchatroomid: '',
+        runningData: RunningData(distance: 0, kcal: 0, speed: 0),
+        imageUrl: '',
+      );
       Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(

@@ -1,29 +1,26 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter_sprinchat_app/ui/widgets/id_text_form_field.dart';
-import 'package:flutter_sprinchat_app/ui/widgets/nickname_text_form_field.dart';
-import 'package:flutter_sprinchat_app/ui/widgets/pw_text_form_field.dart';
+import 'package:flutter_sprinchat_app/data/model/user_model.dart';
 
 class UserRepository {
-  const UserRepository();
+  final firestore = FirebaseFirestore.instance;
 
-// 컬렉션(User)의 userid 문서 읽기
-  Future<void> getAll() async {
-    FirebaseFirestore firestore = FirebaseFirestore.instance;
+  Future<List<UserModel>?> getAll() async {
+    try {
+      final collectionRef = firestore.collection('User');
+      final result = await collectionRef.get();
+      final docs = result.docs;
 
-    //FirebaseFirestore 객체에서 컬렉션메서드로 User 컬렉션에 대한 참조 가져오기
-    // 참조만 저장
-    CollectionReference collectionRef = firestore.collection('User');
-
-    //컬렉션 참조에서 모든 문서 가져오기
-    QuerySnapshot snapshot = await collectionRef.get();
-
-    //QuerySnapshot 객체 내에 docs 필드에 있는 문서조회결과
-    List<QueryDocumentSnapshot> documentSnapshots = snapshot.docs;
-
-    //QueryDocumentSnapshot에서 data 메서드로 진짜 데이터 가져오기
-    for (var docSnapshot in documentSnapshots) {
-      print(docSnapshot.id);
-      print(docSnapshot.data());
+      return docs.map((doc) {
+        final map = doc.data();
+        final newMap = {
+          'id': doc.id,
+          ...map as Map<String, dynamic>,
+        };
+        return UserModel.fromJson(newMap);
+      }).toList();
+    } catch (e) {
+      print(e);
+      return null;
     }
   }
 
@@ -31,15 +28,23 @@ class UserRepository {
     required String userid,
     required String userpw,
     required String nickname,
+    required String lastchatroomid,
+    required RunningData runningData,
+    required String imageUrl,
   }) async {
     try {
-      FirebaseFirestore firestore = FirebaseFirestore.instance;
       CollectionReference collectionRef = firestore.collection('User');
-      DocumentReference documentRef = collectionRef.doc();
+      DocumentReference documentRef = collectionRef.doc(userid);
       Map<String, dynamic> data = {
-        'userid': IdTextFormField,
-        'userpw': PwTextFormField,
-        'nickname': NicknameTextFormField,
+        'userpw': userpw,
+        'nickname': nickname,
+        'lastchatroomid': '',
+        'runningData': ({
+          'distance': runningData.distance,
+          'kcal': runningData.kcal,
+          'speed': runningData.speed,
+        }),
+        'imageUrl': '',
       };
       await documentRef.set(data);
       return true;
@@ -48,4 +53,58 @@ class UserRepository {
       return false;
     }
   }
+
+  Future<UserModel?> getOne(String id) async {
+    try {
+      CollectionReference collectionRef = firestore.collection('User');
+      QuerySnapshot snapshot = await collectionRef.get();
+      List<QueryDocumentSnapshot> documentSnapshot = snapshot.docs;
+      final docs = documentSnapshot.where((e) {
+        return e.id.contains(id);
+      });
+
+      final list = docs.map(
+        (e) {
+          final map = e.data() as Map<String, dynamic>;
+          final newMap = {
+            'userid': e.id,
+            ...map,
+          };
+          return UserModel.fromJson(newMap);
+        },
+      ).toList();
+      return list[0];
+    } catch (e) {
+      print(e);
+      return null;
+    }
+  }
+
+  // Future<bool> update({
+  //   required String userid,
+  //   required String userpw,
+  //   required String nickname,
+  //   required String lastchatroomid,
+  //   required RunningData runningData,
+  //   required String imageUrl,
+  //   required String id,
+  // }) async {
+  //   try {
+  //     CollectionReference collectionRef = firestore.collection('User');
+  //     DocumentReference documentRef = collectionRef.doc(id);
+  //     Map<String, dynamic> data = {
+  //       'userid': IdTextFormField,
+  //       'userpw': PwTextFormField,
+  //       'nickname': NicknameTextFormField,
+  //       'lastchatroomid': lastchatroomid,
+  //       'runningData': runningData,
+  //       'imageUrl': imageUrl,
+  //     };
+  //     documentRef.update(data);
+  //     return true;
+  //   } catch (e) {
+  //     print(e);
+  //     return false;
+  //   }
+  // }
 }
