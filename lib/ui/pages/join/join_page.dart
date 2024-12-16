@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_sprinchat_app/data/model/user_model.dart';
 import 'package:flutter_sprinchat_app/data/repository/user_repository.dart';
@@ -27,10 +28,35 @@ class _JoinPageState extends State<JoinPage> {
     super.dispose();
   }
 
+  void onImageUpload() {}
+
   void onJoin() async {
-    if (formKey.currentState?.validate() ?? false) {
-      final userRepo = UserRepository();
-      await userRepo.insert(
+    final userRepo = UserRepository();
+    String newId = idController.text;
+    bool isDuplicated = await userRepo.checkDuplicatedId(newId);
+    if (isDuplicated) {
+      showCupertinoDialog(
+        context: context,
+        builder: (context) {
+          return CupertinoAlertDialog(
+            title: Text(
+              '중복된 아이디 입니다.',
+              style: TextStyle(fontWeight: FontWeight.normal),
+            ),
+            content: Text('다른 아이디를 입력해주세요.'),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: Text('확인'),
+              )
+            ],
+          );
+        },
+      );
+    } else {
+      userRepo.insert(
         userid: idController.text,
         userpw: pwController.text,
         nickname: nicknameController.text,
@@ -38,6 +64,7 @@ class _JoinPageState extends State<JoinPage> {
         runningData: RunningData(distance: 0, kcal: 0, speed: 0),
         imageUrl: '',
       );
+
       Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(
@@ -51,8 +78,6 @@ class _JoinPageState extends State<JoinPage> {
       );
     }
   }
-
-  void onImageUpload() {}
 
   @override
   Widget build(BuildContext context) {
