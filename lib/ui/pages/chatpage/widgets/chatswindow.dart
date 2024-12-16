@@ -44,7 +44,7 @@ class Chatswindow extends StatelessWidget {
     DateTime date = DateTime.parse(orderchats[index]['createdAt']);
     String minute = date.minute < 10 ? '0${date.minute}' : '${date.minute}';
     String dateTime =
-        '${date.year}-${date.month}-${date.day} ${date.hour} : $minute';
+        '${date.year}-${date.month}-${date.day}  ${date.hour} : $minute';
 
     final userRepository = UserRepository();
 
@@ -67,7 +67,7 @@ class Chatswindow extends StatelessWidget {
                           child: snapshot.data!.imageUrl! != '' ? Image.network(
                             snapshot.data!.imageUrl!,
                             fit: BoxFit.cover,
-                            // loadingBuilder: (context, child, loadingProgress) => Center(child: CircularProgressIndicator(),),
+                            errorBuilder: (context, error, stackTrace) => Image.asset('assets/images/default_profile.png'),
                           ) : Image.asset('assets/images/default_profile.png'),
                         )
                       : SizedBox(
@@ -151,7 +151,7 @@ class Chatswindow extends StatelessWidget {
     DateTime date = DateTime.parse(orderchats[index]['createdAt']);
     String minute = date.minute < 10 ? '0${date.minute}' : '${date.minute}';
     String dateTime =
-        '${date.year}-${date.month}-${date.day} ${date.hour} : $minute';
+        '${date.year}-${date.month}-${date.day}  ${date.hour} : $minute';
 
     final userRepository = UserRepository();
 
