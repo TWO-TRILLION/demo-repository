@@ -1,8 +1,11 @@
+import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_sprinchat_app/data/model/user_model.dart';
 
 class UserRepository {
   final firestore = FirebaseFirestore.instance;
+  final storage = FirebaseStorage.instance;
 
   Future<List<UserModel>?> getAll() async {
     try {
@@ -107,4 +110,57 @@ class UserRepository {
   //     return false;
   //   }
   // }
+
+  Future<void> updateNickname(String userId, String newNickname) async {
+    try {
+      await firestore.collection('User').doc(userId).update({
+        'nickname': newNickname,
+      });
+    } catch (e) {
+      print('닉네임 업데이트 오류: $e');
+      throw Exception('닉네임 업데이트 실패');
+    }
+  }
+
+  Future<UserModel?> getUser(String userId) async {
+    try {
+      final doc = await firestore.collection('User').doc(userId).get();
+      if (doc.exists) {
+        final data = doc.data()!;
+        data['userid'] = doc.id;
+        return UserModel.fromJson(data);
+      }
+      return null;
+    } catch (e) {
+      print('사용자 정보 가져오기 오류: $e');
+      return null;
+    }
+  }
+
+  // 이미지 업로드 및 URL 반환
+  Future<String> uploadProfileImage(String userId, String imagePath) async {
+    try {
+      final file = File(imagePath);
+      final ref = storage.ref().child('profile_images').child('$userId.jpg');
+      await ref.putFile(file);
+      final url = await ref.getDownloadURL();
+      return url;
+    } catch (e) {
+      print('이미지 업로드 오류: $e');
+      throw Exception('이미지 업로드 실패');
+    }
+  }
+
+  // 프로필 이미지 URL 업데이트
+  Future<void> updateUserImage(String userId, String imagePath) async {
+    try {
+      final imageUrl = await uploadProfileImage(userId, imagePath);
+      await firestore.collection('User').doc(userId).update({
+        'imageUrl': imageUrl,
+      });
+    } catch (e) {
+      print('프로필 이미지 업데이트 오류: $e');
+      throw Exception('프로필 이미지 업데이트 실패');
+    }
+  }
 }
