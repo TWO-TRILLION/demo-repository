@@ -50,7 +50,7 @@ class ResultPage extends StatelessWidget {
                             isDefaultAction: false,
                             onPressed: () {
                               Navigator.pop(context);
-                              Navigator.push(
+                              Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) {
@@ -70,7 +70,7 @@ class ResultPage extends StatelessWidget {
                             isDefaultAction: true,
                             onPressed: () {
                               Navigator.pop(context);
-                              Navigator.push(
+                              Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) {
