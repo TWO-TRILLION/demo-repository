@@ -44,7 +44,7 @@ class UserRepository {
         'lastchatroomid': '',
         'runningData': ({
           'distance': runningData.distance,
-          'kcal': runningData.kcal,
+          'calorie': runningData.calorie,
           'speed': runningData.speed,
         }),
         'imageUrl': '',
