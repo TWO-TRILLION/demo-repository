@@ -83,7 +83,8 @@ class UserRepository {
   Future<bool> checkDuplicatedId(String id) async {
     try {
       DocumentSnapshot snapshot =
-          await firestore.collection('user').doc(id).get();
+          await firestore.collection('User').doc(id).get();
+      // print(snapshot.exists);
       return snapshot.exists;
     } catch (e) {
       print(e);
