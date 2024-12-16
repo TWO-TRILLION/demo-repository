@@ -79,7 +79,9 @@ class RunningViewModel extends Notifier<RunningState> {
   // 현재 실행중인 타이머를 중지하는 함수
   RunningState endRunning() {
     timer.cancel();
-    return RunningState(distance, speed, calorie, hour, minute, second);
+    var temp = RunningState(distance, speed, calorie, hour, minute, second);
+    state = RunningState(0, 0, 0, 0, 0, 0);
+    return temp;
   }
 }
 
