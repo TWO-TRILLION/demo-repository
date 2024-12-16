@@ -1,6 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_sprinchat_app/core/geolocator_helper.dart';
-import 'package:geolocator/geolocator.dart';
 
 class RunningState {
   double distance; // 달린 거리
@@ -43,22 +42,30 @@ class RunningViewModel extends Notifier<RunningState> {
     final currentLocation = await GeolocatorHelper.getPosition(); // 현재 위치 좌표
     var time = DateTime.now().difference(startTime); // 달린 시간
 
+    double distance = 0;
+    double speed = 0;
+    int hour = 0;
+    int minute = 0;
+    int second = 0;
+    double calorie = 0;
+
     if (currentLocation != null) {
       // distance : 달린 거리
-      final distance = GeolocatorHelper.getDistance(
+      distance = GeolocatorHelper.getDistance(
         startLat,
         startLng,
         currentLocation.latitude,
         currentLocation.longitude,
       );
-      state.hour = time.inHours; // hour : 달린 시간(시)
-      state.minute = time.inMinutes; // minute : 달린 시간(분)
-      state.second = time.inSeconds; // second : 달린 시간(초)
+      hour = time.inHours; // hour : 달린 시간(시)
+      minute = time.inMinutes; // minute : 달린 시간(분)
+      second = time.inSeconds; // second : 달린 시간(초)
       if (time.inHours != 0) {
-        state.speed = distance / time.inHours; // 평균 속력(km/h)
+        speed = distance / time.inHours; // 평균 속력(km/h)
       }
-      state.calorie = (time.inHours * 60 + time.inMinutes) *
+      calorie = (time.inHours * 60 + time.inMinutes) *
           4; // calorie : 칼로리 소모 (분당 4kcal)
+      state = RunningState(distance, speed, calorie, hour, minute, second);
     }
   }
 }
