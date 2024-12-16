@@ -12,24 +12,13 @@ class RunningPage extends StatefulWidget {
 
   final double startLat; // 러닝을 시작한 좌표(위도)
   final double startLng; // 러닝을 시작한 좌표(경도)
-  IconData icon = Icons.directions_walk; // 러닝 시작 버튼에 들어갈 아이콘
 
   @override
   State<RunningPage> createState() => _RunningPageState();
 }
 
 class _RunningPageState extends State<RunningPage> {
-  DateTime startTime = DateTime.now();
   bool isRunning = false;
-  late Timer timer;
-
-  @override
-  void dispose() {
-    timer = Timer(Duration(seconds: 1), () {});
-    timer.cancel();
-    super.dispose();
-    print('running timer disposed');
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,10 +29,9 @@ class _RunningPageState extends State<RunningPage> {
           child: Consumer(
             builder: (context, ref, child) {
               // 뷰모델 선언
-              late var analysis;
               return Column(
                 children: [
-                  // 상단 문구
+                  // 상단 '러닝' 문구
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -54,12 +42,6 @@ class _RunningPageState extends State<RunningPage> {
                           fontFamily: 'Pretendard',
                           fontWeight: FontWeight.w700,
                           fontSize: 24,
-                        ),
-                      ),
-                      Text(
-                        '${DateTime.now().month}월 ${DateTime.now().day}일 ${DateTime.now().hour}시 ${DateTime.now().minute}분',
-                        style: TextStyle(
-                          color: Color(0xff979C9E),
                         ),
                       ),
                     ],
@@ -84,27 +66,13 @@ class _RunningPageState extends State<RunningPage> {
                                   final viewModel =
                                       ref.read(runningViewModel.notifier);
                                   viewModel.setLocation(); // 시작 위치 설정
-                                  viewModel.update(startTime); // 시작 시간 설정
-                                  analysis = ref.watch(runningViewModel);
-                                  // timer =
-                                  //     Timer.periodic(Duration(seconds: 1), (t) {
-                                  //   var analysis = ref.watch(runningViewModel);
-                                  //   // 1초 간격으로 러닝 버튼의 이미지 변경
-                                  //   // widget.icon == Icons.directions_walk
-                                  //   //     ? setState(() {
-                                  //   //         widget.icon = Icons.directions_run;
-                                  //   //       })
-                                  //   //     : setState(() {
-                                  //   //         widget.icon = Icons.directions_walk;
-                                  //   //       });
-                                  // });
-                                  // 러닝 중지
+                                  viewModel.startRunning(DateTime
+                                      .now()); // 현재 시간으로 시작 시간 설정해서 러닝 시작
                                 } else {
                                   isRunning = false;
-                                  //timer.cancel();
-                                  setState(() {
-                                    widget.icon = Icons.directions_walk;
-                                  });
+                                  ref
+                                      .read(runningViewModel.notifier)
+                                      .endRunning();
                                 }
                               },
                               // 버튼 디자인
@@ -121,11 +89,6 @@ class _RunningPageState extends State<RunningPage> {
                                       offset: Offset(0, 5),
                                     ),
                                   ],
-                                ),
-                                child: Icon(
-                                  widget.icon,
-                                  size: 30,
-                                  color: Colors.white,
                                 ),
                               )),
                         )
