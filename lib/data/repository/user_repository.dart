@@ -80,6 +80,18 @@ class UserRepository {
     }
   }
 
+  Future<bool> checkDuplicatedId(String id) async {
+    try {
+      DocumentSnapshot snapshot =
+          await firestore.collection('User').doc(id).get();
+      // print(snapshot.exists);
+      return snapshot.exists;
+    } catch (e) {
+      print(e);
+      return false;
+    }
+  }
+
   // Future<bool> update({
   //   required String userid,
   //   required String userpw,
@@ -107,4 +119,20 @@ class UserRepository {
   //     return false;
   //   }
   // }
+
+  // 유저의 LastChatRoomID 업데이트
+  Future<void> updateLastChatRoomId(String userid, String chatroomid) async {
+    try {
+      CollectionReference collectionRef = firestore.collection('User');
+      final docRef = collectionRef.doc(userid);
+
+      Map<String, dynamic> map = {
+        "lastchatroomid": chatroomid,
+      };
+
+      await docRef.update(map);
+    } catch (e) {
+      print('없는 아이디 입니다. $e');
+    }
+  }
 }
