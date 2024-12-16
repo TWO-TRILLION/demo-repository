@@ -11,10 +11,10 @@ class ResultBox extends StatelessWidget {
 
   dynamic typeCheck(var value) {
     if (value.runtimeType == double) {
-      return value;
+      return value.toString();
     }
-    if (value.runtimeType == DateTime) {
-      return '${value.hour}시간 ${value.minute}분 ${value.second}';
+    if (value.runtimeType == String) {
+      return value;
     }
   }
 
@@ -67,7 +67,7 @@ class ResultBox extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  value,
+                  typeCheck(value),
                   style: TextStyle(
                     fontFamily: 'Pretendard',
                     fontWeight: FontWeight.w600,

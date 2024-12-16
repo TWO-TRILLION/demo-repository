@@ -78,13 +78,13 @@ class _RunningPageState extends State<RunningPage> {
                               } else {
                                 isRunning = false;
                                 runningButtonViewmodel.stopRunning();
-                                ref
+                                RunningState result = ref
                                     .read(runningViewModel.notifier)
                                     .endRunning();
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => ResultxPage(),
+                                    builder: (context) => ResultPage(result),
                                   ),
                                 );
                               }
