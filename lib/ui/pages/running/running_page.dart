@@ -26,6 +26,11 @@ class _RunningPageState extends State<RunningPage> {
   bool isRunning = false;
 
   @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
