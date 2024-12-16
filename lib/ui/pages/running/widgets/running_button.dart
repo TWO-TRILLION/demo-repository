@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_sprinchat_app/ui/pages/running/running_view_model.dart';
 
 class RunningButton extends StatelessWidget {
   RunningButton(this.isRunning);
@@ -136,33 +135,3 @@ class RunningButton extends StatelessWidget {
     );
   }
 }
-
-class Button {
-  bool isRunning = false;
-  Button(this.isRunning);
-}
-
-class ButtonViewModel extends Notifier<Button> {
-  @override
-  build() {
-    return Button(
-      false,
-    );
-  }
-
-  void startRunning() {
-    state = Button(
-      true,
-    );
-  }
-
-  void stopRunning() {
-    state = Button(
-      false,
-    );
-  }
-}
-
-final buttonViewModel = NotifierProvider<ButtonViewModel, Button>(
-  () => ButtonViewModel(),
-);

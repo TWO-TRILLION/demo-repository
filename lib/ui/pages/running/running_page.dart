@@ -2,8 +2,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_sprinchat_app/ui/pages/result/result_page.dart';
 import 'package:flutter_sprinchat_app/ui/pages/running/running_view_model.dart';
-import 'package:flutter_sprinchat_app/ui/pages/running/widgets/kakao_map.dart';
+import 'package:flutter_sprinchat_app/ui/pages/running/widgets/kakaomap.dart';
 import 'package:flutter_sprinchat_app/ui/pages/running/widgets/running_analysis.dart';
+import 'package:flutter_sprinchat_app/ui/pages/running/widgets/button_view_model.dart';
 import 'package:flutter_sprinchat_app/ui/pages/running/widgets/running_button.dart';
 import 'package:flutter_sprinchat_app/ui/widgets/navigation_bar.dart';
 
