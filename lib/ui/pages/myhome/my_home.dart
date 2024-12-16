@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_sprinchat_app/ui/pages/myhome/profile.dart';
+import 'package:flutter_sprinchat_app/core/geolocator_helper.dart';
 import 'dart:io';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_sprinchat_app/ui/widgets/navigation_bar.dart';
+import 'package:flutter_sprinchat_app/ui/pages/myhome/widgets/home_location.dart';
 
 class MyHome extends StatefulWidget {
   const MyHome({super.key});
@@ -48,30 +50,23 @@ class _MyHomeState extends State<MyHome> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // 상단 헤더
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text(
-                        'Home',
-                        style: TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      Row(
-                        children: const [
-                          Icon(Icons.location_on, size: 16, color: Colors.grey),
-                          Text(
-                            '서울시 강남구 삼성동',
-                            style: TextStyle(color: Colors.grey),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          'Home',
+                          style: TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
                           ),
-                        ],
-                      ),
-                    ],
+                        ),
+                        const HomeLocation(),
+                      ],
+                    ),
                   ),
                   GestureDetector(
                     onTap: () {
@@ -95,8 +90,6 @@ class _MyHomeState extends State<MyHome> {
                 ],
               ),
               const SizedBox(height: 20),
-
-              // 진행중인 채팅 카드
               Container(
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
@@ -130,8 +123,6 @@ class _MyHomeState extends State<MyHome> {
                 ),
               ),
               const SizedBox(height: 20),
-
-              // 최근 러닝 섹션
               const Text(
                 '최근 러닝',
                 style: TextStyle(
@@ -140,8 +131,6 @@ class _MyHomeState extends State<MyHome> {
                 ),
               ),
               const SizedBox(height: 16),
-
-              // 통계 카드들
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
