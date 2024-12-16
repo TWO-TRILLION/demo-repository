@@ -39,7 +39,8 @@ class RunningInformation extends StatelessWidget {
             bottom: 5,
             left: 5,
             child: Text(
-              value.toStringAsFixed(1),
+              // 값이 세자릿수가 될 때부터는 소수점 표기하지 않음
+              value > 99 ? value.toStringAsFixed(0) : value.toStringAsFixed(1),
               style: TextStyle(
                 fontSize: 30,
                 fontFamily: 'Pretendard',
