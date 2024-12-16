@@ -2,29 +2,33 @@ import 'package:flutter/material.dart';
 import 'package:flutter_sprinchat_app/core/geolocator_helper.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_sprinchat_app/core/viewmodel/location_viewmodel/location_viewmodel.dart';
 
-class HomeLocation extends StatefulWidget {
-  const HomeLocation({super.key});
+class HomeLocation extends ConsumerStatefulWidget {
+  const HomeLocation({
+    super.key,
+    required this.onLocationChanged,
+  });
+
+  final Function(String) onLocationChanged;
 
   @override
-  State<HomeLocation> createState() => _HomeLocationState();
+  ConsumerState<HomeLocation> createState() => _HomeLocationState();
 }
 
-class _HomeLocationState extends State<HomeLocation> {
-  String currentLocation = '위치 불러오는 중...';
+class _HomeLocationState extends ConsumerState<HomeLocation> {
   final String vworldApiKey = '23B7F99C-6E94-3B38-8F2E-D43DFF88ADB5';
 
   @override
   void initState() {
     super.initState();
-    _getCurrentLocation();
+    Future.microtask(() => _getCurrentLocation());
   }
 
   Future<void> _getCurrentLocation() async {
     try {
-      setState(() {
-        currentLocation = '위치 불러오는 중...';
-      });
+      ref.read(locationViewModelProvider.notifier).setLocation('위치 불러오는 중...');
 
       final position = await GeolocatorHelper.getPosition();
       if (position != null) {
@@ -45,7 +49,7 @@ class _HomeLocationState extends State<HomeLocation> {
         final response = await http.get(Uri.parse(url));
 
         print('응답 상태 코드: ${response.statusCode}');
-        print('응답 내용: ${response.body}');
+        print('응답 : ${response.body}');
 
         if (response.statusCode == 200) {
           final decodedResponse = json.decode(utf8.decode(response.bodyBytes));
@@ -55,52 +59,64 @@ class _HomeLocationState extends State<HomeLocation> {
             final result = decodedResponse['response']['result'];
             if (result != null && result.isNotEmpty) {
               final structure = result[0]['structure'];
-              setState(() {
-                if (result[0]['text'] != null && result[0]['text'].isNotEmpty) {
-                  currentLocation = result[0]['text'];
-                } else {
-                  currentLocation =
-                      '${structure['level1']} ${structure['level2']} ${structure['level3']}';
-                }
-              });
+              final String address = result[0]['text'] != null &&
+                      result[0]['text'].isNotEmpty
+                  ? result[0]['text']
+                  : '${structure['level1']} ${structure['level2']} ${structure['level3']}';
+
+              if (mounted) {
+                ref
+                    .read(locationViewModelProvider.notifier)
+                    .setLocation(address);
+                widget.onLocationChanged(address);
+              }
             } else {
-              setState(() {
-                currentLocation = '주소를 찾을 수 없습니다';
-              });
+              if (mounted) {
+                ref
+                    .read(locationViewModelProvider.notifier)
+                    .setLocation('주소를 찾을 수 없습니다');
+              }
             }
           } else {
             print('API 응답 상태: ${decodedResponse['response']['status']}');
-            setState(() {
-              currentLocation = '${position.latitude}, ${position.longitude}';
-            });
+            if (mounted) {
+              ref
+                  .read(locationViewModelProvider.notifier)
+                  .setLocation('${position.latitude}, ${position.longitude}');
+            }
           }
         } else {
-          setState(() {
-            currentLocation = '${position.latitude}, ${position.longitude}';
-          });
+          if (mounted) {
+            ref
+                .read(locationViewModelProvider.notifier)
+                .setLocation('${position.latitude}, ${position.longitude}');
+          }
         }
       } else {
-        setState(() {
-          currentLocation = '위치를 가져올 수 없습니다';
-        });
+        if (mounted) {
+          ref
+              .read(locationViewModelProvider.notifier)
+              .setLocation('위치를 가져올 수 없습니다');
+        }
       }
     } catch (e) {
       print('오류 발생: $e');
-      setState(() {
-        currentLocation = '위치 서비스 오류';
-      });
+      if (mounted) {
+        ref.read(locationViewModelProvider.notifier).setLocation('위치 서비스 오류');
+      }
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    final location = ref.watch(locationViewModelProvider);
     return Row(
       children: [
         const Icon(Icons.location_on, size: 16, color: Colors.grey),
         const SizedBox(width: 4),
         Expanded(
           child: Text(
-            currentLocation,
+            location,
             style: const TextStyle(color: Colors.grey),
             overflow: TextOverflow.ellipsis,
           ),

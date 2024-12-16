@@ -10,10 +10,14 @@ import 'package:flutter_sprinchat_app/ui/widgets/navigation_bar.dart';
 import 'package:geolocator/geolocator.dart';
 
 class RunningPage extends StatefulWidget {
-  RunningPage({required this.startLat, required this.startLng});
+  RunningPage(
+      {required this.startLat,
+      required this.startLng,
+      required this.currentLocation});
 
   double startLat;
   double startLng;
+  String currentLocation;
   Color boxColor = Color(0xff0070F0);
   IconData icon = Icons.directions_walk;
 
@@ -156,7 +160,8 @@ class _RunningPageState extends State<RunningPage> {
           ),
         ),
       ),
-      bottomNavigationBar: const CustomNavigationBar(currentPage: 'running'),
+      bottomNavigationBar: CustomNavigationBar(
+          currentPage: 'running', currentLocation: widget.currentLocation),
     );
   }
 }
