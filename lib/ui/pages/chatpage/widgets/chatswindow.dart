@@ -64,10 +64,10 @@ class Chatswindow extends StatelessWidget {
                       ? SizedBox(
                           width: 40,
                           height: 40,
-                          child: Image.network(
+                          child: snapshot.data!.imageUrl! != '' ? Image.network(
                             snapshot.data!.imageUrl!,
                             fit: BoxFit.cover,
-                          ),
+                          ) : Image.asset('assets/images/default_profile.png'),
                         )
                       : SizedBox(
                           width: 40,
