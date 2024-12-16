@@ -3,7 +3,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_sprinchat_app/core/viewmodel/chat_viewmodel/chat_viewmodel.dart';
 
 class Inputmessage extends ConsumerStatefulWidget {
-  const Inputmessage({super.key});
+  const Inputmessage({this.scrollController, super.key});
+
+  final scrollController;
 
   @override
   ConsumerState<Inputmessage> createState() => _InputmessageState();
@@ -28,7 +30,7 @@ class _InputmessageState extends ConsumerState<Inputmessage> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 20,bottom: 20, left: 24, right: 24),
+      padding: const EdgeInsets.only(top: 20, bottom: 20, left: 24, right: 24),
       child: Form(
         key: formkey,
         child: Row(
@@ -40,18 +42,19 @@ class _InputmessageState extends ConsumerState<Inputmessage> {
                   controller: textController,
                   validator: inputvalidator,
                   decoration: InputDecoration(
-                    hintText: 'Type a message',
-                    border: OutlineInputBorder()),
+                      hintText: 'Type a message', border: OutlineInputBorder()),
                 ),
               ),
             ),
             IconButton(
               onPressed: () {
                 final bool isValid = formkey.currentState?.validate() ?? false;
-                if(!isValid){
+                if (!isValid) {
                   return;
                 }
-                ref.read(chatViewModelProvider.notifier).newChat(textController.text);
+                ref
+                    .read(chatViewModelProvider.notifier)
+                    .newChat(textController.text);
                 textController.text = '';
               },
               icon: Icon(

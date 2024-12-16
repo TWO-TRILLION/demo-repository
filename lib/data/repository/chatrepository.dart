@@ -77,7 +77,7 @@ class Chatrepository {
 
       final docRef = collectionRef.doc(chatroomid);
 
-      Map<String,dynamic> map = {
+      Map<String, dynamic> map = {
         "chats": chats,
         "member": member,
         "updatetime": updatetime.toIso8601String(),
@@ -97,14 +97,46 @@ class Chatrepository {
 
     final docRef = collectionRef.doc(chatroomid);
 
-    Map<String,dynamic> map ={
-      "updatetime" : DateTime.now().toIso8601String(),
+    Map<String, dynamic> map = {
+      "updatetime": DateTime.now().toIso8601String(),
       "member": FieldValue.arrayUnion([userid]),
-      "chats": FieldValue.arrayUnion([{
-        "message": chat,
-        "createdAt" : DateTime.now().toIso8601String(),
-        "userid": userid,
-      }])
+      "chats": FieldValue.arrayUnion([
+        {
+          "message": chat,
+          "createdAt": DateTime.now().toIso8601String(),
+          "userid": userid,
+        }
+      ])
+    };
+
+    await docRef.update(map);
+  }
+
+  // 컬렉션(Chatroom)의 chatroomid 문서 중 member속성만 업데이트
+  // presenchatpage의 참여하기 버튼을 누르면 호출 (채팅방 참여)
+  Future<void> updateMember(String chatroomid, String userid) async {
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+    CollectionReference collectionRef = firestore.collection('Chatroom');
+
+    final docRef = collectionRef.doc(chatroomid);
+
+    Map<String, dynamic> map = {
+      "member": FieldValue.arrayUnion([userid]),
+    };
+
+    await docRef.update(map);
+  }
+
+  // 컬렉션(Chatroom)의 chatroomid 문서 중 member리스트의 유저id 만 제거
+  // 유저가 다른 채팅방을 들어가게 될 경우 호출 (미리 User가 참여하고 있던 채팅방 정보가 있어야 함)
+  Future<void> deleteMember(String chatroomid, String userid) async {
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+    CollectionReference collectionRef = firestore.collection('Chatroom');
+
+    final docRef = collectionRef.doc(chatroomid);
+
+    Map<String, dynamic> map = {
+      "member": FieldValue.arrayRemove([userid]),
     };
 
     await docRef.update(map);

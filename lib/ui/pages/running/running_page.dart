@@ -32,8 +32,10 @@ class _RunningPageState extends State<RunningPage> {
 
   @override
   void dispose() {
+    timer = Timer(Duration(seconds: 1), () {});
     timer.cancel();
     super.dispose();
+    print('running timer disposed');
   }
 
   @override

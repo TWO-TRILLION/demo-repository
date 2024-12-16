@@ -2,9 +2,10 @@ import 'package:chat_bubbles/chat_bubbles.dart';
 import 'package:flutter/material.dart';
 
 class Chatswindow extends StatelessWidget {
-  const Chatswindow({super.key, this.chatState});
+  const Chatswindow({super.key, this.chatState, this.scrollController});
 
   final chatState;
+  final scrollController;
 
   @override
   Widget build(BuildContext context) {
@@ -15,6 +16,7 @@ class Chatswindow extends StatelessWidget {
 
     return Expanded(
       child: ListView.builder(
+        controller: scrollController,
         itemCount: orderchats.length,
         itemBuilder: (context, index) {
           if (chatState.userid == orderchats[index]['userid']) {
@@ -128,6 +130,7 @@ class Chatswindow extends StatelessWidget {
                 )
             ],
           ),
+          /* 현 유저의 프로필사진은 띄울 필요 없다는 의견이 타당하다고 생각해서 지움
           ClipRRect(
             borderRadius: BorderRadius.circular(30),
             child: isDiffUser
@@ -141,6 +144,7 @@ class Chatswindow extends StatelessWidget {
                     width: 40,
                   ),
           ),
+          */
         ],
       ),
     );
