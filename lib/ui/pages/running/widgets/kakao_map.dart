@@ -13,18 +13,12 @@ class KakaoMap extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
+    return KakaoMapView(
       width: double.infinity,
       height: 300,
-      child: Flexible(
-        child: KakaoMapView(
-          width: double.infinity,
-          height: 300,
-          kakaoMapKey: '08eebe69029ef27e6209ec2d97b79d29',
-          lat: lat,
-          lng: lng,
-        ),
-      ),
+      kakaoMapKey: '08eebe69029ef27e6209ec2d97b79d29',
+      lat: lat,
+      lng: lng,
     );
   }
 }
