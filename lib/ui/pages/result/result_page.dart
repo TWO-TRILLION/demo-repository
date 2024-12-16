@@ -24,6 +24,11 @@ class ResultxPage extends StatelessWidget {
                 ResultBox('달린 시간', '30분', '동안'),
                 ResultBox('달린 거리', '3km', '뛰고'),
                 ResultBox('소모한 칼로리', '500kcal', '불태웠습니다'),
+                SizedBox(height: 30),
+                ElevatedButton(
+                  onPressed: () {},
+                  child: Text('러닝 마치기'),
+                )
               ],
             ),
           ),
