@@ -2,10 +2,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_sprinchat_app/firebase_options.dart';
-import 'package:flutter_sprinchat_app/ui/pages/myhome/my_home.dart';
+import 'package:flutter_sprinchat_app/ui/pages/login/login_page.dart';
 import 'package:flutter_sprinchat_app/theme.dart';
-import 'package:flutter_sprinchat_app/ui/pages/myhome/my_home.dart';
-import 'package:flutter_sprinchat_app/ui/pages/result/result_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
