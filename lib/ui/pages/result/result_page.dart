@@ -21,9 +21,9 @@ class ResultxPage extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: 30),
-                ResultBox('달린 시간', '30분', '동안', Icons.timer_outlined),
-                ResultBox('달린 거리', '3km', '뛰고', Icons.straighten),
-                ResultBox('소모한 칼로리', '500kcal', '불태웠습니다',
+                ResultBox('달린 시간', '30', '초', '동안', Icons.timer_outlined),
+                ResultBox('달린 거리', '3', 'km', '뛰고', Icons.straighten),
+                ResultBox('소모한 칼로리', '500', 'kcal', '불태웠습니다',
                     Icons.local_fire_department_outlined),
                 SizedBox(height: 30),
                 ElevatedButton(

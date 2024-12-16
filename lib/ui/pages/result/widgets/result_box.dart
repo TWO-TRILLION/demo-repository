@@ -1,12 +1,22 @@
 import 'package:flutter/material.dart';
 
 class ResultBox extends StatelessWidget {
-  ResultBox(this.title, this.value, this.message, this.icon);
+  ResultBox(this.title, this.value, this.unit, this.message, this.icon);
 
   String title;
-  String value;
+  var value;
   String message;
   IconData icon;
+  String unit;
+
+  dynamic typeCheck(var value) {
+    if (value.runtimeType == double) {
+      return value;
+    }
+    if (value.runtimeType == DateTime) {
+      return '${value.hour}시간 ${value.minute}분 ${value.second}';
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -53,13 +63,26 @@ class ResultBox extends StatelessWidget {
                 ),
               ],
             ),
-            Text(
-              value,
-              style: TextStyle(
-                fontFamily: 'Pretendard',
-                fontWeight: FontWeight.w600,
-                fontSize: 30,
-              ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  value,
+                  style: TextStyle(
+                    fontFamily: 'Pretendard',
+                    fontWeight: FontWeight.w600,
+                    fontSize: 30,
+                  ),
+                ),
+                Text(
+                  unit,
+                  style: TextStyle(
+                    fontFamily: 'Pretendard',
+                    fontWeight: FontWeight.w600,
+                    fontSize: 30,
+                  ),
+                ),
+              ],
             ),
             SizedBox(height: 4),
             Text(
