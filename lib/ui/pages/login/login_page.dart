@@ -1,26 +1,12 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_sprinchat_app/core/viewmodel/user_viewmodel/user_viewmodel.dart';
 import 'package:flutter_sprinchat_app/data/repository/user_repository.dart';
-import 'package:flutter_sprinchat_app/theme.dart';
 import 'package:flutter_sprinchat_app/ui/pages/join/join_page.dart';
 import 'package:flutter_sprinchat_app/ui/pages/myhome/my_home.dart';
 import 'package:flutter_sprinchat_app/ui/widgets/id_text_form_field.dart';
 import 'package:flutter_sprinchat_app/ui/widgets/pw_text_form_field.dart';
-
-void main() {
-  runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp();
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: theme,
-      home: LoginPage(),
-    );
-  }
-}
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -41,18 +27,51 @@ class _LoginPageState extends State<LoginPage> {
     super.dispose();
   }
 
-  void onLoginClick() async {
-    if (formKey.currentState?.validate() ?? false) {
-      final userRepo = UserRepository();
-      final user = await userRepo.getOne(idController.text);
-      print(user!.userpw);
-      if (user.userpw == pwController.text) {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => const MyHome()),
-        );
-      }
-      ;
+  void onLoginClick(WidgetRef ref) async {
+    final userRepo = UserRepository();
+
+    final user = await userRepo.getOne(idController.text);
+
+    if (user == null) {
+      showCupertinoDialog(
+        context: context,
+        builder: (context) {
+          return CupertinoAlertDialog(
+            title: Text('로그인 오류'),
+            content: Text('아이디를 확인하세요.'),
+            actions: [
+              TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: Text('확인'))
+            ],
+          );
+        },
+      );
+    } else if (user.userpw != pwController.text) {
+      showCupertinoDialog(
+        context: context,
+        builder: (context) {
+          return CupertinoAlertDialog(
+            title: Text('로그인 오류'),
+            content: Text('비밀번호를 확인하세요.'),
+            actions: [
+              TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: Text('확인'))
+            ],
+          );
+        },
+      );
+    } else {
+      ref.read(userViewModelProvider.notifier).setUserId(idController.text);
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => const MyHome()),
+      );
     }
   }
 
@@ -78,8 +97,13 @@ class _LoginPageState extends State<LoginPage> {
                     SizedBox(height: 30),
                     PwTextFormField(controller: pwController),
                     SizedBox(height: 30),
-                    ElevatedButton(
-                        onPressed: (onLoginClick), child: Text('로그인')),
+                    Consumer(
+                      builder: (context, ref, child) => ElevatedButton(
+                          onPressed: () {
+                            onLoginClick(ref);
+                          },
+                          child: Text('로그인')),
+                    ),
                     SizedBox(
                       height: 10,
                     ),

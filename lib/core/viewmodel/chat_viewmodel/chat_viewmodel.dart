@@ -3,7 +3,9 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_sprinchat_app/data/model/chatmodel.dart';
+import 'package:flutter_sprinchat_app/data/model/user_model.dart';
 import 'package:flutter_sprinchat_app/data/repository/chatrepository.dart';
+import 'package:flutter_sprinchat_app/data/repository/user_repository.dart';
 
 // presenchatpage 하고, chatpage 에 영향을 주고 있는 State
 // location이 채팅방에 chatroomid 역할을 맡음
@@ -97,6 +99,9 @@ class ChatViewmodel extends AutoDisposeNotifier<ChatState> {
   void newMember() {
     final chatrepository = Chatrepository();
     chatrepository.updateMember(state.location, state.userid);
+
+    final userrepository = UserRepository();
+    userrepository.updateLastChatRoomId(state.userid, state.location);
   }
 
   // 채팅방 나가기 메서드 (해당 채팅방의 멤버리스트에서 유저id 제거)
@@ -104,6 +109,9 @@ class ChatViewmodel extends AutoDisposeNotifier<ChatState> {
   void deleteMember() {
     final chatrepository = Chatrepository();
     chatrepository.deleteMember(state.location, state.userid);
+
+    final userrepository = UserRepository();
+    userrepository.updateLastChatRoomId(state.userid, '');
   }
 
   // 스크롤 컨트롤러를 마지막으로 옮기는 메서드

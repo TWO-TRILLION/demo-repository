@@ -31,6 +31,13 @@ class RunningViewModel extends Notifier<RunningState> {
   double startLng = 0;
   late Timer timer;
 
+  double distance = 0;
+  double speed = 0;
+  int hour = 0;
+  int minute = 0;
+  int second = 0;
+  double calorie = 0;
+
   // 러닝 시작할 때 시작 위치 좌표 설정하는 함수
   Future<void> setLocation() async {
     final startLocation = await GeolocatorHelper.getPosition();
@@ -47,13 +54,6 @@ class RunningViewModel extends Notifier<RunningState> {
     timer = Timer.periodic(Duration(seconds: 1), (t) async {
       final currentLocation = await GeolocatorHelper.getPosition(); // 현재 위치 좌표
       var time = DateTime.now().difference(startTime); // 달린 시간
-
-      double distance = 0;
-      double speed = 0;
-      int hour = 0;
-      int minute = 0;
-      int second = 0;
-      double calorie = 0;
 
       if (currentLocation != null) {
         // distance : 달린 거리
@@ -77,8 +77,11 @@ class RunningViewModel extends Notifier<RunningState> {
   }
 
   // 현재 실행중인 타이머를 중지하는 함수
-  void endRunning() {
+  RunningState endRunning() {
     timer.cancel();
+    var temp = RunningState(distance, speed, calorie, hour, minute, second);
+    state = RunningState(0, 0, 0, 0, 0, 0);
+    return temp;
   }
 }
 

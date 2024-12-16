@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_sprinchat_app/core/validator_utils.dart';
 
 class NicknameTextFormField extends StatelessWidget {
@@ -10,6 +11,9 @@ class NicknameTextFormField extends StatelessWidget {
       decoration: InputDecoration(hintText: "닉네임"),
       validator: ValidatorUtils.validatorNickname,
       controller: controller,
+      inputFormatters: [
+        FilteringTextInputFormatter.allow(RegExp("[a-zA-Zㄱ-힣0-9]")),
+      ],
     );
   }
 }
