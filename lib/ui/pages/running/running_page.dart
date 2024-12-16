@@ -2,12 +2,11 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_sprinchat_app/core/geolocator_helper.dart';
 import 'package:flutter_sprinchat_app/ui/pages/running/running_view_model.dart';
 import 'package:flutter_sprinchat_app/ui/pages/running/widgets/kakao_map.dart';
 import 'package:flutter_sprinchat_app/ui/pages/running/widgets/running_analysis.dart';
+import 'package:flutter_sprinchat_app/ui/pages/running/widgets/running_button.dart';
 import 'package:flutter_sprinchat_app/ui/widgets/navigation_bar.dart';
-import 'package:geolocator/geolocator.dart';
 
 class RunningPage extends StatefulWidget {
   RunningPage(
@@ -15,32 +14,17 @@ class RunningPage extends StatefulWidget {
       required this.startLng,
       required this.currentLocation});
 
-  double startLat;
-  double startLng;
+  final double startLat; // 러닝을 시작한 좌표(위도)
+  final double startLng; // 러닝을 시작한 좌표(경도)
+  bool isRunning = false;
   String currentLocation;
-  Color boxColor = Color(0xff0070F0);
-  IconData icon = Icons.directions_walk;
 
   @override
   State<RunningPage> createState() => _RunningPageState();
 }
 
 class _RunningPageState extends State<RunningPage> {
-  double distance = 0;
-  double speed = 0;
-  double calorie = 0;
-  DateTime? time;
-  DateTime startTime = DateTime.now();
   bool isRunning = false;
-  late Timer timer;
-
-  @override
-  void dispose() {
-    timer = Timer(Duration(seconds: 1), () {});
-    timer.cancel();
-    super.dispose();
-    print('running timer disposed');
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -50,17 +34,14 @@ class _RunningPageState extends State<RunningPage> {
           padding: const EdgeInsets.all(16),
           child: Consumer(
             builder: (context, ref, child) {
-              final viewModel = ref.read(runningViewModel.notifier);
-              viewModel.setLocation();
-              viewModel.update(startTime);
-              var analysis = ref.watch(runningViewModel);
+              // 뷰모델 선언
+              final runningButtonViewmodel = ref.read(buttonViewModel.notifier);
               return Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  // 상단 '러닝' 문구
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.end,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Text(
                         '러닝',
@@ -70,90 +51,50 @@ class _RunningPageState extends State<RunningPage> {
                           fontSize: 24,
                         ),
                       ),
-                      Text(
-                        '${DateTime.now().month}월 ${DateTime.now().day}일 ${DateTime.now().hour}시 ${DateTime.now().minute}분',
-                        style: TextStyle(
-                          color: Color(0xff979C9E),
-                        ),
-                      ),
                     ],
                   ),
                   SizedBox(height: 30),
-                  // Container(
-                  //   width: double.infinity,
-                  //   height: 10,
-                  //   color: widget.boxColor,
-                  //   child: GestureDetector(
-                  //     onTap: () {
-                  //       Timer.periodic(Duration(seconds: 1), (t) {
-                  //         widget.boxColor != Colors.yellow
-                  //             ? setState(() {
-                  //                 widget.boxColor = Colors.yellow;
-                  //               })
-                  //             : setState(() {
-                  //                 widget.boxColor = Colors.grey;
-                  //               });
-                  //       });
-                  //     },
-                  //   ),
-                  // ),
+                  // 지도 및 러닝 시작 버튼
                   SizedBox(
                     height: 350,
                     child: Stack(
                       alignment: Alignment.topCenter,
                       children: [
+                        // 지도
                         KakaoMap(lat: widget.startLat, lng: widget.startLng),
+                        // 러닝 시작 버튼
                         Positioned(
                           bottom: 0,
                           child: GestureDetector(
-                              onTap: () {
-                                if (!isRunning) {
-                                  isRunning = true;
-                                  timer =
-                                      Timer.periodic(Duration(seconds: 1), (t) {
-                                    analysis = ref.watch(runningViewModel);
-                                    widget.icon == Icons.directions_walk
-                                        ? setState(() {
-                                            widget.icon = Icons.directions_run;
-                                          })
-                                        : setState(() {
-                                            widget.icon = Icons.directions_walk;
-                                          });
-                                  });
-                                } else {
-                                  isRunning = false;
-                                  timer.cancel();
-                                  setState(() {
-                                    widget.icon = Icons.directions_walk;
-                                  });
-                                }
-                              },
-                              child: Container(
-                                width: 120,
-                                height: 120,
-                                decoration: BoxDecoration(
-                                  color: widget.boxColor,
-                                  shape: BoxShape.circle,
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.grey.withOpacity(0.7),
-                                      blurRadius: 5.0,
-                                      offset: Offset(0, 5),
-                                    ),
-                                  ],
-                                ),
-                                child: Icon(
-                                  widget.icon,
-                                  size: 30,
-                                  color: Colors.white,
-                                ),
-                              )),
+                            onTap: () {
+                              // 러닝 시작
+                              if (!isRunning) {
+                                isRunning = true;
+                                runningButtonViewmodel.startRunning();
+                                final viewModel =
+                                    ref.read(runningViewModel.notifier);
+                                viewModel.setLocation(); // 시작 위치 설정
+                                viewModel.startRunning(
+                                    DateTime.now()); // 현재 시간으로 시작 시간 설정해서 러닝 시작
+                              } else {
+                                isRunning = false;
+                                runningButtonViewmodel.stopRunning();
+                                ref
+                                    .read(runningViewModel.notifier)
+                                    .endRunning();
+                              }
+                            },
+                            // 버튼 디자인
+                            child: RunningButton(
+                                ref.watch(buttonViewModel).isRunning),
+                          ),
                         )
                       ],
                     ),
                   ),
                   SizedBox(height: 30),
-                  RunningAnalysis(analysis: analysis),
+                  // 러닝 분석 정보 표시
+                  RunningAnalysis(),
                 ],
               );
             },
