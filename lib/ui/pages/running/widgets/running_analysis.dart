@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_sprinchat_app/ui/pages/running/running_view_model.dart';
@@ -7,12 +5,9 @@ import 'package:flutter_sprinchat_app/ui/pages/running/widgets/running_informati
 import 'package:flutter_sprinchat_app/ui/pages/running/widgets/time_information.dart';
 
 class RunningAnalysis extends StatefulWidget {
-  RunningAnalysis({
+  const RunningAnalysis({
     super.key,
-    required this.analysis,
   });
-
-  var analysis;
 
   @override
   State<RunningAnalysis> createState() => _RunningAnalysisState();
@@ -23,6 +18,7 @@ class _RunningAnalysisState extends State<RunningAnalysis> {
   Widget build(BuildContext context) {
     return Consumer(
       builder: (context, ref, child) {
+        var analysis = ref.watch(runningViewModel);
         return Padding(
           padding: const EdgeInsets.symmetric(horizontal: 0),
           child: Column(
@@ -31,17 +27,17 @@ class _RunningAnalysisState extends State<RunningAnalysis> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   TimeInformation(
-                    value: widget.analysis.hour,
+                    value: analysis.hour,
                     unit: 'h',
                   ),
                   SizedBox(width: 10),
                   TimeInformation(
-                    value: widget.analysis.minute,
+                    value: analysis.minute,
                     unit: 'm',
                   ),
                   SizedBox(width: 10),
                   TimeInformation(
-                    value: widget.analysis.second % 60,
+                    value: analysis.second % 60,
                     unit: 's',
                   ),
                 ],
@@ -50,10 +46,9 @@ class _RunningAnalysisState extends State<RunningAnalysis> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  RunningInformation('달린 거리', widget.analysis.distance, 'km'),
-                  RunningInformation('평균 속력', widget.analysis.speed, 'km/h'),
-                  RunningInformation(
-                      '소모한 칼로리', widget.analysis.calorie, 'kcal'),
+                  RunningInformation('달린 거리', analysis.distance, 'km'),
+                  RunningInformation('평균 속력', analysis.speed, 'km/h'),
+                  RunningInformation('소모한 칼로리', analysis.calorie, 'kcal'),
                 ],
               ),
               SizedBox(height: 30),

@@ -16,9 +16,10 @@ class RunningInformation extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 120,
-      width: 110,
+      width: 120,
       padding: EdgeInsets.all(10),
       child: Stack(
+        alignment: Alignment.bottomRight,
         children: [
           // 제목
           Positioned(
@@ -38,7 +39,8 @@ class RunningInformation extends StatelessWidget {
             bottom: 5,
             left: 5,
             child: Text(
-              '$value',
+              // 값이 세자릿수가 될 때부터는 소수점 표기하지 않음
+              value > 99 ? value.toStringAsFixed(0) : value.toStringAsFixed(1),
               style: TextStyle(
                 fontSize: 30,
                 fontFamily: 'Pretendard',
@@ -47,16 +49,12 @@ class RunningInformation extends StatelessWidget {
             ),
           ),
           // 단위
-          Positioned(
-            bottom: 10,
-            right: 5,
-            child: Text(
-              unit,
-              style: TextStyle(
-                fontSize: 14,
-                fontFamily: 'Pretendard',
-                fontWeight: FontWeight.w300,
-              ),
+          Text(
+            unit,
+            style: TextStyle(
+              fontSize: 14,
+              fontFamily: 'Pretendard',
+              fontWeight: FontWeight.w300,
             ),
           ),
         ],
