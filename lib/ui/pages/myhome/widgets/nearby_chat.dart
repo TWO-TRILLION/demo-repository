@@ -1,8 +1,8 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_sprinchat_app/core/viewmodel/chat_viewmodel/chat_viewmodel.dart';
-import 'package:flutter_sprinchat_app/core/viewmodel/location_viewmodel/location_viewmodel.dart';
 import 'package:flutter_sprinchat_app/ui/pages/presenchatpage/presenchatpage.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class NearbyChat extends ConsumerStatefulWidget {
   const NearbyChat({super.key});
@@ -12,18 +12,61 @@ class NearbyChat extends ConsumerStatefulWidget {
 }
 
 class _NearbyChatState extends ConsumerState<NearbyChat> {
+  int _memberCount = 0;
+  String _currentLocation = '';
+  Timer? _refreshTimer;
+  final firestore = FirebaseFirestore.instance;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadChatInfo();
+    _refreshTimer = Timer.periodic(const Duration(seconds: 1), (_) {
+      _loadChatInfo();
+    });
+  }
+
+  @override
+  void dispose() {
+    _refreshTimer?.cancel();
+    super.dispose();
+  }
+
+  Future<void> _loadChatInfo() async {
+    try {
+      // 현재 위치의 채팅방 정보 가져오기
+      final snapshot = await firestore
+          .collection('Chatroom')
+          .orderBy('updatetime', descending: true)
+          .limit(1)
+          .get();
+
+      if (snapshot.docs.isNotEmpty) {
+        final chatroom = snapshot.docs.first.data();
+        final List<dynamic> members = chatroom['member'] ?? [];
+        final String location = chatroom['chatroomid'] ?? '';
+
+        if (mounted) {
+          setState(() {
+            _memberCount = members.length;
+            _currentLocation = location;
+          });
+        }
+      }
+    } catch (e) {
+      print('채팅방 정보 로딩 오류: $e');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    final chatState = ref.watch(chatViewModelProvider);
-    final locationState = ref.watch(locationViewModelProvider);
-
     return GestureDetector(
       onTap: () {
         Navigator.push(
           context,
           MaterialPageRoute(
             builder: (context) => Presenchatpage(
-              locationState,
+              _currentLocation,
               location: '',
             ),
           ),
@@ -39,12 +82,12 @@ class _NearbyChatState extends ConsumerState<NearbyChat> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              locationState,
+              _currentLocation.isEmpty ? '채팅방이 없습니다' : _currentLocation,
               style: const TextStyle(fontSize: 16),
             ),
             const SizedBox(height: 4),
             Text(
-              '참여중인 그룹원 • ${chatState.chats.member.length}명',
+              '참여중인 그룹원 • $_memberCount명',
               style: const TextStyle(color: Colors.grey),
             ),
             Row(

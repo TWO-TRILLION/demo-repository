@@ -18,77 +18,81 @@ class CustomNavigationBar extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final location = ref.watch(locationViewModelProvider);
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
-      margin: const EdgeInsets.only(left: 8, right: 8, bottom: 16),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(30),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.1),
-            blurRadius: 10,
-          ),
-        ],
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: [
-          _buildNavItem(
-            context: context,
-            icon: Icons.home_filled,
-            label: 'Home',
-            isSelected: currentPage == 'home',
-            onTap: () {
-              if (currentPage != 'home') {
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(builder: (context) => const MyHome()),
-                );
-              }
-            },
-          ),
-          _buildNavItem(
-            context: context,
-            icon: Icons.chat_bubble,
-            label: 'Chat',
-            isSelected: currentPage == 'chat',
-            onTap: () {
-              if (currentPage != 'chat') {
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => Presenchatpage(
-                      location,
-                      location: '',
+      color: const Color(0xFFF2F8FF),
+      child: Container(
+        padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+        margin: const EdgeInsets.only(left: 8, right: 8, bottom: 16),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(30),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.1),
+              blurRadius: 10,
+            ),
+          ],
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            _buildNavItem(
+              context: context,
+              icon: Icons.home_filled,
+              label: 'Home',
+              isSelected: currentPage == 'home',
+              onTap: () {
+                if (currentPage != 'home') {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context) => const MyHome()),
+                  );
+                }
+              },
+            ),
+            _buildNavItem(
+              context: context,
+              icon: Icons.chat_bubble,
+              label: 'Chat',
+              isSelected: currentPage == 'chat',
+              onTap: () {
+                if (currentPage != 'chat') {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => Presenchatpage(
+                        location,
+                        location: '',
+                      ),
                     ),
-                  ),
-                );
-              }
-            },
-          ),
-          _buildNavItem(
-            context: context,
-            icon: Icons.directions_run,
-            label: 'Running',
-            isSelected: currentPage == 'running',
-            onTap: () {
-              if (currentPage != 'running') {
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => RunningPage(
-                      currentLocation: location,
+                  );
+                }
+              },
+            ),
+            _buildNavItem(
+              context: context,
+              icon: Icons.directions_run,
+              label: 'Running',
+              isSelected: currentPage == 'running',
+              onTap: () {
+                if (currentPage != 'running') {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => RunningPage(
+                        currentLocation: location,
+                      ),
                     ),
-                  ),
-                );
-              }
-            },
-          ),
-        ],
+                  );
+                }
+              },
+            ),
+          ],
+        ),
       ),
     );
   }
 
+  // 네비게이션 바 아이템 빌드(빈 공간을 터치해도 작동)
   Widget _buildNavItem({
     required BuildContext context,
     required IconData icon,
