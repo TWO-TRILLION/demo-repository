@@ -3,7 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_sprinchat_app/core/validator_utils.dart';
 
 class NicknameTextFormField extends StatelessWidget {
-  const NicknameTextFormField({super.key, required this.controller});
+  const NicknameTextFormField(
+      {super.key, required this.controller, required TextAlign textAlign});
   final TextEditingController controller;
   @override
   Widget build(BuildContext context) {

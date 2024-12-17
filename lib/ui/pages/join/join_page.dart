@@ -118,7 +118,10 @@ class _JoinPageState extends State<JoinPage> {
                     SizedBox(height: 20),
                     PwTextFormField(controller: pwController),
                     SizedBox(height: 20),
-                    NicknameTextFormField(controller: nicknameController),
+                    NicknameTextFormField(
+                      controller: nicknameController,
+                      textAlign: TextAlign.center,
+                    ),
                     SizedBox(height: 20),
                     ElevatedButton(onPressed: onJoin, child: Text('가입하기')),
                     SizedBox(height: 50)
