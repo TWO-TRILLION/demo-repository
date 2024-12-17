@@ -58,10 +58,7 @@ class CustomNavigationBar extends ConsumerWidget {
                   Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => Presenchatpage(
-                        location,
-                        location: '',
-                      ),
+                      builder: (context) => Presenchatpage(),
                     ),
                   );
                 }

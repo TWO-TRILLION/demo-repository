@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_sprinchat_app/core/viewmodel/location_viewmodel/location_viewmodel.dart';
 import 'package:flutter_sprinchat_app/ui/pages/presenchatpage/presenchatpage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -13,7 +14,6 @@ class NearbyChat extends ConsumerStatefulWidget {
 
 class _NearbyChatState extends ConsumerState<NearbyChat> {
   int _memberCount = 0;
-  String _currentLocation = '';
   Timer? _refreshTimer;
   final firestore = FirebaseFirestore.instance;
 
@@ -21,7 +21,7 @@ class _NearbyChatState extends ConsumerState<NearbyChat> {
   void initState() {
     super.initState();
     _loadChatInfo();
-    _refreshTimer = Timer.periodic(const Duration(seconds: 1), (_) {
+    _refreshTimer = Timer.periodic(const Duration(seconds: 10), (_) {
       _loadChatInfo();
     });
   }
@@ -34,32 +34,57 @@ class _NearbyChatState extends ConsumerState<NearbyChat> {
 
   Future<void> _loadChatInfo() async {
     try {
-      // 현재 위치의 채팅방 정보 가져오기
-      final snapshot = await firestore
-          .collection('Chatroom')
-          .orderBy('updatetime', descending: true)
-          .limit(1)
-          .get();
+      final location = ref.read(locationViewModelProvider);
+      print('현재 위치: $location');
 
-      if (snapshot.docs.isNotEmpty) {
-        final chatroom = snapshot.docs.first.data();
+      // 모든 채팅방 가져오기
+      final snapshot = await firestore.collection('Chatroom').get();
+      print('전체 채팅방 수: ${snapshot.docs.length}개');
+
+      // 각 채팅방의 정보 출력
+      for (var doc in snapshot.docs) {
+        print('채팅방 ID: ${doc.id}');
+        print('채팅방 데이터: ${doc.data()}');
+      }
+
+      // 현재 위치와 일치하는 채팅방 찾기
+      final matchingDocs = snapshot.docs.where(
+          (doc) => doc.id == location || doc.data()['chatroomid'] == location);
+
+      if (matchingDocs.isNotEmpty) {
+        final chatroom = matchingDocs.first.data();
         final List<dynamic> members = chatroom['member'] ?? [];
-        final String location = chatroom['chatroomid'] ?? '';
+        print('찾은 채팅방 데이터: $chatroom');
+        print('멤버 수: ${members.length}명');
 
         if (mounted) {
           setState(() {
             _memberCount = members.length;
-            _currentLocation = location;
+          });
+        }
+      } else {
+        print('채팅방을 찾을 수 없음 (위치: $location)');
+        if (mounted) {
+          setState(() {
+            _memberCount = 0;
           });
         }
       }
-    } catch (e) {
+    } catch (e, stackTrace) {
       print('채팅방 정보 로딩 오류: $e');
+      print('스택트레이스: $stackTrace');
+      if (mounted) {
+        setState(() {
+          _memberCount = 0;
+        });
+      }
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    final locationState = ref.watch(locationViewModelProvider);
+
     return GestureDetector(
       onTap: () {
         Navigator.push(
@@ -79,12 +104,12 @@ class _NearbyChatState extends ConsumerState<NearbyChat> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              _currentLocation.isEmpty ? '채팅방이 없습니다' : _currentLocation,
+              locationState,
               style: const TextStyle(fontSize: 16),
             ),
             const SizedBox(height: 4),
             Text(
-              '참여중인 그룹원 • $_memberCount명',
+              '참여중인 그룹원 • ${_memberCount - 1}명',
               style: const TextStyle(color: Colors.grey),
             ),
             Row(

@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_sprinchat_app/data/model/user_model.dart';
 import 'package:flutter_sprinchat_app/core/viewmodel/user_viewmodel/user_viewmodel.dart';
+import 'package:flutter_sprinchat_app/ui/pages/chatpage/chatpage.dart';
 
 class CurrentChat extends ConsumerStatefulWidget {
   const CurrentChat({super.key});
@@ -14,6 +15,7 @@ class CurrentChat extends ConsumerStatefulWidget {
 
 class _CurrentChatState extends ConsumerState<CurrentChat> {
   String _currentLocation = '';
+  String _lastChatRoomId = '';
   int _memberCount = 0;
   Timer? _refreshTimer;
   final firestore = FirebaseFirestore.instance;
@@ -35,7 +37,6 @@ class _CurrentChatState extends ConsumerState<CurrentChat> {
 
   Future<void> _loadLastChatRoom() async {
     try {
-      // 현재 사용자의 lastChatRoomId 가져오기
       final userId = ref.read(userViewModelProvider);
       final userDoc = await firestore.collection('User').doc(userId).get();
 
@@ -44,7 +45,6 @@ class _CurrentChatState extends ConsumerState<CurrentChat> {
         final lastChatRoomId = userData['lastchatroomid'] as String?;
 
         if (lastChatRoomId?.isNotEmpty == true) {
-          // 채팅방 정보 가져오기
           final chatDoc =
               await firestore.collection('Chatroom').doc(lastChatRoomId).get();
 
@@ -55,6 +55,7 @@ class _CurrentChatState extends ConsumerState<CurrentChat> {
             if (mounted) {
               setState(() {
                 _currentLocation = lastChatRoomId ?? '';
+                _lastChatRoomId = lastChatRoomId ?? '';
                 _memberCount = members.length;
               });
             }
@@ -63,6 +64,7 @@ class _CurrentChatState extends ConsumerState<CurrentChat> {
           if (mounted) {
             setState(() {
               _currentLocation = '';
+              _lastChatRoomId = '';
               _memberCount = 0;
             });
           }
@@ -75,54 +77,64 @@ class _CurrentChatState extends ConsumerState<CurrentChat> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: Colors.grey[100],
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: _currentLocation.isEmpty
-          ? const Center(
-              child: Text(
-                '참여중인 채팅방이 없습니다',
-                style: TextStyle(
-                  fontSize: 16,
-                  color: Colors.grey,
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => Chatpage(),
+          ),
+        );
+      },
+      child: Container(
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          color: Colors.grey[100],
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: _currentLocation.isEmpty
+            ? const Center(
+                child: Text(
+                  '참여중인 채팅방이 없습니다',
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Colors.grey,
+                  ),
                 ),
-              ),
-            )
-          : Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  '$_currentLocation 채팅방',
-                  style: const TextStyle(fontSize: 16),
-                ),
-                const SizedBox(height: 4),
-                Text(
-                  '참여중인 그룹원 • $_memberCount명',
-                  style: const TextStyle(color: Colors.grey),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Row(
-                      children: [
-                        Icon(Icons.star, color: Colors.amber, size: 16),
-                        Text(' 5.0'),
-                      ],
-                    ),
-                    Text(
-                      '현재 위치 기준',
-                      style: const TextStyle(
-                        color: Colors.blue,
-                        fontWeight: FontWeight.w500,
+              )
+            : Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    '$_lastChatRoomId 채팅방',
+                    style: const TextStyle(fontSize: 16),
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    '참여중인 그룹원 • $_memberCount명',
+                    style: const TextStyle(color: Colors.grey),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Row(
+                        children: [
+                          Icon(Icons.star, color: Colors.amber, size: 16),
+                          Text(' 5.0'),
+                        ],
                       ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
+                      Text(
+                        '현재 위치 기준',
+                        style: const TextStyle(
+                          color: Colors.blue,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+      ),
     );
   }
 }
