@@ -64,11 +64,16 @@ class Chatswindow extends StatelessWidget {
                       ? SizedBox(
                           width: 40,
                           height: 40,
-                          child: snapshot.data!.imageUrl! != '' ? Image.network(
-                            snapshot.data!.imageUrl!,
-                            fit: BoxFit.cover,
-                            errorBuilder: (context, error, stackTrace) => Image.asset('assets/images/default_profile.png'),
-                          ) : Image.asset('assets/images/default_profile.png'),
+                          child: snapshot.data!.imageUrl! != ''
+                              ? Image.network(
+                                  snapshot.data!.imageUrl!,
+                                  fit: BoxFit.cover,
+                                  errorBuilder: (context, error, stackTrace) =>
+                                      Image.asset(
+                                          'assets/images/default_profile.png'),
+                                )
+                              : Image.asset(
+                                  'assets/images/default_profile.png'),
                         )
                       : SizedBox(
                           width: 40,
@@ -95,7 +100,8 @@ class Chatswindow extends StatelessWidget {
                 )
               ],
             );
-          } else { // 로딩중이거나, 정상적으로 userNickname, userImageUrl 이 가져오지 못했을 경우
+          } else {
+            // 로딩중이거나, 정상적으로 userNickname, userImageUrl 이 가져오지 못했을 경우
             return Row(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
@@ -169,7 +175,8 @@ class Chatswindow extends StatelessWidget {
                 isSender: true,
                 tail: true,
                 color: Color(0xff0070f0),
-                textStyle: TextStyle(color: Colors.white),
+                textStyle:
+                    TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
               ),
               if (isDiffUser)
                 Padding(
@@ -183,7 +190,8 @@ class Chatswindow extends StatelessWidget {
                           '[ ${snapshot.data!.nickname} ]  $dateTime',
                           style: TextStyle(fontSize: 12),
                         );
-                      } else { // 로딩중이거나, 정상적으로 userNickname 을 가져오지 못했을 경우
+                      } else {
+                        // 로딩중이거나, 정상적으로 userNickname 을 가져오지 못했을 경우
                         return Text(
                           '[ Nickname ]  $dateTime',
                           style: TextStyle(fontSize: 12),
