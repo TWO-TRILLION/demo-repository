@@ -11,16 +11,16 @@ class RunningData {
 
   RunningData.fromJson(Map<String, dynamic> json)
       : this(
-          distance: json['distance'],
-          calorie: json['calorie'],
-          speed: json['speed'],
+          distance: json['distance'] as double,
+          calorie: json['calorie'] as double,
+          speed: json['speed'] as double,
         );
 
   Map<String, dynamic> toJson() {
     return {
-      'distance': distance.toStringAsFixed(1),
-      'calorie': calorie.toStringAsFixed(2),
-      'speed': speed.toStringAsFixed(2),
+      'distance': double.parse(distance.toStringAsFixed(2)),
+      'calorie': double.parse(calorie.toStringAsFixed(2)),
+      'speed': double.parse(speed.toStringAsFixed(2)),
     };
   }
 }

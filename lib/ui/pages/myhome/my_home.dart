@@ -70,7 +70,6 @@ class _MyHomeState extends ConsumerState<MyHome> {
       ),
       bottomNavigationBar: CustomNavigationBar(
         currentPage: 'home',
-        currentLocation: '부산광역시 동래구 온천동',
       ),
     );
   }

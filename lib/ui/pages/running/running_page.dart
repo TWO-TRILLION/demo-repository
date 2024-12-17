@@ -89,7 +89,7 @@ class _RunningPageState extends State<RunningPage> {
                                 RunningState result = ref
                                     .read(runningViewModel.notifier)
                                     .endRunning();
-                                Navigator.push(
+                                Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) =>
@@ -116,7 +116,7 @@ class _RunningPageState extends State<RunningPage> {
         ),
       ),
       bottomNavigationBar: CustomNavigationBar(
-          currentPage: 'running', currentLocation: widget.currentLocation),
+          currentPage: 'running'),
     );
   }
 }

@@ -11,7 +11,6 @@ class CustomNavigationBar extends ConsumerWidget {
   const CustomNavigationBar({
     super.key,
     required this.currentPage,
-    required String currentLocation,
   });
 
   @override
