@@ -40,9 +40,13 @@ class ResultPage extends StatelessWidget {
                 SizedBox(height: 30),
                 ResultBox('달린 시간', runningTime, '', '동안',
                     Icons.timer_outlined), // 달린 시간
-                ResultBox('달린 거리', analysis.distance, 'km', '뛰고',
-                    Icons.straighten), // 달린 거리
-                ResultBox('소모한 칼로리', analysis.calorie, 'kcal', '불태웠습니다',
+                ResultBox('달린 거리', analysis.distance.toStringAsFixed(2), 'km',
+                    '뛰고', Icons.straighten), // 달린 거리
+                ResultBox(
+                    '소모한 칼로리',
+                    analysis.calorie.toStringAsFixed(2),
+                    'kcal',
+                    '불태웠습니다',
                     Icons.local_fire_department_outlined), // 소모한 칼로리
                 SizedBox(height: 30),
                 ElevatedButton(
@@ -56,13 +60,6 @@ class ResultPage extends StatelessWidget {
                           CupertinoDialogAction(
                             isDefaultAction: false,
                             onPressed: () {
-                              // 러닝 기록 업데이트
-                              updateResult(
-                                userId,
-                                analysis.distance,
-                                analysis.calorie,
-                                analysis.speed,
-                              );
                               Navigator.pop(context);
                               // 홈페이지로 라우팅
                               Navigator.pushReplacement(
@@ -86,6 +83,13 @@ class ResultPage extends StatelessWidget {
                             isDefaultAction: true,
                             onPressed: () {
                               Navigator.pop(context);
+                              // 러닝 기록 업데이트
+                              updateResult(
+                                userId,
+                                analysis.distance,
+                                analysis.calorie,
+                                analysis.speed,
+                              );
                               // 홈페이지로 라우팅
                               Navigator.pushReplacement(
                                 context,

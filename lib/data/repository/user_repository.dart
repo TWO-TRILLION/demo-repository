@@ -155,8 +155,13 @@ class UserRepository {
     final json = jsonEncode(data);
     try {
       await firestore.collection('User').doc(userId).update({
-        'runningData': json,
+        'runningData': {
+          "calorie": data.calorie,
+          "distance": data.distance,
+          "speed": data.speed,
+        }
       });
+      print('러닝 등록 성공 ');
     } catch (e) {
       print('러닝 기록 등록 오류: $e');
       throw Exception('러닝 기록 등록 실패');
