@@ -19,6 +19,12 @@ class _WelcomeHeaderState extends ConsumerState<WelcomeHeader> {
     _loadNickname();
   }
 
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _loadNickname();
+  }
+
   Future<void> _loadNickname() async {
     try {
       final userRepo = UserRepository();

@@ -7,6 +7,7 @@ import 'package:flutter_sprinchat_app/ui/pages/myhome/widgets/welcome_header.dar
 import 'package:flutter_sprinchat_app/ui/pages/myhome/widgets/profile_image.dart';
 import 'package:flutter_sprinchat_app/ui/pages/myhome/widgets/recent_running.dart';
 import 'package:flutter_sprinchat_app/ui/pages/myhome/widgets/nearby_chat.dart';
+import 'package:flutter_sprinchat_app/ui/pages/myhome/profile.dart';
 
 class MyHome extends ConsumerStatefulWidget {
   const MyHome({super.key});
@@ -16,6 +17,20 @@ class MyHome extends ConsumerStatefulWidget {
 }
 
 class _MyHomeState extends ConsumerState<MyHome> {
+  Key _welcomeHeaderKey = UniqueKey();
+
+  @override
+  void initState() {
+    super.initState();
+    _refreshWelcomeHeader();
+  }
+
+  void _refreshWelcomeHeader() {
+    setState(() {
+      _welcomeHeaderKey = UniqueKey();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,12 +48,23 @@ class _MyHomeState extends ConsumerState<MyHome> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const WelcomeHeader(),
+                          WelcomeHeader(key: _welcomeHeaderKey),
                           HomeLocation(onLocationChanged: (location) {}),
                         ],
                       ),
                     ),
-                    const ProfileImage(),
+                    ProfileImage(
+                      onTap: () async {
+                        final result = await Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const Profile()),
+                        );
+                        if (result == true) {
+                          _refreshWelcomeHeader();
+                        }
+                      },
+                    ),
                   ],
                 ),
                 const SizedBox(height: 20),

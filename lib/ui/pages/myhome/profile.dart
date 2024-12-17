@@ -81,6 +81,8 @@ class _ProfileState extends ConsumerState<Profile> {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('프로필이 업데이트되었습니다.')),
         );
+        // 프로필 수정 완료 후 이전 화면으로 돌아가면서 결과 전달
+        Navigator.pop(context, true);
       }
     } catch (e) {
       print('프로필 저장 오류: $e');
@@ -135,171 +137,207 @@ class _ProfileState extends ConsumerState<Profile> {
       ),
     );
 
-    return Scaffold(
-      body: Stack(
-        children: [
-          // 배경 이미지
-          Container(
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: _selectedImagePath != null
-                    ? (_selectedImagePath!.startsWith('http')
-                        ? NetworkImage(_selectedImagePath!)
-                        : FileImage(File(_selectedImagePath!)) as ImageProvider)
-                    : AssetImage(defaultProfileImage),
-                fit: BoxFit.cover,
+    return WillPopScope(
+      onWillPop: () async {
+        if (_isEditing) {
+          setState(() {
+            _isEditing = false;
+          });
+          return false;
+        }
+        return true;
+      },
+      child: Scaffold(
+        body: Stack(
+          children: [
+            // 배경 이미지
+            Container(
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: _selectedImagePath != null
+                      ? (_selectedImagePath!.startsWith('http')
+                          ? NetworkImage(_selectedImagePath!)
+                          : FileImage(File(_selectedImagePath!))
+                              as ImageProvider)
+                      : AssetImage(defaultProfileImage),
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
-          ),
-          // 배경 오버레이
-          Container(
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [
-                  Colors.black.withOpacity(0.7),
-                  Colors.black.withOpacity(0.3),
+            // 배경 오버레이
+            Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [
+                    Colors.black.withOpacity(0.7),
+                    Colors.black.withOpacity(0.3),
+                  ],
+                ),
+              ),
+            ),
+            // 컨텐츠
+            SafeArea(
+              child: Column(
+                children: [
+                  // 상단 네비게이션 바
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        IconButton(
+                          icon: const Icon(Icons.arrow_back_ios,
+                              color: Colors.white, size: 20),
+                          onPressed: () {
+                            if (_isEditing) {
+                              setState(() {
+                                _isEditing = false;
+                              });
+                            } else {
+                              Navigator.pop(context);
+                            }
+                          },
+                        ),
+                        if (_isEditing)
+                          TextButton(
+                            onPressed: () async {
+                              await _saveProfile();
+                              setState(() {
+                                _isEditing = false;
+                              });
+                            },
+                            child: const Text(
+                              '완료',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 16,
+                              ),
+                            ),
+                          ),
+                      ],
+                    ),
+                  ),
+
+                  const Spacer(flex: 2),
+
+                  // 프로필 이미지
+                  GestureDetector(
+                    onTap: _isEditing ? _pickImage : null,
+                    child: Stack(
+                      children: [
+                        profileImage,
+                        if (_isEditing)
+                          Positioned(
+                            right: 0,
+                            bottom: 0,
+                            child: Container(
+                              padding: const EdgeInsets.all(4),
+                              decoration: const BoxDecoration(
+                                color: Colors.blue,
+                                shape: BoxShape.circle,
+                              ),
+                              child: const Icon(
+                                Icons.edit,
+                                color: Colors.white,
+                                size: 20,
+                              ),
+                            ),
+                          ),
+                      ],
+                    ),
+                  ),
+
+                  const SizedBox(height: 12),
+
+                  // 사용자 이름
+                  if (_isEditing)
+                    Container(
+                      width: 200,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: NicknameTextFormField(
+                        controller: _nameController,
+                        textAlign: TextAlign.center,
+                      ),
+                    )
+                  else
+                    Text(
+                      _nameController.text,
+                      style: const TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.white,
+                      ),
+                    ),
+
+                  const Spacer(flex: 2),
+
+                  // 프로필 수정 버튼
+                  if (!_isEditing)
+                    ElevatedButton(
+                      onPressed: () {
+                        setState(() {
+                          _isEditing = true;
+                        });
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.blue,
+                        foregroundColor: Colors.white,
+                        minimumSize: const Size(140, 40),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                      ),
+                      child: const Text(
+                        '프로필 수정',
+                        style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ),
+
+                  const SizedBox(height: 10),
+
+                  // 로그아웃 버튼 - 수정 모드가 아닐 때만 표시
+                  if (!_isEditing)
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 40),
+                      child: ElevatedButton(
+                        onPressed: () {
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => LoginPage(),
+                            ),
+                          );
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.blue,
+                          foregroundColor: Colors.white,
+                          minimumSize: const Size(140, 40),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                        ),
+                        child: const Text(
+                          '로그아웃',
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ),
+                    ),
                 ],
               ),
             ),
-          ),
-          // 컨텐츠
-          SafeArea(
-            child: Column(
-              children: [
-                // 상단 네비게이션 바
-                Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      IconButton(
-                        icon: const Icon(Icons.arrow_back_ios,
-                            color: Colors.white, size: 20),
-                        onPressed: () => Navigator.pop(context),
-                      ),
-                      if (_isEditing)
-                        TextButton(
-                          onPressed: () async {
-                            await _saveProfile();
-                            setState(() {
-                              _isEditing = false;
-                            });
-                          },
-                          child: const Text(
-                            '완료',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 16,
-                            ),
-                          ),
-                        ),
-                    ],
-                  ),
-                ),
-
-                const Spacer(flex: 2),
-
-                // 프로필 이미지
-                GestureDetector(
-                  onTap: _isEditing ? _pickImage : null,
-                  child: Stack(
-                    children: [
-                      profileImage,
-                      if (_isEditing)
-                        Positioned(
-                          right: 0,
-                          bottom: 0,
-                          child: Container(
-                            padding: const EdgeInsets.all(4),
-                            decoration: const BoxDecoration(
-                              color: Colors.blue,
-                              shape: BoxShape.circle,
-                            ),
-                            child: const Icon(
-                              Icons.edit,
-                              color: Colors.white,
-                              size: 20,
-                            ),
-                          ),
-                        ),
-                    ],
-                  ),
-                ),
-
-                const SizedBox(height: 12),
-
-                // 사용자 이름
-                if (_isEditing)
-                  Container(
-                    width: 200,
-                    child: NicknameTextFormField(
-                      controller: _nameController,
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-
-                const Spacer(flex: 3),
-
-                // 프로필 수정 버튼
-                if (!_isEditing)
-                  ElevatedButton(
-                    onPressed: () {
-                      setState(() {
-                        _isEditing = true;
-                      });
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.blue,
-                      foregroundColor: Colors.white,
-                      minimumSize: const Size(140, 40),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                    ),
-                    child: const Text(
-                      '프로필 수정',
-                      style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ),
-                SizedBox(
-                  height: 10,
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 40),
-                  child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.pushReplacement(context, MaterialPageRoute(
-                        builder: (context) {
-                          return LoginPage();
-                        },
-                      ));
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.blue,
-                      foregroundColor: Colors.white,
-                      minimumSize: const Size(140, 40),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                    ),
-                    child: const Text(
-                      '로그아웃',
-                      style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

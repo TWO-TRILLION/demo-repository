@@ -5,7 +5,12 @@ import 'package:flutter_sprinchat_app/data/repository/user_repository.dart';
 import 'package:flutter_sprinchat_app/ui/pages/myhome/profile.dart';
 
 class ProfileImage extends ConsumerStatefulWidget {
-  const ProfileImage({super.key});
+  final Function() onTap;
+
+  const ProfileImage({
+    super.key,
+    required this.onTap,
+  });
 
   @override
   ConsumerState<ProfileImage> createState() => _ProfileImageState();
@@ -68,15 +73,7 @@ class _ProfileImageState extends ConsumerState<ProfileImage> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () async {
-        await Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => const Profile()),
-        );
-        if (mounted) {
-          await _loadProfileImage();
-        }
-      },
+      onTap: widget.onTap,
       child: Container(
         width: 50,
         height: 50,
