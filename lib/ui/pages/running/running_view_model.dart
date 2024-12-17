@@ -81,7 +81,7 @@ class RunningViewModel extends Notifier<RunningState> {
           speed = distance / totalTime; // 평균 속력(km/m)
         }
         calorie = (time.inHours * 3600 + time.inMinutes * 60 + time.inSeconds) *
-            0.12; // calorie : 칼로리 소모 (분당 7.3kcal)
+            0.12; // calorie : 칼로리 소모 (초당 0.12kcal)
         state = RunningState(distance, speed, calorie, hour, minute, second,
             currentLocation.latitude, currentLocation.longitude);
       }
