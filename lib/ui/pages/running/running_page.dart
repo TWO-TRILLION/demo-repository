@@ -8,6 +8,7 @@ import 'package:flutter_sprinchat_app/ui/pages/running/widgets/button_view_model
 import 'package:flutter_sprinchat_app/ui/pages/running/widgets/running_button.dart';
 import 'package:flutter_sprinchat_app/ui/pages/running/widgets/unavailable_navigationbar.dart';
 import 'package:flutter_sprinchat_app/ui/widgets/navigation_bar.dart';
+import 'package:lottie/lottie.dart';
 
 class RunningPage extends ConsumerStatefulWidget {
   RunningPage({super.key, required this.currentLocation});
@@ -50,33 +51,27 @@ class RunningPageState extends ConsumerState<RunningPage> {
               return Column(
                 children: [
                   // 상단 '러닝' 문구
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text(
-                        '러닝',
-                        style: TextStyle(
-                          fontFamily: 'Pretendard',
-                          fontWeight: FontWeight.w700,
-                          fontSize: 24,
-                        ),
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      '러닝',
+                      style: TextStyle(
+                        fontFamily: 'Pretendard',
+                        fontWeight: FontWeight.w700,
+                        fontSize: 24,
                       ),
-                      Text(
-                        widget.currentLocation,
-                        style: TextStyle(
-                            fontFamily: 'Pretendard',
-                            fontWeight: FontWeight.normal),
-                      )
-                    ],
+                    ),
                   ),
-                  SizedBox(height: 30),
                   // 지도 및 러닝 시작 버튼
                   SizedBox(
-                    height: 350,
+                    height: 320,
                     child: Stack(
                       alignment: Alignment.topCenter,
                       children: [
+                        SizedBox(
+                          height: 200,
+                          child: Lottie.asset('assets/json/lottie.json'),
+                        ),
                         // 러닝 시작 버튼
                         Positioned(
                           bottom: 0,
