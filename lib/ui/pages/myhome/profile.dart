@@ -295,8 +295,8 @@ class _ProfileState extends ConsumerState<Profile> {
                       child: const Text(
                         '프로필 수정',
                         style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w500,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w700,
                         ),
                       ),
                     ),
@@ -327,8 +327,8 @@ class _ProfileState extends ConsumerState<Profile> {
                         child: const Text(
                           '로그아웃',
                           style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w500,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w700,
                           ),
                         ),
                       ),

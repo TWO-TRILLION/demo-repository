@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_sprinchat_app/constant/colors.dart';
 import 'package:flutter_sprinchat_app/core/viewmodel/location_viewmodel/location_viewmodel.dart';
 import 'package:flutter_sprinchat_app/ui/pages/presenchatpage/presenchatpage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -128,7 +129,7 @@ class _NearbyChatState extends ConsumerState<NearbyChat> {
                 Text(
                   '채팅방 참여하기',
                   style: const TextStyle(
-                    color: Colors.blue,
+                    color: AppColors.blueAccent,
                     fontWeight: FontWeight.w500,
                   ),
                 ),
