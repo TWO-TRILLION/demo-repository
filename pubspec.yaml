@@ -44,6 +44,7 @@ dependencies:
   chat_bubbles: ^1.6.0
   cloud_firestore: ^5.5.1
   firebase_storage: ^12.3.7
+  lottie: ^3.0.0
   fluttertoast: ^8.2.10
 
 dev_dependencies:
@@ -71,6 +72,7 @@ flutter:
   assets:
     - assets/fruits/
     - assets/images/
+    - assets/json/
 
   # To add assets to your application, add an assets section, like this:
   # An image asset can refer to one or more resolution-specific "variants", see
