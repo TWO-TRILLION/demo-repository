@@ -43,7 +43,9 @@ class _JoinPageState extends ConsumerState<JoinPage> {
                     PwTextFormField(controller: joinState.pwController),
                     SizedBox(height: 20),
                     NicknameTextFormField(
-                        controller: joinState.nicknameController),
+                      controller: joinState.nicknameController,
+                      textAlign: TextAlign.left,
+                    ),
                     SizedBox(height: 20),
                     ElevatedButton(
                         onPressed: () {

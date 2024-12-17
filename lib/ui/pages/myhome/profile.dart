@@ -5,6 +5,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_sprinchat_app/data/model/user_model.dart';
 import 'package:flutter_sprinchat_app/data/repository/user_repository.dart';
+import 'package:flutter_sprinchat_app/ui/widgets/nickname_text_form_field.dart';
 
 final userRepositoryProvider = Provider((ref) => UserRepository());
 
@@ -77,7 +78,7 @@ class _ProfileState extends ConsumerState<Profile> {
 
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('프로필이 업데이트되었��니다.')),
+          const SnackBar(content: Text('프로필이 업데이트되었습니다.')),
         );
       }
     } catch (e) {
@@ -232,34 +233,9 @@ class _ProfileState extends ConsumerState<Profile> {
                 if (_isEditing)
                   Container(
                     width: 200,
-                    child: TextField(
+                    child: NicknameTextFormField(
                       controller: _nameController,
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 20,
-                        fontWeight: FontWeight.w600,
-                      ),
                       textAlign: TextAlign.center,
-                      decoration: const InputDecoration(
-                        border: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.white),
-                        ),
-                        enabledBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.white),
-                        ),
-                        focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.blue),
-                        ),
-                      ),
-                    ),
-                  )
-                else
-                  Text(
-                    _nameController.text,
-                    style: const TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.white,
                     ),
                   ),
 

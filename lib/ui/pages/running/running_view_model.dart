@@ -9,8 +9,6 @@ class RunningState {
   int hour; // 달린 시간(시)
   int minute; // 달린 시간(분)
   int second;
-  double currentLat;
-  double currentLng;
 
   RunningState(
     this.distance,
@@ -19,15 +17,13 @@ class RunningState {
     this.hour,
     this.minute,
     this.second,
-    this.currentLat,
-    this.currentLng,
   );
 }
 
 class RunningViewModel extends Notifier<RunningState> {
   @override
   build() {
-    return RunningState(0, 0, 0, 0, 0, 0, 37.56668, 126.978415);
+    return RunningState(0, 0, 0, 0, 0, 0);
   }
 
   double startLat = 0;
@@ -82,8 +78,7 @@ class RunningViewModel extends Notifier<RunningState> {
         }
         calorie = (time.inHours * 3600 + time.inMinutes * 60 + time.inSeconds) *
             0.12; // calorie : 칼로리 소모 (초당 0.12kcal)
-        state = RunningState(distance, speed, calorie, hour, minute, second,
-            currentLocation.latitude, currentLocation.longitude);
+        state = RunningState(distance, speed, calorie, hour, minute, second);
       }
     });
   }
@@ -91,9 +86,8 @@ class RunningViewModel extends Notifier<RunningState> {
   // 현재 실행중인 타이머를 중지하는 함수
   RunningState endRunning() {
     timer.cancel();
-    var temp = RunningState(
-        distance, speed, calorie, hour, minute, second, currentLat, currentLng);
-    state = RunningState(0, 0, 0, 0, 0, 0, 37.56668, 126.978415);
+    var temp = RunningState(distance, speed, calorie, hour, minute, second);
+    state = RunningState(0, 0, 0, 0, 0, 0);
     return temp;
   }
 }

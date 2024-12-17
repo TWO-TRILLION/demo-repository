@@ -24,9 +24,6 @@ class _CurrentChatState extends ConsumerState<CurrentChat> {
   void initState() {
     super.initState();
     _loadLastChatRoom();
-    _refreshTimer = Timer.periodic(const Duration(seconds: 1), (_) {
-      _loadLastChatRoom();
-    });
   }
 
   @override
@@ -82,7 +79,7 @@ class _CurrentChatState extends ConsumerState<CurrentChat> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => Chatpage(),
+            builder: (context) => Chatpage(_lastChatRoomId),
           ),
         );
       },
@@ -106,7 +103,7 @@ class _CurrentChatState extends ConsumerState<CurrentChat> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    '$_lastChatRoomId 채팅방',
+                    '$_lastChatRoomId',
                     style: const TextStyle(fontSize: 16),
                   ),
                   const SizedBox(height: 4),
