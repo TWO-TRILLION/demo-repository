@@ -1,23 +1,26 @@
-import 'package:flutter_sprinchat_app/data/model/user_model.dart';
-import 'package:flutter_sprinchat_app/data/repository/user_repository.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class JoinViewModel {
-  final UserRepository userRepository;
+class JoinState {
+  TextEditingController idController;
+  TextEditingController pwController;
+  TextEditingController nicknameController;
 
-  JoinViewModel(this.userRepository);
-
-  Future<bool> checkDuplicatedId(String id) async {
-    return await userRepository.checkDuplicatedId(id);
-  }
-
-  Future<void> createUser(String id, String pw, String nickname) async {
-    await userRepository.insert(
-      userid: id,
-      userpw: pw,
-      nickname: nickname,
-      lastchatroomid: '',
-      runningData: RunningData(distance: 0, calorie: 0, speed: 0),
-      imageUrl: '',
-    );
-  }
+  JoinState(this.idController, this.pwController, this.nicknameController);
 }
+
+class JoinViewModel extends Notifier<JoinState> {
+  @override
+  JoinState build() {
+    return JoinState(TextEditingController(), TextEditingController(),
+        TextEditingController());
+  }
+
+  void onJoin() async {}
+}
+
+final joinViewModelProvider = NotifierProvider<JoinViewModel, JoinState>(
+  () {
+    return JoinViewModel();
+  },
+);
