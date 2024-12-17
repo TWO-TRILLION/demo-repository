@@ -11,8 +11,6 @@ import 'package:flutter_sprinchat_app/ui/widgets/navigation_bar.dart';
 class RunningPage extends ConsumerStatefulWidget {
   RunningPage({super.key, required this.currentLocation});
 
-  //final double startLat; // 러닝을 시작한 좌표(위도)
-  //final double startLng; // 러닝을 시작한 좌표(경도)
   bool isRunning = false;
   String currentLocation;
 
