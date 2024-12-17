@@ -3,20 +3,11 @@ import 'package:flutter/material.dart';
 class ResultBox extends StatelessWidget {
   ResultBox(this.title, this.value, this.unit, this.message, this.icon);
 
-  String title;
-  var value;
-  String message;
-  IconData icon;
-  String unit;
-
-  dynamic typeCheck(var value) {
-    if (value.runtimeType == double) {
-      return value.toString();
-    }
-    if (value.runtimeType == String) {
-      return value;
-    }
-  }
+  IconData icon; // 좌상단 아이콘 종류
+  String title; // 제목
+  var value; // 기록값
+  String message; // 박스 하단 메시지
+  String unit; // 데이터 단위
 
   @override
   Widget build(BuildContext context) {
@@ -40,6 +31,7 @@ class ResultBox extends StatelessWidget {
           children: [
             Row(
               children: [
+                // 아이콘 들어 있는 원
                 Container(
                   width: 30,
                   height: 30,
@@ -53,6 +45,7 @@ class ResultBox extends StatelessWidget {
                   ),
                 ),
                 SizedBox(width: 10),
+                // 박스 제목
                 Text(
                   title,
                   style: TextStyle(
@@ -66,14 +59,16 @@ class ResultBox extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                // 값
                 Text(
-                  typeCheck(value),
+                  value,
                   style: TextStyle(
                     fontFamily: 'Pretendard',
                     fontWeight: FontWeight.w600,
                     fontSize: 30,
                   ),
                 ),
+                // 단위
                 Text(
                   unit,
                   style: TextStyle(
@@ -85,6 +80,7 @@ class ResultBox extends StatelessWidget {
               ],
             ),
             SizedBox(height: 4),
+            // 메시지
             Text(
               message,
               style: TextStyle(

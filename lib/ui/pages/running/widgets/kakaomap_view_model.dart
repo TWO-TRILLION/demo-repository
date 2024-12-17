@@ -1,10 +1,10 @@
 import 'dart:async';
-
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_sprinchat_app/core/geolocator_helper.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:kakaomap_webview/kakaomap_webview.dart';
 
+//
 class KakaomapState {
   KakaomapState(double lat, double lng) {
     mapView = KakaoMapView(
@@ -25,10 +25,10 @@ class KakaomapViewModel extends Notifier<KakaomapState> {
     //return KakaomapState(0, 0);
   }
 
-  late Timer timer;
+  late Timer maptimer;
 
   void startMap() async {
-    timer = Timer.periodic(Duration(seconds: 5), (t) async {
+    maptimer = Timer.periodic(Duration(seconds: 5), (t) async {
       var currentPosition = await GeolocatorHelper.getPosition();
       if (currentPosition != null) {
         state =
@@ -38,7 +38,7 @@ class KakaomapViewModel extends Notifier<KakaomapState> {
   }
 
   void endMap() {
-    timer.cancel();
+    maptimer.cancel();
   }
 }
 
