@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_sprinchat_app/core/viewmodel/user_viewmodel/user_viewmodel.dart';
 import 'package:flutter_sprinchat_app/ui/pages/login/login_page.dart';
+import 'package:flutter_sprinchat_app/ui/pages/myhome/my_home.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_sprinchat_app/data/model/user_model.dart';
@@ -81,8 +82,11 @@ class _ProfileState extends ConsumerState<Profile> {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('프로필이 업데이트되었습니다.')),
         );
-        // 프로필 수정 완료 후 이전 화면으로 돌아가면서 결과 전달
-        Navigator.pop(context, true);
+        // 프로필 수정 완료 후 이전 화면으로 돌아가기
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => const MyHome()),
+        );
       }
     } catch (e) {
       print('프로필 저장 오류: $e');
