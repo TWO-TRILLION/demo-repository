@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter_sprinchat_app/core/viewmodel/user_viewmodel/user_viewmodel.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_sprinchat_app/data/model/user_model.dart';
@@ -36,14 +37,18 @@ class _ProfileState extends ConsumerState<Profile> {
   }
 
   Future<void> _loadUserProfile() async {
-    const userId = 'ABCD'; // 임시로 저장
+    final userId = ref.read(userViewModelProvider); // 실제 사용자 ID 사용
     final userRepo = ref.read(userRepositoryProvider);
-    final user = await userRepo.getUser(userId);
+    final user = await userRepo.getOne(userId);
 
     if (user != null) {
       setState(() {
         _userModel = user;
         _nameController.text = user.nickname;
+        // 이미지 URL이 있으면 선택된 이미지로 설정
+        if (user.imageUrl != null && user.imageUrl!.isNotEmpty) {
+          _selectedImagePath = user.imageUrl;
+        }
       });
     }
   }
@@ -58,7 +63,8 @@ class _ProfileState extends ConsumerState<Profile> {
       await userRepo.updateNickname(_userModel!.userid, _nameController.text);
 
       // 이미지가 선택되었다면 이미지도 업데이트
-      if (_selectedImagePath != null) {
+      if (_selectedImagePath != null &&
+          !_selectedImagePath!.startsWith('http')) {
         await userRepo.updateUserImage(_userModel!.userid, _selectedImagePath!);
       }
 
@@ -71,7 +77,7 @@ class _ProfileState extends ConsumerState<Profile> {
 
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('프로필이 업데이트되었습니다.')),
+          const SnackBar(content: Text('프로필이 업데이트되었��니다.')),
         );
       }
     } catch (e) {
@@ -118,11 +124,10 @@ class _ProfileState extends ConsumerState<Profile> {
         border: Border.all(color: Colors.white, width: 2),
         image: DecorationImage(
           image: _selectedImagePath != null
-              ? FileImage(File(_selectedImagePath!))
-              : (_userModel?.imageUrl != null &&
-                      _userModel!.imageUrl!.isNotEmpty
-                  ? NetworkImage(_userModel!.imageUrl!)
-                  : AssetImage(defaultProfileImage)) as ImageProvider,
+              ? (_selectedImagePath!.startsWith('http')
+                  ? NetworkImage(_selectedImagePath!)
+                  : FileImage(File(_selectedImagePath!)) as ImageProvider)
+              : AssetImage(defaultProfileImage),
           fit: BoxFit.cover,
         ),
       ),
@@ -136,8 +141,10 @@ class _ProfileState extends ConsumerState<Profile> {
             decoration: BoxDecoration(
               image: DecorationImage(
                 image: _selectedImagePath != null
-                    ? FileImage(File(_selectedImagePath!))
-                    : AssetImage(defaultProfileImage) as ImageProvider,
+                    ? (_selectedImagePath!.startsWith('http')
+                        ? NetworkImage(_selectedImagePath!)
+                        : FileImage(File(_selectedImagePath!)) as ImageProvider)
+                    : AssetImage(defaultProfileImage),
                 fit: BoxFit.cover,
               ),
             ),
