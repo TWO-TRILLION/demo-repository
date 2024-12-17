@@ -3,30 +3,38 @@ import 'package:flutter/material.dart';
 import 'package:flutter_sprinchat_app/core/viewmodel/user_viewmodel/user_viewmodel.dart';
 import 'package:flutter_sprinchat_app/ui/pages/result/result_page.dart';
 import 'package:flutter_sprinchat_app/ui/pages/running/running_view_model.dart';
-import 'package:flutter_sprinchat_app/ui/pages/running/widgets/kakaomap_view_model.dart';
 import 'package:flutter_sprinchat_app/ui/pages/running/widgets/running_analysis.dart';
 import 'package:flutter_sprinchat_app/ui/pages/running/widgets/button_view_model.dart';
 import 'package:flutter_sprinchat_app/ui/pages/running/widgets/running_button.dart';
 import 'package:flutter_sprinchat_app/ui/widgets/navigation_bar.dart';
 
-class RunningPage extends StatefulWidget {
-  RunningPage({required this.currentLocation});
+class RunningPage extends ConsumerStatefulWidget {
+  RunningPage({super.key, required this.currentLocation});
 
-  //final double startLat; // 러닝을 시작한 좌표(위도)
-  //final double startLng; // 러닝을 시작한 좌표(경도)
   bool isRunning = false;
   String currentLocation;
 
   @override
-  State<RunningPage> createState() => _RunningPageState();
+  RunningPageState createState() => RunningPageState();
 }
 
-class _RunningPageState extends State<RunningPage> {
+class RunningPageState extends ConsumerState<RunningPage> {
   bool isRunning = false;
+
+  late final userId;
+  late final runningButton;
+  late final running;
 
   @override
   void dispose() {
     super.dispose();
+  }
+
+  @override
+  void initState() {
+    userId = ref.read(userViewModelProvider);
+    runningButton = ref.read(buttonViewModel.notifier); // 러닝 버튼 UI 관리용 뷰모델
+    running = ref.read(runningViewModel.notifier);
   }
 
   @override
@@ -37,14 +45,7 @@ class _RunningPageState extends State<RunningPage> {
           padding: const EdgeInsets.all(16),
           child: Consumer(
             builder: (context, ref, child) {
-              // 유저 뷰모델
-              final userId = ref.read(userViewModelProvider);
-              // 러닝 버튼 UI 변경용 뷰모델
-              final runningButtonViewmodel = ref.read(buttonViewModel.notifier);
               // 카카오맵 트랙킹 뷰모델
-              final mapViewmodel = ref.read(kakaomapViewModel.notifier);
-              mapViewmodel.startMap();
-              final map = ref.watch(kakaomapViewModel);
               return Column(
                 children: [
                   // 상단 '러닝' 문구
@@ -75,14 +76,6 @@ class _RunningPageState extends State<RunningPage> {
                     child: Stack(
                       alignment: Alignment.topCenter,
                       children: [
-                        // 지도
-                        // KakaoMap(
-                        //   lat: 37.56668,
-                        //   lng: 126.978415,
-                        // ),
-                        SizedBox(
-                          child: map.mapView,
-                        ),
                         // 러닝 시작 버튼
                         Positioned(
                           bottom: 0,
@@ -91,18 +84,14 @@ class _RunningPageState extends State<RunningPage> {
                               // 러닝 시작
                               if (!isRunning) {
                                 isRunning = true;
-                                runningButtonViewmodel.startRunning();
-                                final viewModel =
-                                    ref.read(runningViewModel.notifier);
-                                viewModel.setLocation(); // 시작 위치 설정
-                                viewModel.startRunning(
+                                runningButton.startRunning();
+                                running.setLocation(); // 시작 위치 설정
+                                running.startRunning(
                                     DateTime.now()); // 현재 시간으로 시작 시간 설정해서 러닝 시작
                               } else {
                                 isRunning = false;
-                                runningButtonViewmodel.stopRunning();
-                                RunningState result = ref
-                                    .read(runningViewModel.notifier)
-                                    .endRunning();
+                                runningButton.stopRunning();
+                                RunningState result = running.endRunning();
                                 Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(
