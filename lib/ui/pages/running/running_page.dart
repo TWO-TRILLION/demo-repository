@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_sprinchat_app/core/viewmodel/user_viewmodel/user_viewmodel.dart';
 import 'package:flutter_sprinchat_app/ui/pages/result/result_page.dart';
 import 'package:flutter_sprinchat_app/ui/pages/running/running_view_model.dart';
-import 'package:flutter_sprinchat_app/ui/pages/running/widgets/kakaomap_view_model.dart';
 import 'package:flutter_sprinchat_app/ui/pages/running/widgets/running_analysis.dart';
 import 'package:flutter_sprinchat_app/ui/pages/running/widgets/button_view_model.dart';
 import 'package:flutter_sprinchat_app/ui/pages/running/widgets/running_button.dart';
@@ -79,10 +78,6 @@ class RunningPageState extends ConsumerState<RunningPage> {
                     child: Stack(
                       alignment: Alignment.topCenter,
                       children: [
-                        // 지도
-                        SizedBox(
-                          child: viewmodel.mapview,
-                        )
                         // 러닝 시작 버튼
                         Positioned(
                           bottom: 0,
