@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_sprinchat_app/constant/colors.dart';
 import 'package:flutter_sprinchat_app/data/model/user_model.dart';
 import 'package:flutter_sprinchat_app/core/viewmodel/user_viewmodel/user_viewmodel.dart';
 import 'package:flutter_sprinchat_app/ui/pages/chatpage/chatpage.dart';
@@ -123,7 +124,7 @@ class _CurrentChatState extends ConsumerState<CurrentChat> {
                       Text(
                         '현재 위치 기준',
                         style: const TextStyle(
-                          color: Colors.blue,
+                          color: AppColors.blueAccent,
                           fontWeight: FontWeight.w500,
                         ),
                       ),

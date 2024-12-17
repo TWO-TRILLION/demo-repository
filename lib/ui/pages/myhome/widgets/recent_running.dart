@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_sprinchat_app/constant/colors.dart';
 import 'package:flutter_sprinchat_app/core/viewmodel/user_viewmodel/user_viewmodel.dart';
 
 class RecentRunning extends ConsumerStatefulWidget {
@@ -105,7 +106,7 @@ class _RecentRunningState extends ConsumerState<RecentRunning> {
       ),
       child: Column(
         children: [
-          Icon(icon, color: Colors.blue),
+          Icon(icon, color: AppColors.blueAccent),
           const SizedBox(height: 8),
           Text(
             value,

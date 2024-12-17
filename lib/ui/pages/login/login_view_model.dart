@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_sprinchat_app/constant/colors.dart';
 import 'package:flutter_sprinchat_app/core/viewmodel/user_viewmodel/user_viewmodel.dart';
 import 'package:flutter_sprinchat_app/data/repository/user_repository.dart';
 import 'package:flutter_sprinchat_app/ui/pages/myhome/my_home.dart';
@@ -80,7 +81,7 @@ class LoginViewModel extends AutoDisposeNotifier<LoginState> {
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.BOTTOM,
           timeInSecForIosWeb: 1,
-          backgroundColor: Colors.blueAccent,
+          backgroundColor: AppColors.blueAccent,
           textColor: Colors.white,
           fontSize: 16);
     }
