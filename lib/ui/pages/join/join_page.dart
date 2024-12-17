@@ -49,6 +49,11 @@ class _JoinPageState extends ConsumerState<JoinPage> {
                     SizedBox(height: 20),
                     ElevatedButton(
                         onPressed: () {
+                          final bool isValid =
+                              formKey.currentState!.validate() ?? false;
+                          if (!isValid) {
+                            return;
+                          }
                           ref
                               .watch(joinViewModelProvider.notifier)
                               .onJoin(context);

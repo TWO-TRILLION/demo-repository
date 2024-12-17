@@ -42,6 +42,11 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                     Consumer(
                       builder: (context, ref, child) => ElevatedButton(
                           onPressed: () {
+                            final bool isValid =
+                                formKey.currentState!.validate() ?? false;
+                            if (!isValid) {
+                              return;
+                            }
                             ref
                                 .watch(loginViewModelProvider.notifier)
                                 .onLoginClick(context);
