@@ -20,7 +20,14 @@ class _NearbyChatState extends ConsumerState<NearbyChat> {
   @override
   void initState() {
     super.initState();
-    _loadChatInfo();
+    Future.delayed(const Duration(milliseconds: 500), () {
+      if (mounted) {
+        _loadChatInfo();
+        _refreshTimer = Timer.periodic(const Duration(seconds: 10), (_) {
+          _loadChatInfo();
+        });
+      }
+    });
   }
 
   @override

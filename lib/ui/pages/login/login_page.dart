@@ -1,82 +1,24 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_sprinchat_app/core/viewmodel/user_viewmodel/user_viewmodel.dart';
-import 'package:flutter_sprinchat_app/data/repository/user_repository.dart';
 import 'package:flutter_sprinchat_app/ui/pages/join/join_page.dart';
-import 'package:flutter_sprinchat_app/ui/pages/myhome/my_home.dart';
+import 'package:flutter_sprinchat_app/ui/pages/login/login_view_model.dart';
 import 'package:flutter_sprinchat_app/ui/widgets/id_text_form_field.dart';
 import 'package:flutter_sprinchat_app/ui/widgets/pw_text_form_field.dart';
 
-class LoginPage extends StatefulWidget {
+class LoginPage extends ConsumerStatefulWidget {
   const LoginPage({super.key});
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  ConsumerState<LoginPage> createState() => _LoginPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
-  final idController = TextEditingController();
-  final pwController = TextEditingController();
+class _LoginPageState extends ConsumerState<LoginPage> {
   final formKey = GlobalKey<FormState>();
 
   @override
-  void dispose() {
-    idController.dispose();
-    pwController.dispose();
-    super.dispose();
-  }
-
-  void onLoginClick(WidgetRef ref) async {
-    final userRepo = UserRepository();
-
-    final user = await userRepo.getOne(idController.text);
-
-    if (user == null) {
-      showCupertinoDialog(
-        context: context,
-        builder: (context) {
-          return CupertinoAlertDialog(
-            title: Text('로그인 오류'),
-            content: Text('아이디를 확인하세요.'),
-            actions: [
-              TextButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  child: Text('확인'))
-            ],
-          );
-        },
-      );
-    } else if (user.userpw != pwController.text) {
-      showCupertinoDialog(
-        context: context,
-        builder: (context) {
-          return CupertinoAlertDialog(
-            title: Text('로그인 오류'),
-            content: Text('비밀번호를 확인하세요.'),
-            actions: [
-              TextButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  child: Text('확인'))
-            ],
-          );
-        },
-      );
-    } else {
-      ref.read(userViewModelProvider.notifier).setUserId(idController.text);
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => const MyHome()),
-      );
-    }
-  }
-
-  @override
   Widget build(BuildContext context) {
+    final loginState = ref.watch(loginViewModelProvider);
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
@@ -93,14 +35,16 @@ class _LoginPageState extends State<LoginPage> {
                   children: [
                     Image.asset('assets/images/logo.png'),
                     SizedBox(height: 40),
-                    IdTextFormField(controller: idController),
+                    IdTextFormField(controller: loginState.idController),
                     SizedBox(height: 30),
-                    PwTextFormField(controller: pwController),
+                    PwTextFormField(controller: loginState.pwController),
                     SizedBox(height: 30),
                     Consumer(
                       builder: (context, ref, child) => ElevatedButton(
                           onPressed: () {
-                            onLoginClick(ref);
+                            ref
+                                .watch(loginViewModelProvider.notifier)
+                                .onLoginClick(context);
                           },
                           child: Text('로그인')),
                     ),
