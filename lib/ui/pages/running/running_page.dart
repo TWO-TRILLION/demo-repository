@@ -92,8 +92,8 @@ class _RunningPageState extends State<RunningPage> {
                                 Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) =>
-                                        ResultPage(result, userId),
+                                    builder: (context) => ResultPage(
+                                        analysis: result, userId: userId),
                                   ),
                                 );
                               }
@@ -115,8 +115,7 @@ class _RunningPageState extends State<RunningPage> {
           ),
         ),
       ),
-      bottomNavigationBar: CustomNavigationBar(
-          currentPage: 'running'),
+      bottomNavigationBar: CustomNavigationBar(currentPage: 'running'),
     );
   }
 }
