@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_sprinchat_app/core/viewmodel/user_viewmodel/user_viewmodel.dart';
 import 'package:flutter_sprinchat_app/ui/pages/result/result_page.dart';
 import 'package:flutter_sprinchat_app/ui/pages/running/running_view_model.dart';
-import 'package:flutter_sprinchat_app/ui/pages/running/widgets/kakaomap.dart';
+import 'package:flutter_sprinchat_app/ui/pages/running/widgets/kakaomap_view_model.dart';
 import 'package:flutter_sprinchat_app/ui/pages/running/widgets/running_analysis.dart';
 import 'package:flutter_sprinchat_app/ui/pages/running/widgets/button_view_model.dart';
 import 'package:flutter_sprinchat_app/ui/pages/running/widgets/running_button.dart';
@@ -37,9 +37,14 @@ class _RunningPageState extends State<RunningPage> {
           padding: const EdgeInsets.all(16),
           child: Consumer(
             builder: (context, ref, child) {
-              // 뷰모델 선언
+              // 유저 뷰모델
               final userId = ref.read(userViewModelProvider);
+              // 러닝 버튼 UI 변경용 뷰모델
               final runningButtonViewmodel = ref.read(buttonViewModel.notifier);
+              // 카카오맵 트랙킹 뷰모델
+              final mapViewmodel = ref.read(kakaomapViewModel.notifier);
+              mapViewmodel.startMap();
+              final map = ref.watch(kakaomapViewModel);
               return Column(
                 children: [
                   // 상단 '러닝' 문구
@@ -55,6 +60,12 @@ class _RunningPageState extends State<RunningPage> {
                           fontSize: 24,
                         ),
                       ),
+                      Text(
+                        widget.currentLocation,
+                        style: TextStyle(
+                            fontFamily: 'Pretendard',
+                            fontWeight: FontWeight.normal),
+                      )
                     ],
                   ),
                   SizedBox(height: 30),
@@ -65,9 +76,12 @@ class _RunningPageState extends State<RunningPage> {
                       alignment: Alignment.topCenter,
                       children: [
                         // 지도
-                        KakaoMap(
-                          lat: 37.56668,
-                          lng: 126.978415,
+                        // KakaoMap(
+                        //   lat: 37.56668,
+                        //   lng: 126.978415,
+                        // ),
+                        SizedBox(
+                          child: map.mapView,
                         ),
                         // 러닝 시작 버튼
                         Positioned(
