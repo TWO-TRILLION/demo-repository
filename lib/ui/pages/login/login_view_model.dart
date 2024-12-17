@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_sprinchat_app/core/viewmodel/user_viewmodel/user_viewmodel.dart';
 import 'package:flutter_sprinchat_app/data/repository/user_repository.dart';
 import 'package:flutter_sprinchat_app/ui/pages/myhome/my_home.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class LoginState {
   TextEditingController idController;
@@ -67,10 +68,21 @@ class LoginViewModel extends AutoDisposeNotifier<LoginState> {
       ref
           .read(userViewModelProvider.notifier)
           .setUserId(state.idController.text);
+
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => const MyHome()),
+        MaterialPageRoute(
+          builder: (context) => const MyHome(),
+        ),
       );
+      Fluttertoast.showToast(
+          msg: '로그인 성공',
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.blueAccent,
+          textColor: Colors.white,
+          fontSize: 16);
     }
   }
 }
