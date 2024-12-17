@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_sprinchat_app/core/viewmodel/location_viewmodel/location_viewmodel.dart';
 import 'package:flutter_sprinchat_app/core/viewmodel/user_viewmodel/user_viewmodel.dart';
+import 'package:flutter_sprinchat_app/data/repository/user_repository.dart';
 import 'package:flutter_sprinchat_app/ui/pages/chatpage/widgets/chatswindow.dart';
 import 'package:flutter_sprinchat_app/ui/pages/chatpage/widgets/inputmessage.dart';
 import 'package:flutter_sprinchat_app/core/viewmodel/chat_viewmodel/chat_viewmodel.dart';
@@ -22,7 +23,11 @@ class _ChatpageState extends ConsumerState<Chatpage> {
     ref.read(chatViewModelProvider.notifier).setLocation(location);
     // 유저세팅(userid)
     ref.read(chatViewModelProvider.notifier).setUserId(userid);
-    
+
+    // lastChatRoomId 업데이트 추가
+    final userRepo = UserRepository();
+    userRepo.updateLastChatRoomId(userid, location);
+
     WidgetsBinding.instance.addPostFrameCallback((_) {
       ref.read(chatViewModelProvider.notifier).scrollEndPosition();
     });

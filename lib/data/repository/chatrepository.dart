@@ -141,4 +141,25 @@ class Chatrepository {
 
     await docRef.update(map);
   }
+
+  // 특정 채팅방의 멤버 수를 가져오는 메서드 추가
+  Future<int> getMemberCount(String location) async {
+    try {
+      FirebaseFirestore firestore = FirebaseFirestore.instance;
+      final snapshot = await firestore
+          .collection('Chatroom')
+          .where('chatroomid', isEqualTo: location)
+          .get();
+
+      if (snapshot.docs.isNotEmpty) {
+        final chatroom = snapshot.docs.first.data();
+        final List<dynamic> members = chatroom['member'] ?? [];
+        return members.length;
+      }
+      return 0;
+    } catch (e) {
+      print('멤버 수 가져오기 오류: $e');
+      return 0;
+    }
+  }
 }
