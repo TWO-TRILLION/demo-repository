@@ -10,14 +10,21 @@ class JoinState {
   TextEditingController pwController;
   TextEditingController nicknameController;
 
-  JoinState(this.idController, this.pwController, this.nicknameController);
+  JoinState(
+    this.idController,
+    this.pwController,
+    this.nicknameController,
+  );
 }
 
-class JoinViewModel extends Notifier<JoinState> {
+class JoinViewModel extends AutoDisposeNotifier<JoinState> {
   @override
   JoinState build() {
-    return JoinState(TextEditingController(), TextEditingController(),
-        TextEditingController());
+    return JoinState(
+      TextEditingController(),
+      TextEditingController(),
+      TextEditingController(),
+    );
   }
 
   void onJoin(BuildContext context) async {
@@ -70,7 +77,8 @@ class JoinViewModel extends Notifier<JoinState> {
   }
 }
 
-final joinViewModelProvider = NotifierProvider<JoinViewModel, JoinState>(
+final joinViewModelProvider =
+    AutoDisposeNotifierProvider<JoinViewModel, JoinState>(
   () {
     return JoinViewModel();
   },
