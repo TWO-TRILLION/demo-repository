@@ -13,6 +13,7 @@ class NicknameTextFormField extends StatelessWidget {
       controller: controller,
       inputFormatters: [
         FilteringTextInputFormatter.allow(RegExp("[a-zA-Zㄱ-힣0-9]")),
+        LengthLimitingTextInputFormatter(10), // 최대 10자 입력으로 제한
       ],
     );
   }
