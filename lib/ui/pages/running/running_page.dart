@@ -6,6 +6,7 @@ import 'package:flutter_sprinchat_app/ui/pages/running/running_view_model.dart';
 import 'package:flutter_sprinchat_app/ui/pages/running/widgets/running_analysis.dart';
 import 'package:flutter_sprinchat_app/ui/pages/running/widgets/button_view_model.dart';
 import 'package:flutter_sprinchat_app/ui/pages/running/widgets/running_button.dart';
+import 'package:flutter_sprinchat_app/ui/pages/running/widgets/unavailable_navigationbar.dart';
 import 'package:flutter_sprinchat_app/ui/widgets/navigation_bar.dart';
 
 class RunningPage extends ConsumerStatefulWidget {
@@ -118,7 +119,9 @@ class RunningPageState extends ConsumerState<RunningPage> {
           ),
         ),
       ),
-      bottomNavigationBar: CustomNavigationBar(currentPage: 'running'),
+      bottomNavigationBar: !ref.watch(buttonViewModel).isRunning
+          ? CustomNavigationBar(currentPage: 'running')
+          : UnavailableNavigationbar(currentPage: 'running'),
     );
   }
 }
