@@ -77,8 +77,6 @@ class CustomNavigationBar extends ConsumerWidget {
                   context,
                   MaterialPageRoute(
                     builder: (context) => RunningPage(
-                      startLat: 35.8245542,
-                      startLng: 127.1007766,
                       currentLocation: location,
                     ),
                   ),

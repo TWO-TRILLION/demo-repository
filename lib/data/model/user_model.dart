@@ -1,20 +1,28 @@
 class RunningData {
-  int distance;
-  int kcal;
-  int speed;
+  double distance;
+  double calorie;
+  double speed;
 
   RunningData({
     required this.distance,
-    required this.kcal,
+    required this.calorie,
     required this.speed,
   });
 
   RunningData.fromJson(Map<String, dynamic> json)
       : this(
           distance: json['distance'],
-          kcal: json['kcal'],
+          calorie: json['calorie'],
           speed: json['speed'],
         );
+
+  Map<String, dynamic> toJson() {
+    return {
+      'distance': distance.toStringAsFixed(1),
+      'calorie': calorie.toStringAsFixed(2),
+      'speed': speed.toStringAsFixed(2),
+    };
+  }
 }
 
 class UserModel {

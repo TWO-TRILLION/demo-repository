@@ -1,14 +1,20 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_sprinchat_app/data/model/user_model.dart';
+import 'package:flutter_sprinchat_app/data/repository/user_repository.dart';
 import 'package:flutter_sprinchat_app/ui/pages/myhome/my_home.dart';
 import 'package:flutter_sprinchat_app/ui/pages/result/widgets/result_box.dart';
-import 'package:flutter_sprinchat_app/ui/pages/running/running_page.dart';
 import 'package:flutter_sprinchat_app/ui/pages/running/running_view_model.dart';
 
 class ResultPage extends StatelessWidget {
-  ResultPage(this.analysis);
-
+  ResultPage(
+    this.analysis,
+    this.userId,
+    //this.user,
+  );
+  final userId;
   RunningState analysis;
+  //UserModel user;
 
   @override
   Widget build(BuildContext context) {
@@ -46,11 +52,20 @@ class ResultPage extends StatelessWidget {
                       builder: (context) => CupertinoAlertDialog(
                         title: Text('러닝 기록을 저장하시겠습니까?'),
                         actions: <CupertinoDialogAction>[
+                          // 저장하고 종료할 시
                           CupertinoDialogAction(
                             isDefaultAction: false,
                             onPressed: () {
+                              // 러닝 기록 업데이트
+                              updateResult(
+                                userId,
+                                analysis.distance,
+                                analysis.calorie,
+                                analysis.speed,
+                              );
                               Navigator.pop(context);
-                              Navigator.push(
+                              // 홈페이지로 라우팅
+                              Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) {
@@ -66,11 +81,13 @@ class ResultPage extends StatelessWidget {
                               ),
                             ),
                           ),
+                          // 저장하지 않고 종료할 시
                           CupertinoDialogAction(
                             isDefaultAction: true,
                             onPressed: () {
                               Navigator.pop(context);
-                              Navigator.push(
+                              // 홈페이지로 라우팅
+                              Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) {
@@ -98,5 +115,19 @@ class ResultPage extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  // 결과 업데이트 함수
+  Future<void> updateResult(
+    String userId,
+    double distance,
+    double calorie,
+    double speed,
+  ) async {
+    final repo = UserRepository();
+    final runningData =
+        RunningData(distance: distance, calorie: calorie, speed: speed);
+
+    repo.updateRunningdata(userId, runningData);
   }
 }

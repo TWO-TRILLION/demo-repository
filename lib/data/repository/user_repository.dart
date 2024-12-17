@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -44,7 +45,7 @@ class UserRepository {
         'lastchatroomid': '',
         'runningData': ({
           'distance': runningData.distance,
-          'kcal': runningData.kcal,
+          'calorie': runningData.calorie,
           'speed': runningData.speed,
         }),
         'imageUrl': '',
@@ -147,6 +148,18 @@ class UserRepository {
     } catch (e) {
       print('닉네임 업데이트 오류: $e');
       throw Exception('닉네임 업데이트 실패');
+    }
+  }
+
+  Future<void> updateRunningdata(String userId, RunningData data) async {
+    final json = jsonEncode(data);
+    try {
+      await firestore.collection('User').doc(userId).update({
+        'runningData': json,
+      });
+    } catch (e) {
+      print('러닝 기록 등록 오류: $e');
+      throw Exception('러닝 기록 등록 실패');
     }
   }
 
