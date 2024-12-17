@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_sprinchat_app/constant/colors.dart';
 
 final theme = ThemeData(
     appBarTheme: AppBarTheme(
@@ -6,8 +7,8 @@ final theme = ThemeData(
       color: Colors.transparent,
     ),
     fontFamily: 'Pretendard',
-    colorScheme: ColorScheme.fromSeed(seedColor: Colors.blueAccent),
-    highlightColor: Colors.blueAccent,
+    colorScheme: ColorScheme.fromSeed(seedColor: AppColors.blueAccent),
+    highlightColor: AppColors.blueAccent,
     scaffoldBackgroundColor: Colors.white,
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ButtonStyle(
@@ -20,7 +21,7 @@ final theme = ThemeData(
         textStyle: WidgetStatePropertyAll(
           TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
         ),
-        backgroundColor: WidgetStatePropertyAll(Colors.blueAccent),
+        backgroundColor: WidgetStatePropertyAll(AppColors.blueAccent),
         foregroundColor: WidgetStatePropertyAll(Colors.white),
       ),
     ),
