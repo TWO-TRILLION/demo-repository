@@ -10,7 +10,8 @@ import 'package:flutter_sprinchat_app/ui/pages/presenchatpage/widgets/hill.dart'
 import 'package:flutter_sprinchat_app/ui/widgets/navigation_bar.dart';
 
 class Presenchatpage extends ConsumerStatefulWidget {
-  const Presenchatpage(this.currentLocation, {super.key});
+  const Presenchatpage(this.currentLocation,
+      {super.key, required String location});
 
   final String currentLocation;
 

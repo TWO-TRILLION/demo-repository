@@ -7,10 +7,14 @@ import 'package:flutter_sprinchat_app/theme.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
-
+  try {
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
+    print('Firebase 초기화 성공');
+  } catch (e) {
+    print('Firebase 초기화 오류: $e');
+  }
   runApp(const ProviderScope(child: MyApp()));
 }
 

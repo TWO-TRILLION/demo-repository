@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_sprinchat_app/data/model/chatmodel.dart';
-import 'package:flutter_sprinchat_app/data/model/user_model.dart';
 import 'package:flutter_sprinchat_app/data/repository/chatrepository.dart';
 import 'package:flutter_sprinchat_app/data/repository/user_repository.dart';
 
@@ -89,7 +88,7 @@ class ChatViewmodel extends AutoDisposeNotifier<ChatState> {
   // 유저가 채팅을 치면, 스크롤 컨트롤러가 마지막으로 가도록 설정
   void newChat(String chat) {
     final chatrepository = Chatrepository();
-    chatrepository.update(state.location, state.userid, chat).then((_){
+    chatrepository.update(state.location, state.userid, chat).then((_) {
       scrollEndPosition();
     });
   }
