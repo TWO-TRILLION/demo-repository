@@ -61,7 +61,7 @@ class _JoinPageState extends State<JoinPage> {
         userpw: pwController.text,
         nickname: nicknameController.text,
         lastchatroomid: '',
-        runningData: RunningData(distance: 0, kcal: 0, speed: 0),
+        runningData: RunningData(distance: 0, calorie: 0, speed: 0),
         imageUrl: '',
       );
 

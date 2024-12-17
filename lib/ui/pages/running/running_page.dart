@@ -1,20 +1,19 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_sprinchat_app/core/viewmodel/user_viewmodel/user_viewmodel.dart';
 import 'package:flutter_sprinchat_app/ui/pages/result/result_page.dart';
 import 'package:flutter_sprinchat_app/ui/pages/running/running_view_model.dart';
-import 'package:flutter_sprinchat_app/ui/pages/running/widgets/kakao_map.dart';
+import 'package:flutter_sprinchat_app/ui/pages/running/widgets/kakaomap.dart';
 import 'package:flutter_sprinchat_app/ui/pages/running/widgets/running_analysis.dart';
+import 'package:flutter_sprinchat_app/ui/pages/running/widgets/button_view_model.dart';
 import 'package:flutter_sprinchat_app/ui/pages/running/widgets/running_button.dart';
 import 'package:flutter_sprinchat_app/ui/widgets/navigation_bar.dart';
 
 class RunningPage extends StatefulWidget {
-  RunningPage(
-      {required this.startLat,
-      required this.startLng,
-      required this.currentLocation});
+  RunningPage({required this.currentLocation});
 
-  final double startLat; // 러닝을 시작한 좌표(위도)
-  final double startLng; // 러닝을 시작한 좌표(경도)
+  //final double startLat; // 러닝을 시작한 좌표(위도)
+  //final double startLng; // 러닝을 시작한 좌표(경도)
   bool isRunning = false;
   String currentLocation;
 
@@ -39,6 +38,7 @@ class _RunningPageState extends State<RunningPage> {
           child: Consumer(
             builder: (context, ref, child) {
               // 뷰모델 선언
+              final userId = ref.read(userViewModelProvider);
               final runningButtonViewmodel = ref.read(buttonViewModel.notifier);
               return Column(
                 children: [
@@ -65,7 +65,10 @@ class _RunningPageState extends State<RunningPage> {
                       alignment: Alignment.topCenter,
                       children: [
                         // 지도
-                        KakaoMap(lat: widget.startLat, lng: widget.startLng),
+                        KakaoMap(
+                          lat: 37.56668,
+                          lng: 126.978415,
+                        ),
                         // 러닝 시작 버튼
                         Positioned(
                           bottom: 0,
@@ -89,7 +92,8 @@ class _RunningPageState extends State<RunningPage> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => ResultPage(result),
+                                    builder: (context) =>
+                                        ResultPage(result, userId),
                                   ),
                                 );
                               }
