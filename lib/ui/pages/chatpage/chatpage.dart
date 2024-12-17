@@ -8,7 +8,9 @@ import 'package:flutter_sprinchat_app/ui/pages/chatpage/widgets/inputmessage.dar
 import 'package:flutter_sprinchat_app/core/viewmodel/chat_viewmodel/chat_viewmodel.dart';
 
 class Chatpage extends ConsumerStatefulWidget {
-  const Chatpage({super.key});
+  const Chatpage(this.location, {super.key});
+
+  final location;
 
   @override
   ConsumerState<Chatpage> createState() => _ChatpageState();
@@ -17,12 +19,21 @@ class Chatpage extends ConsumerStatefulWidget {
 class _ChatpageState extends ConsumerState<Chatpage> {
   @override
   void initState() {
-    final location = ref.read(locationViewModelProvider);
+    String location;
+    if(widget.location == null) {
+      location = ref.read(locationViewModelProvider);
+    } else {
+      location = widget.location;
+    }
+
     final userid = ref.read(userViewModelProvider);
     // 위치세팅(chatroomid)
     ref.read(chatViewModelProvider.notifier).setLocation(location);
     // 유저세팅(userid)
     ref.read(chatViewModelProvider.notifier).setUserId(userid);
+
+    // db읽고(채팅방 없으면 만들고), 스트림 세팅
+    ref.read(chatViewModelProvider.notifier).readChats();
 
     // lastChatRoomId 업데이트 추가
     final userRepo = UserRepository();

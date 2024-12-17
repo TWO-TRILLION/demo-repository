@@ -21,9 +21,6 @@ class _NearbyChatState extends ConsumerState<NearbyChat> {
   void initState() {
     super.initState();
     _loadChatInfo();
-    _refreshTimer = Timer.periodic(const Duration(seconds: 10), (_) {
-      _loadChatInfo();
-    });
   }
 
   @override
@@ -87,7 +84,7 @@ class _NearbyChatState extends ConsumerState<NearbyChat> {
 
     return GestureDetector(
       onTap: () {
-        Navigator.push(
+        Navigator.pushReplacement(
           context,
           MaterialPageRoute(
             builder: (context) => Presenchatpage(),
@@ -109,7 +106,7 @@ class _NearbyChatState extends ConsumerState<NearbyChat> {
             ),
             const SizedBox(height: 4),
             Text(
-              '참여중인 그룹원 • ${_memberCount - 1}명',
+              '참여중인 그룹원 • ${_memberCount}명',
               style: const TextStyle(color: Colors.grey),
             ),
             Row(
