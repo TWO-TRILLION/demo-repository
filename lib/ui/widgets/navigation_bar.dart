@@ -17,10 +17,10 @@ class CustomNavigationBar extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final location = ref.watch(locationViewModelProvider);
     return Container(
-      color: const Color(0xFFF2F8FF),
+      color: Colors.white,
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
-        margin: const EdgeInsets.only(left: 8, right: 8, bottom: 16),
+        margin: const EdgeInsets.only(left: 16, right: 16, bottom: 40),
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(30),

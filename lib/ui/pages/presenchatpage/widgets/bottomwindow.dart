@@ -18,7 +18,7 @@ class Bottomwindow extends StatelessWidget {
       child: Container(
           height: MediaQuery.of(context).size.height / 2 - 300,
           decoration: BoxDecoration(
-              color: Color(0xfff2f8ff),
+              color: Colors.white,
               borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(10), topRight: Radius.circular(10))),
           child: Column(
