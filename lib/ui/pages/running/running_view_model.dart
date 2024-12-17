@@ -61,23 +61,24 @@ class RunningViewModel extends Notifier<RunningState> {
       var time = DateTime.now().difference(startTime); // 달린 시간
 
       if (currentLocation != null) {
-        // distance : 달린 거리
+        // distance : 달린 거리(km)
+        // getDistance가 m값을 반환합니다
         distance = GeolocatorHelper.getDistance(
-          startLat,
-          startLng,
-          currentLat,
-          currentLng,
-        );
+              startLat,
+              startLng,
+              currentLat,
+              currentLng,
+            ) /
+            1000;
         hour = time.inHours; // hour : 달린 시간(시)
         minute = time.inMinutes; // minute : 달린 시간(분)
         second = time.inSeconds; // second : 달린 시간(초)
         double totalTime =
             (time.inHours + time.inMinutes / 60 + time.inSeconds / 3600);
         if (totalTime != 0) {
-          speed = distance / totalTime; // 평균 속력(km/m)
+          speed = distance / totalTime; // 평균 속력(km/h)
         }
-        calorie = (time.inHours * 3600 + time.inMinutes * 60 + time.inSeconds) *
-            0.12; // calorie : 칼로리 소모 (초당 0.12kcal)
+        calorie = distance * 14.4; // calorie : 칼로리 소모 (1m당 0.0144cal)
         state = RunningState(distance, speed, calorie, hour, minute, second);
       }
     });
