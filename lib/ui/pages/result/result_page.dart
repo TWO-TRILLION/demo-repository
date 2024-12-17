@@ -4,6 +4,7 @@ import 'package:flutter_sprinchat_app/data/model/user_model.dart';
 import 'package:flutter_sprinchat_app/data/repository/user_repository.dart';
 import 'package:flutter_sprinchat_app/ui/pages/myhome/my_home.dart';
 import 'package:flutter_sprinchat_app/ui/pages/result/widgets/result_box.dart';
+import 'package:flutter_sprinchat_app/ui/pages/result/widgets/update_result.dart';
 import 'package:flutter_sprinchat_app/ui/pages/running/running_view_model.dart';
 
 class ResultPage extends StatelessWidget {
@@ -120,19 +121,5 @@ class ResultPage extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  // 결과 업데이트 함수
-  Future<void> updateResult(
-    String userId,
-    double distance,
-    double calorie,
-    double speed,
-  ) async {
-    final repo = UserRepository();
-    final runningData =
-        RunningData(distance: distance, calorie: calorie, speed: speed);
-
-    repo.updateRunningdata(userId, runningData);
   }
 }
