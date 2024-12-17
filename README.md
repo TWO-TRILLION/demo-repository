@@ -98,7 +98,6 @@ DB 제공 : `Firebase`
  ┃ ┃ ┗ 📜pw_text_form_field.dart  
  ┣ 📂widgets  
  ┃ ┗ 📜.gitkeep  
- ┣ 📜.DS_Store  
  ┣ 📜firebase_options.dart  
  ┣ 📜main.dart  
  ┗ 📜theme.dart
