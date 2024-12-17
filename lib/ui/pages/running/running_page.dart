@@ -116,7 +116,7 @@ class _RunningPageState extends State<RunningPage> {
         ),
       ),
       bottomNavigationBar: CustomNavigationBar(
-          currentPage: 'running', currentLocation: widget.currentLocation),
+          currentPage: 'running'),
     );
   }
 }

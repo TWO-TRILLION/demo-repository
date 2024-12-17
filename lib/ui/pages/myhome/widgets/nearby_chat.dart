@@ -22,10 +22,7 @@ class _NearbyChatState extends ConsumerState<NearbyChat> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => Presenchatpage(
-              locationState,
-              location: '',
-            ),
+            builder: (context) => Presenchatpage(),
           ),
         );
       },
