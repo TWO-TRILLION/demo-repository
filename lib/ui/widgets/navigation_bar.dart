@@ -11,7 +11,6 @@ class CustomNavigationBar extends ConsumerWidget {
   const CustomNavigationBar({
     super.key,
     required this.currentPage,
-    required String currentLocation,
   });
 
   @override
@@ -57,10 +56,7 @@ class CustomNavigationBar extends ConsumerWidget {
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => Presenchatpage(
-                      location,
-                      location: '',
-                    ),
+                    builder: (context) => Presenchatpage(),
                   ),
                 );
               }

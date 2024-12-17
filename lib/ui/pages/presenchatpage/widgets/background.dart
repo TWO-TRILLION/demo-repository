@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_sprinchat_app/core/viewmodel/user_viewmodel/user_viewmodel.dart';
+import 'package:flutter_sprinchat_app/data/repository/user_repository.dart';
 
 class Background extends StatelessWidget {
   const Background({super.key, this.chatState});
@@ -7,13 +10,15 @@ class Background extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final userRepository = UserRepository();
+
     return Stack(
       children: [
         Container(
           color: Color(0xffffcf8b),
         ),
         Positioned(
-          left: 40,
+          left: 30,
           top: 40,
           child: Row(
             children: [
@@ -22,8 +27,32 @@ class Background extends StatelessWidget {
                 child: SizedBox(
                   width: 50,
                   height: 50,
-                  child: Image.network('https://picsum.photos/300/300',
-                      fit: BoxFit.cover),
+                  child: Consumer(
+                    builder: (context, ref, child) {
+                      return FutureBuilder(
+                        future: userRepository
+                            .getOne(ref.read(userViewModelProvider)),
+                        builder: (context, snapshot) {
+                          if (snapshot.hasData) {
+                            return snapshot.data!.imageUrl! != ''
+                                ? Image.network(
+                                    snapshot.data!.imageUrl!,
+                                    fit: BoxFit.cover,
+                                    errorBuilder: (context, error,
+                                            stackTrace) =>
+                                        Image.asset(
+                                            'assets/images/default_profile.png'),
+                                  )
+                                : Image.asset(
+                                    'assets/images/default_profile.png');
+                          } else {
+                            return Image.asset(
+                                'assets/images/default_profile.png');
+                          }
+                        },
+                      );
+                    },
+                  ),
                 ),
               ),
               SizedBox(
@@ -36,7 +65,7 @@ class Background extends StatelessWidget {
                     '${chatState.chats.chatroomid}',
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      fontSize: 20,
+                      fontSize: 18,
                       color: Colors.black,
                     ),
                   ),
@@ -45,7 +74,7 @@ class Background extends StatelessWidget {
                     style: TextStyle(
                       fontFamily: 'Pretendard',
                       fontWeight: FontWeight.bold,
-                      fontSize: 20,
+                      fontSize: 18,
                       color: Colors.black,
                     ),
                   )
