@@ -33,7 +33,7 @@ class _PresenchatpageState extends ConsumerState<Presenchatpage> {
 
   @override
   Widget build(BuildContext context) {
-    final location = ref.watch(locationViewModelProvider);
+    // final location = ref.watch(locationViewModelProvider);
     var chatState = ref.watch(chatViewModelProvider);
     int membersNum = chatState.chats.member.length;
 
