@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_sprinchat_app/core/geolocator_helper.dart';
-import 'package:geolocator/geolocator.dart';
 
 class RunningState {
   double distance; // 달린 거리

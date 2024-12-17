@@ -1,9 +1,9 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_sprinchat_app/core/viewmodel/user_viewmodel/user_viewmodel.dart';
 import 'package:flutter_sprinchat_app/ui/pages/result/result_page.dart';
 import 'package:flutter_sprinchat_app/ui/pages/running/running_view_model.dart';
 import 'package:flutter_sprinchat_app/ui/pages/running/widgets/kakaomap.dart';
-import 'package:flutter_sprinchat_app/ui/pages/running/widgets/kakaomap_view_model.dart';
 import 'package:flutter_sprinchat_app/ui/pages/running/widgets/running_analysis.dart';
 import 'package:flutter_sprinchat_app/ui/pages/running/widgets/button_view_model.dart';
 import 'package:flutter_sprinchat_app/ui/pages/running/widgets/running_button.dart';
@@ -38,6 +38,7 @@ class _RunningPageState extends State<RunningPage> {
           child: Consumer(
             builder: (context, ref, child) {
               // 뷰모델 선언
+              final userId = ref.read(userViewModelProvider);
               final runningButtonViewmodel = ref.read(buttonViewModel.notifier);
               return Column(
                 children: [
@@ -91,7 +92,8 @@ class _RunningPageState extends State<RunningPage> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => ResultPage(result),
+                                    builder: (context) =>
+                                        ResultPage(result, userId),
                                   ),
                                 );
                               }
