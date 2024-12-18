@@ -20,7 +20,7 @@ class _ChatpageState extends ConsumerState<Chatpage> {
   @override
   void initState() {
     String location;
-    if(widget.location == null) {
+    if (widget.location == null) {
       location = ref.read(locationViewModelProvider);
     } else {
       location = widget.location;
@@ -51,7 +51,7 @@ class _ChatpageState extends ConsumerState<Chatpage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('${chatState.location}'),
+        title: Text(chatState.location),
       ),
       body: GestureDetector(
         onTap: () {

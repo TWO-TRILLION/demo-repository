@@ -3,8 +3,8 @@ import 'package:flutter_sprinchat_app/ui/pages/myhome/my_home.dart';
 import 'package:flutter_sprinchat_app/ui/pages/presenchatpage/presenchatpage.dart';
 import 'package:flutter_sprinchat_app/ui/pages/running/running_page.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_sprinchat_app/core/viewmodel/location_viewmodel/location_viewmodel.dart';
 
+// 홈-PresentPage-러닝 페이지 하단에 비치한 bottomNavigationbar
 class CustomNavigationBar extends ConsumerWidget {
   final String currentPage;
 
@@ -15,7 +15,6 @@ class CustomNavigationBar extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final location = ref.watch(locationViewModelProvider);
     return Container(
       color: Colors.white,
       child: Container(
@@ -74,9 +73,7 @@ class CustomNavigationBar extends ConsumerWidget {
                   Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => RunningPage(
-                        currentLocation: location,
-                      ),
+                      builder: (context) => RunningPage(),
                     ),
                   );
                 }

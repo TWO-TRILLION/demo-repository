@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_sprinchat_app/core/viewmodel/location_viewmodel/location_viewmodel.dart';
 
+// 러닝 중일 경우 화면 하단에 띄울 기능 없는 컨테이너
+// 클릭해도 다른 페이지로 이동하지 않습니다
 class UnavailableNavigationbar extends ConsumerWidget {
   final String currentPage;
 
@@ -12,7 +13,6 @@ class UnavailableNavigationbar extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final location = ref.watch(locationViewModelProvider);
     return Container(
       color: Colors.white,
       child: Container(
@@ -31,17 +31,17 @@ class UnavailableNavigationbar extends ConsumerWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            _Unavailable_NavItem(
+            Unavailable_NavItem(
               icon: Icons.home_filled,
               label: 'Home',
               isSelected: currentPage == 'home',
             ),
-            _Unavailable_NavItem(
+            Unavailable_NavItem(
               icon: Icons.chat_bubble,
               label: 'Chat',
               isSelected: currentPage == 'chat',
             ),
-            _Unavailable_NavItem(
+            Unavailable_NavItem(
               icon: Icons.directions_run,
               label: 'Running',
               isSelected: currentPage == 'running',
@@ -52,8 +52,8 @@ class UnavailableNavigationbar extends ConsumerWidget {
     );
   }
 
-  // 네비게이션 바 아이템 빌드(빈 공간을 터치해도 작동)
-  Widget _Unavailable_NavItem({
+  // 네비게이션 바 아이템 빌드
+  Widget Unavailable_NavItem({
     required IconData icon,
     required String label,
     required bool isSelected,

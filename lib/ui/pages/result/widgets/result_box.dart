@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 class ResultBox extends StatelessWidget {
   ResultBox(this.title, this.value, this.unit, this.message, this.icon);
 
-  IconData icon; // 좌상단 아이콘 종류
-  String title; // 제목
-  var value; // 기록값
-  String message; // 박스 하단 메시지
-  String unit; // 데이터 단위
+  final IconData icon; // 좌상단 아이콘 종류
+  final String title; // 제목
+  final dynamic value; // 기록값
+  final String message; // 박스 하단 메시지
+  final String unit; // 데이터 단위
 
   @override
   Widget build(BuildContext context) {

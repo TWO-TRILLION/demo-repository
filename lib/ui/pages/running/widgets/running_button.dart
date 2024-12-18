@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+// 러닝 버튼의 디자인을 정하는 위젯
 class RunningButton extends StatelessWidget {
   RunningButton(this.isRunning);
   bool isRunning = false;
 
-  Color runningColor = Color(0xff0070F0);
-  Color stopColor = Color(0xff000000);
+  final Color runningColor = Color(0xff0070F0); // 러닝 중에 사용할 색상
+  final Color stopColor = Color(0xff000000); // 러닝 전/러닝 종료 이후 사용할 색상
 
   @override
   Widget build(BuildContext context) {

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_sprinchat_app/core/viewmodel/user_viewmodel/user_viewmodel.dart';
 import 'package:flutter_sprinchat_app/data/repository/user_repository.dart';
-import 'package:flutter_sprinchat_app/ui/pages/myhome/profile.dart';
 
 class ProfileImage extends ConsumerStatefulWidget {
   final Function() onTap;

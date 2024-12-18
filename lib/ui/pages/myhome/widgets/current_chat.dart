@@ -104,7 +104,7 @@ class _CurrentChatState extends ConsumerState<CurrentChat> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    '$_lastChatRoomId',
+                    _lastChatRoomId,
                     style: const TextStyle(fontSize: 16),
                   ),
                   const SizedBox(height: 4),

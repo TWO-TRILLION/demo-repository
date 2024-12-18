@@ -114,7 +114,7 @@ class _NearbyChatState extends ConsumerState<NearbyChat> {
             ),
             const SizedBox(height: 4),
             Text(
-              '참여중인 그룹원 • ${_memberCount}명',
+              '참여중인 그룹원 • $_memberCount명',
               style: const TextStyle(color: Colors.grey),
             ),
             Row(
