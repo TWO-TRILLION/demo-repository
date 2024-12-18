@@ -31,17 +31,17 @@ class UnavailableNavigationbar extends ConsumerWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            Unavailable_NavItem(
+            unavailableNavItem(
               icon: Icons.home_filled,
               label: 'Home',
               isSelected: currentPage == 'home',
             ),
-            Unavailable_NavItem(
+            unavailableNavItem(
               icon: Icons.chat_bubble,
               label: 'Chat',
               isSelected: currentPage == 'chat',
             ),
-            Unavailable_NavItem(
+            unavailableNavItem(
               icon: Icons.directions_run,
               label: 'Running',
               isSelected: currentPage == 'running',
@@ -53,7 +53,7 @@ class UnavailableNavigationbar extends ConsumerWidget {
   }
 
   // 네비게이션 바 아이템 빌드
-  Widget Unavailable_NavItem({
+  Widget unavailableNavItem({
     required IconData icon,
     required String label,
     required bool isSelected,
