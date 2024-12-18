@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_sprinchat_app/core/geolocator_helper.dart';
 
+// 러닝 정보를 분석하는 뷰모델
 class RunningState {
   double distance; // 달린 거리
   double speed; // 평균 속력

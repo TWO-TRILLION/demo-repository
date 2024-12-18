@@ -70,7 +70,7 @@ class _RecentRunningState extends ConsumerState<RecentRunning> {
           children: [
             Expanded(
               child: _buildStatCard(
-                '${_calorie.toStringAsFixed(1)}',
+                _calorie.toStringAsFixed(1),
                 '소모한 칼로리',
                 Icons.local_fire_department,
               ),

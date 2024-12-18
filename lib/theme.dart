@@ -10,6 +10,7 @@ final theme = ThemeData(
     colorScheme: ColorScheme.fromSeed(seedColor: AppColors.blueAccent),
     highlightColor: AppColors.blueAccent,
     scaffoldBackgroundColor: Colors.white,
+    // ElevatedButton
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ButtonStyle(
         minimumSize: WidgetStatePropertyAll(Size.fromHeight(50)),
@@ -25,6 +26,7 @@ final theme = ThemeData(
         foregroundColor: WidgetStatePropertyAll(Colors.white),
       ),
     ),
+    // TextField InputDecoration
     inputDecorationTheme: InputDecorationTheme(
         hintStyle: TextStyle(
           fontSize: 16,

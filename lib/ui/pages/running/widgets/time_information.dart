@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 
+// 타이머 위젯
 class TimeInformation extends StatelessWidget {
   const TimeInformation({
     super.key,
-    required this.value,
-    required this.unit,
+    required this.value, // 데이터 값
+    required this.unit, // 단위(시간, 분, 초)
   });
 
   final int value;

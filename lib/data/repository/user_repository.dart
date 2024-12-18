@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -18,7 +17,7 @@ class UserRepository {
         final map = doc.data();
         final newMap = {
           'id': doc.id,
-          ...map as Map<String, dynamic>,
+          ...map,
         };
         return UserModel.fromJson(newMap);
       }).toList();
@@ -152,7 +151,6 @@ class UserRepository {
   }
 
   Future<void> updateRunningdata(String userId, RunningData data) async {
-    final json = jsonEncode(data);
     try {
       await firestore.collection('User').doc(userId).update({
         'runningData': {

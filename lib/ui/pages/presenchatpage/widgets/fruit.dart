@@ -71,8 +71,7 @@ class _FruitState extends State<Fruit> with TickerProviderStateMixin {
     return Positioned(
         top: MediaQuery.of(context).size.height / 2 - 200,
         left: MediaQuery.of(context).size.width / 2 - 50,
-        child: SlideTransition(
-            position: _offset,
-            child: Image.asset('assets/fruits/strawberry.png')));
+        child:
+            SlideTransition(position: _offset, child: Image.asset(assetImage)));
   }
 }

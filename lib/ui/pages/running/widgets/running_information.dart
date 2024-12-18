@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class RunningInformation extends StatelessWidget {
-  // 달린 거리, 평균 속력, 소모한 칼로리 위젯
+  // 달린 거리, 평균 속력, 소모한 칼로리를 표시하는 위젯
   RunningInformation(
     this.title, // 제목
     this.value, // 값

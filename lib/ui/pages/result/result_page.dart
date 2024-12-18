@@ -1,20 +1,21 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_sprinchat_app/data/model/user_model.dart';
-import 'package:flutter_sprinchat_app/data/repository/user_repository.dart';
+import 'package:flutter_sprinchat_app/constant/colors.dart';
 import 'package:flutter_sprinchat_app/ui/pages/myhome/my_home.dart';
 import 'package:flutter_sprinchat_app/ui/pages/result/widgets/result_box.dart';
 import 'package:flutter_sprinchat_app/ui/pages/result/widgets/update_result.dart';
 import 'package:flutter_sprinchat_app/ui/pages/running/running_view_model.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
+// 결과 페이지
 class ResultPage extends StatelessWidget {
   ResultPage({
     required this.analysis,
     required this.userId,
   });
 
-  final userId; // 유저 아이디
-  RunningState analysis; // 마지막으로 저장한 러닝 데이터
+  final String userId; // 유저 아이디
+  final RunningState analysis; // 마지막으로 저장한 러닝 데이터
 
   @override
   Widget build(BuildContext context) {
@@ -101,6 +102,14 @@ class ResultPage extends StatelessWidget {
                                   },
                                 ),
                               );
+                              Fluttertoast.showToast(
+                                  msg: '기록을 저장하였습니다',
+                                  toastLength: Toast.LENGTH_SHORT,
+                                  gravity: ToastGravity.BOTTOM,
+                                  timeInSecForIosWeb: 1,
+                                  backgroundColor: AppColors.blueAccent,
+                                  textColor: Colors.white,
+                                  fontSize: 16);
                             },
                             child: Text(
                               '저장',

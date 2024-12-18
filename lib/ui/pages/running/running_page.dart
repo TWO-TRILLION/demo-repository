@@ -11,11 +11,6 @@ import 'package:flutter_sprinchat_app/ui/widgets/navigation_bar.dart';
 import 'package:lottie/lottie.dart';
 
 class RunningPage extends ConsumerStatefulWidget {
-  RunningPage({super.key, required this.currentLocation});
-
-  bool isRunning = false;
-  String currentLocation;
-
   @override
   RunningPageState createState() => RunningPageState();
 }
@@ -23,9 +18,9 @@ class RunningPage extends ConsumerStatefulWidget {
 class RunningPageState extends ConsumerState<RunningPage> {
   bool isRunning = false;
 
-  late final userId;
-  late final runningButton;
-  late final running;
+  late final String userId; // 유저 id 뷰모델
+  late final dynamic runningButton; // 러닝중/러닝 종료 상태 관리 뷰모델
+  late final dynamic running; // 러닝 데이터 분석 뷰모델
 
   @override
   void dispose() {
@@ -35,8 +30,9 @@ class RunningPageState extends ConsumerState<RunningPage> {
   @override
   void initState() {
     userId = ref.read(userViewModelProvider);
-    runningButton = ref.read(buttonViewModel.notifier); // 러닝 버튼 UI 관리용 뷰모델
+    runningButton = ref.read(buttonViewModel.notifier);
     running = ref.read(runningViewModel.notifier);
+    super.initState();
   }
 
   @override
@@ -44,76 +40,73 @@ class RunningPageState extends ConsumerState<RunningPage> {
     return Scaffold(
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Consumer(
-            builder: (context, ref, child) {
-              // 카카오맵 트랙킹 뷰모델
-              return Column(
-                children: [
-                  // 상단 '러닝' 문구
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      '러닝',
-                      style: TextStyle(
-                        fontFamily: 'Pretendard',
-                        fontWeight: FontWeight.w700,
-                        fontSize: 24,
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              children: [
+                // 상단 문구
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    '러닝',
+                    style: TextStyle(
+                      fontFamily: 'Pretendard',
+                      fontWeight: FontWeight.w700,
+                      fontSize: 24,
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 320,
+                  child: Stack(
+                    alignment: Alignment.topCenter,
+                    children: [
+                      // 화면 상단 애니메이션 - LottieFiles 애니메이션 사용
+                      SizedBox(
+                        height: 200,
+                        child: Lottie.asset('assets/json/lottie.json'),
                       ),
-                    ),
-                  ),
-                  // 지도 및 러닝 시작 버튼
-                  SizedBox(
-                    height: 320,
-                    child: Stack(
-                      alignment: Alignment.topCenter,
-                      children: [
-                        SizedBox(
-                          height: 200,
-                          child: Lottie.asset('assets/json/lottie.json'),
+                      // 러닝 시작 버튼
+                      Positioned(
+                        bottom: 0,
+                        child: GestureDetector(
+                          onTap: () {
+                            // 러닝 시작
+                            if (!isRunning) {
+                              isRunning = true;
+                              runningButton.startRunning(); // 러닝 버튼 상태 변경
+                              running.setLocation(); // 시작 위치 설정
+                              running.startRunning(
+                                  DateTime.now()); // 현재 시간으로 시작 시간 설정해서 러닝 시작
+                              // 러닝 종료
+                            } else {
+                              isRunning = false;
+                              runningButton.stopRunning(); // 러닝 버튼 상태 변경
+                              RunningState result =
+                                  running.endRunning(); // 러닝 분석 결과 저장
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => ResultPage(
+                                      analysis: result, userId: userId),
+                                ),
+                              );
+                            }
+                          },
+                          // 버튼 디자인
+                          child: RunningButton(
+                              ref.watch(buttonViewModel).isRunning),
                         ),
-                        // 러닝 시작 버튼
-                        Positioned(
-                          bottom: 0,
-                          child: GestureDetector(
-                            onTap: () {
-                              // 러닝 시작
-                              if (!isRunning) {
-                                isRunning = true;
-                                runningButton.startRunning();
-                                running.setLocation(); // 시작 위치 설정
-                                running.startRunning(
-                                    DateTime.now()); // 현재 시간으로 시작 시간 설정해서 러닝 시작
-                              } else {
-                                isRunning = false;
-                                runningButton.stopRunning();
-                                RunningState result = running.endRunning();
-                                Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => ResultPage(
-                                        analysis: result, userId: userId),
-                                  ),
-                                );
-                              }
-                            },
-                            // 버튼 디자인
-                            child: RunningButton(
-                                ref.watch(buttonViewModel).isRunning),
-                          ),
-                        )
-                      ],
-                    ),
+                      )
+                    ],
                   ),
-                  SizedBox(height: 30),
-                  // 러닝 분석 정보 표시
-                  RunningAnalysis(),
-                ],
-              );
-            },
-          ),
-        ),
+                ),
+                SizedBox(height: 30),
+                // 러닝 분석 정보 표시
+                RunningAnalysis(),
+              ],
+            )),
       ),
+      // 러닝중일 때는 bottomNavigationbar를 눌러도 화면을 전환할 수 없게 설정
       bottomNavigationBar: !ref.watch(buttonViewModel).isRunning
           ? CustomNavigationBar(currentPage: 'running')
           : UnavailableNavigationbar(currentPage: 'running'),
