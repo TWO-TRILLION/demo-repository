@@ -79,7 +79,7 @@ class _RecentRunningState extends ConsumerState<RecentRunning> {
             Expanded(
               child: _buildStatCard(
                 '${_speed.toStringAsFixed(1)}km/h',
-                '달린 속도',
+                '평균 속력',
                 Icons.speed,
               ),
             ),
