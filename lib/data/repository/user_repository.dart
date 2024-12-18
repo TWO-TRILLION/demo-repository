@@ -63,7 +63,7 @@ class UserRepository {
       QuerySnapshot snapshot = await collectionRef.get();
       List<QueryDocumentSnapshot> documentSnapshot = snapshot.docs;
       final docs = documentSnapshot.where((e) {
-        return e.id.contains(id);
+        return e.id == id;
       });
 
       final list = docs.map(
