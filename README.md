@@ -113,7 +113,8 @@
 
 ### 실행 화면
 
-|![login](https://velog.velcdn.com/images/utiranoj/post/d8c1072b-8e14-48f4-a8f6-17696150e4dd/image.gif)|![home-chat](https://velog.velcdn.com/images/utiranoj/post/c31300c9-c6de-46b0-89f5-555debb414a1/image.gif)|![run](https://velog.velcdn.com/images/utiranoj/post/5a431ddc-d869-4418-9cfe-9801e3f9bde3/image.gif)|
+| ![login](https://velog.velcdn.com/images/utiranoj/post/d8c1072b-8e14-48f4-a8f6-17696150e4dd/image.gif) | ![home-chat](https://velog.velcdn.com/images/utiranoj/post/c31300c9-c6de-46b0-89f5-555debb414a1/image.gif) | ![run](https://velog.velcdn.com/images/utiranoj/post/5a431ddc-d869-4418-9cfe-9801e3f9bde3/image.gif) |
+| ------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
 
 > 로그인
 
