@@ -111,12 +111,16 @@
 
 ## 💡 어떻게 사용하나요?
 
+### 실행 화면
+
+|![login](https://velog.velcdn.com/images/utiranoj/post/d8c1072b-8e14-48f4-a8f6-17696150e4dd/image.gif)|![home-chat](https://velog.velcdn.com/images/utiranoj/post/c31300c9-c6de-46b0-89f5-555debb414a1/image.gif)|![run](https://velog.velcdn.com/images/utiranoj/post/5a431ddc-d869-4418-9cfe-9801e3f9bde3/image.gif)|
+
 > 로그인
 
 - 아이디와 비밀번호는 영문과 숫자만 사용하여 구성합니다.
 - 사용자 아이디는 중복으로 등록할 수 없습니다.
 - 닉네임과 프로필 사진은 추후 변경 가능합니다.
-- firebase DB의 `User` Collection에 데이터를 저장하였습니다.
+- firebase DB의 `User` Collection에 데이터를 저장합니다.
 
 > 홈
 
@@ -129,7 +133,7 @@
 
 - 사용자 위치를 기반으로 해당 행정구역에서 채팅방을 신설하거나 기존 채팅방에 참여합니다.
 - 닉네임과 채팅 메시지, 전송 시간을 기록합니다.
-- firebase DB의 `Chatroom` Collection에 데이터를 저장하였습니다.
+- firebase DB의 `Chatroom` Collection에 데이터를 저장합니다.
 - 내 지역의 러닝 크루와 실시간으로 대화를 나눠보세요.
 
 > 러닝
@@ -137,4 +141,4 @@
 - **러닝 시작**을 누르면 기록을 시작합니다.
 - **러닝 종료**를 누르면 기록을 저장하고 결과 화면으로 이동합니다.
 - 얼마나 오래 뛰었는지, 얼마만큼의 칼로리를 불태웠는지 확인하세요.
-- 러닝을 마치고 나면 기록을 저장할 수 있습니다.
+- 러닝을 마치고 나면 `User` - `RunningData` 필드에 기록을 저장할 수 있습니다.
